@@ -1,0 +1,48 @@
+body{
+
+}
+.container{
+    margin: 2% auto;
+}
+.reg-form{
+    border-style: groove;
+    border-width: 2px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.form-group{
+    padding: 10px;
+}
+.error{
+    border-color: #ff8080;
+}
+.heading{
+    margin: auto;
+    text-align: center;
+    width:100%;
+    height: 100px;
+    background-color: #4673ae;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    color: white;
+
+}
+.heading h3{
+    line-height:100px;
+}
+.hotels_container{
+    background-color:#d9d9d9;
+    padding: 10px; 
+    border-radius: 10px;
+}
+.hotels_container .row .card{
+    padding:10px; 
+   border-width:3px;
+   border-radius: 10px;
+}
+
+.hotel-image{
+    max-height: 30%;
+    max-width: 30%;
+
+}

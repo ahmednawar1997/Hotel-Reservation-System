@@ -4,7 +4,7 @@ var con = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "root",
-  database: "lab4",
+  database: "hotel_reservation_system",
   port: 3307
 });
 con.connect(function(err){

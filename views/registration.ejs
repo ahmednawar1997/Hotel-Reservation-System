@@ -1,0 +1,126 @@
+<html>
+
+<head>
+    <title>lab4</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/registration.css">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-between">
+        <a class="navbar-brand" href="#">Lab4</a>
+        <ul class="navbar-nav mr-auto"></ul>
+        <ul class="navbar-nav">
+            <li class='nav-item'><a class="nav-link" href="/login"><span class="fa fa-sign-in"></span>
+                    Login</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <div class="jumbotron">
+            <div class="heading">
+                <h3>Register New User</h3>
+                <% if (error_msg.length > 0){ %>
+                    <div class="alert alert-danger"><%= error_msg %></div>
+                <% } %>
+                    
+                <% if (success_msg.length > 0){ %>
+                    <div class="alert alert-success"><%= success_msg %></div>
+                <% } %>
+            </div>
+            <form class="reg-form" action="/register" method="POST">
+                <div class="form-group">
+
+                    <div class="form-group row">
+                        <label for="example-text-input" class="col-2 col-form-label">Email</label>
+                        <div class="col-6">
+                            <input class="form-control" name="email" type="email" id="useremail" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="example-text-input" class="col-2 col-form-label">UserName</label>
+                        <div class="col-6">
+                            <input class="form-control" name="username" type="text" required>
+                        </div>
+                    </div>
+                    <div class="form-group row pwd_field">
+                        <label for="example-text-input" class="col-2 col-form-label">Password</label>
+                        <div class="col-6">
+                            <input class="form-control" id="pwd1" name="pwd1" type="password" required>
+                        </div>
+                    </div>
+                    <div class="form-group row pwd_field">
+                        <label for="example-text-input" class="col-2 col-form-label">Re-Enter Password</label>
+                        <div class="col-6">
+                            <input class="form-control" id="pwd2" name="pwd2" type="password" required>
+                            
+                        </div>
+                            
+                    </div>
+                    <div class="form-control-feedback pwd_dont_match alert alert-warning alert-dismissible fade show" role="alert" style="display:none">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <strong>Warning</strong> Passwords don't match!
+                        </div>
+                        <div class="form-control-feedback wrongEmail alert alert-warning alert-dismissible fade show" role="alert" style="display:none">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <strong>Warning</strong> Invalid Email
+                        </div>
+                        <div class="form-control-feedback invalid_username alert alert-danger alert-dismissible fade show" role="alert" style="display:none">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <strong>Error</strong> Invalid username or email already in use
+                        </div>
+                    <div class="form-group row">
+                        <div class="col-2 col-form-label"></div>
+                        <div class="col-6">
+                            <button type="submit" class="btn btn-dark btn-block">Sign Up</button>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script>
+        $(function () {
+
+            $('form').submit(function () {
+                var pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/; 
+                if (document.getElementById('pwd1').value !== document.getElementById('pwd2').value) {
+                    $('.pwd_dont_match').css('display', 'block');
+                    $('#pwd1').addClass('error');
+                    $('#pwd2').addClass('error');
+                }else if(!pattern.test(document.getElementById('useremail').value)){
+                    $('#pwd1').removeClass('error');
+                    $('#pwd2').removeClass('error');
+                    $('.wrongEmail').css('display', 'block');
+                    $('#userEmail').addClass('error');
+                }else {
+                    return true;
+                }
+            });
+
+
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+</body>
+
+</html>
