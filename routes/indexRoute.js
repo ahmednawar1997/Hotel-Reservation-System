@@ -4,8 +4,15 @@ var router = express.Router();
 
 module.exports = function(passport) {
 
+
+
+router.get('/', function(req, res, next) {
+	res.render('');
+});
+	
+
 router.get('/login', function(req, res, next) {
-	res.render('login');
+	res.render('login', {message: req.flash('message')});
 });
 
 
@@ -17,7 +24,7 @@ router.post('/login', passport.authenticate('local', {
 );
 
 router.get('/register', function(req, res, next) {
-	res.render('registration');
+	res.render('registration',{message: req.flash('message')});
 });
 
 
@@ -32,12 +39,10 @@ router.get('/home', isAuthenticated, function(req, res, next) {
 	res.render('home',{message: req.flash('message') });
 });
 
-router.get('/hotels', function(req, res, next){
-	res.render('hotels', {message: req.flash('message') });
-});
 
 router.get('/logout', function(req, res){
-  req.logout();
+	req.logout();
+	req.flash('message','You just logged out');
   res.redirect('/login');
 });
 
@@ -56,17 +61,15 @@ router.get('/wat', function(req, res, next) {
 
 });
 
-function isAuthenticated(req, res, next) {
 
-  if (req.isAuthenticated())
-
-    return next();
-
-  res.redirect('/login');
-
-}
 
 module.exports = router;
 return router;
+}
+
+function isAuthenticated(req, res, next) {
+  if (req.isAuthenticated())
+    return next();
+  res.redirect('/login');
 }
 

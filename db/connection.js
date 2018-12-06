@@ -13,7 +13,6 @@ con.connect(function(err){
     console.log(err);
     return;
   }
-  console.log('Connection to DB established');
 });
 
 exports.con = con;

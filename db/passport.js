@@ -29,10 +29,9 @@ passport.use('local', new LocalStrategy({
         }
         var now = new Date();
         date.format(now, 'YYYY-MM-DD'); 
-        req.con.query("UPDATE users SET last_login_date = ? WHERE username = ? " , [now, username], function(err, rows){
-            if(err) return done(null, err, req.flash('message','Unknown error while inserting to DB'));
-
-        return done(null, rows[0].user_id, req.flash('message','Signed In successfully'));
+        req.con.query("UPDATE users SET last_login_date = ? WHERE username = ? " , [now, username], function(err, updatedRows){
+            if(err) console.log(err);
+        return done(null, rows[0].user_id, req.flash('message','Signed In Successfully'));
         });
   
         });
