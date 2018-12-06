@@ -91,6 +91,4 @@ passport.deserializeUser(function(req, id, done){
         done(err, users[0]);
     });
 });
-
-
 }

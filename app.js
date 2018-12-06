@@ -5,10 +5,10 @@ var logger        = require('morgan');
 var passport      = require('passport');
 var session       = require('express-session');
 var flash         = require('connect-flash');
-var MemoryStore = require('session-memory-store')(session);
+var MemoryStore   = require('session-memory-store')(session);
 
-var DB = require('./db/connection');
-var initPassport = require('./db/passport')(passport);
+var DB            = require('./db/connection');
+var initPassport  = require('./db/passport')(passport);
 
 var app = express();
 

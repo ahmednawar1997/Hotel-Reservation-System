@@ -5,7 +5,8 @@ var router = express.Router();
 module.exports = function(passport) {
 
 router.get('/',isAuthenticated, function(req, res, next){
-	res.render('hotels', {message: req.flash('message') });
+  
+	res.render('hotels', {message: req.flash('message')});
 });
 
 

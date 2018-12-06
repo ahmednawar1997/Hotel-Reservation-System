@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var Hotel  = require('../entities/hotel');
 
 
 module.exports = function(passport) {
