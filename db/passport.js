@@ -1,12 +1,12 @@
 var LocalStrategy     = require('passport-local').Strategy;
 var bcrypt            = require('bcrypt');
-var date = require('date-and-time');
+var date                = require('date-and-time');
 const saltRounds = 10;
 
 module.exports = function(passport) {
 
 
-passport.use('local', new LocalStrategy({
+passport.use('sign-in', new LocalStrategy({
 
     usernameField: 'username',
     passwordField: 'password',
@@ -14,10 +14,10 @@ passport.use('local', new LocalStrategy({
 
   }, function (req, username, password, done){
   
-        if(!username || !password ) { return done(null, false, req.flash('message','All fields are required.')); }
+        if(!username || !password) { return done(null, false, req.flash('message','All fields are required.')); }
   
         req.con.query("select * from users where username = ?", [username], function(err, rows){
-  
+            
         if (err) return done();
 
         if(!rows.length){ return done(null, false, req.flash('message','Invalid username or password.')); }
@@ -27,8 +27,9 @@ passport.use('local', new LocalStrategy({
         if(!bcrypt.compareSync(password, dbPassword)){
             return done(null, false, req.flash('message','Invalid username or password.'));
         }
-        var now = new Date();
-        date.format(now, 'YYYY-MM-DD'); 
+        let now = new Date();
+        date.format(now, '[YYYY-MM-DD]'); 
+        console.log(now);
         req.con.query("UPDATE users SET last_login_date = ? WHERE username = ? " , [now, username], function(err, updatedRows){
             if(err) console.log(err);
         return done(null, rows[0].user_id, req.flash('message','Signed In Successfully'));
@@ -41,7 +42,7 @@ passport.use('local', new LocalStrategy({
   ));
 
 
-passport.use('local-signup', new LocalStrategy({
+passport.use('sign-up', new LocalStrategy({
     usernameField : 'username',
     passwordField : 'pwd1',
     passReqToCallback : true // allows us to pass back the entire request to the callback
@@ -72,7 +73,7 @@ function(req, username, password, done) {
             req.con.query(sql, [ req.body.email, username, passwordHash, now], function(err, user) {
                 if(err) console.log(err);
                 else{
-                    return done(null, user.insertId);
+                    return done(null, user.insertId, req.flash('message', 'Signed Up Successful'));
                 }
             });
         }

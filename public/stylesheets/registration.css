@@ -42,7 +42,9 @@ body{
 }
 
 .hotel-image{
-    max-height: 30%;
-    max-width: 30%;
+    border-radius: 30px;
 
+}
+.card.mb-3 .row{
+    height: 15%;
 }

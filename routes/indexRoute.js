@@ -8,7 +8,7 @@ module.exports = function(passport) {
 
 
 router.get('/', function(req, res, next) {
-	res.render('');
+	res.render('index');
 });
 	
 
@@ -17,7 +17,7 @@ router.get('/login', function(req, res, next) {
 });
 
 
-router.post('/login', passport.authenticate('local', {
+router.post('/login', passport.authenticate('sign-in', {
 	successRedirect: '/home',
 	failureRedirect: '/login',
 	failureFlash: true
@@ -29,7 +29,7 @@ router.get('/register', function(req, res, next) {
 });
 
 
-router.post('/register', passport.authenticate('local-signup', {
+router.post('/register', passport.authenticate('sign-up', {
 	successRedirect : '/home',
 	failureRedirect : '/register',
 	failureFlash : true 
@@ -37,7 +37,7 @@ router.post('/register', passport.authenticate('local-signup', {
 
 
 router.get('/home', isAuthenticated, function(req, res, next) {
-	res.render('home',{message: req.flash('message') });
+	res.render('home', {message: req.flash('message') });
 });
 
 
