@@ -3,7 +3,15 @@ var router = express.Router();
 
 
 router.get('/', isAuthenticated, function(req, res, next){
-	res.render('hotels', {message: req.flash('message')});
+  var sql = "SELECT * FROM hotels, facilities where approved = ? AND hotels.id = facilities.hotel_id;";
+    req.con.query(sql, [1], function(err, hotels) {
+        if(err) console.log(err);
+        else{
+          res.render('hotels', {hotels:hotels});        
+        }  
+    });
+    console.log("here");
+	
 });
 
 router.get('/getHotels', isAuthenticated, function(req, res, next){
