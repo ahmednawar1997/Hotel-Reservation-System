@@ -42,7 +42,8 @@ app.use(passport.session());
 
 
 app.use('/', require('./routes/indexRoute')(passport));
-app.use('/hotels', require('./routes/hotelsRoute')(passport));
+app.use('/hotels', require('./routes/hotelsRoute'));
+app.use('register-hotel',require('./routes/registerHotelRoute'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

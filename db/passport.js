@@ -9,30 +9,30 @@ module.exports = function(passport) {
 
 passport.use('sign-in', new LocalStrategy({
 
-    usernameField: 'username',
+    usernameField: 'email',
     passwordField: 'password',
     passReqToCallback: true
 
-  }, function (req, username, password, done){
+  }, function (req, email, password, done){
   
-        if(!username || !password) { return done(null, false, req.flash('message','All fields are required.')); }
+        if(!email || !password) { return done(null, false, req.flash('message','All fields are required.')); }
   
-        req.con.query("select * from users where username = ?", [username], function(err, rows){
+        req.con.query("select * from users where email = ?", [email], function(err, rows){
             
         if (err) return done();
 
-        if(!rows.length){ return done(null, false, req.flash('message','Invalid username or password.')); }
+        if(!rows.length){ return done(null, false, req.flash('message','Invalid email or password.')); }
         
         var dbPassword  = rows[0].password;
 
         if(!bcrypt.compareSync(password, dbPassword)){
-            return done(null, false, req.flash('message','Invalid username or password.'));
+            return done(null, false, req.flash('message','Invalid email or password.'));
         }
         let now = new Date();
         date.format(now, '[YYYY-MM-DD]'); 
-        req.con.query("UPDATE users SET last_login_date = ? WHERE username = ? " , [now, username], function(err, updatedRows){
+        req.con.query("UPDATE users SET last_login_date = ? WHERE email = ? " , [now, email], function(err, updatedRows){
             if(err) console.log(err);
-        return done(null, rows[0].user_id, req.flash('message','Signed In Successfully'));
+        return done(null, rows[0].id, req.flash('message','Signed In Successfully'));
         });
   
         });
@@ -43,34 +43,32 @@ passport.use('sign-in', new LocalStrategy({
 
 
 passport.use('sign-up', new LocalStrategy({
-    usernameField : 'username',
+    usernameField : 'email',
     passwordField : 'pwd1',
     passReqToCallback : true // allows us to pass back the entire request to the callback
 },
-function(req, username, password, done) {
-    console.log('local signup');
-
+function(req, email, password, done) {
     // we are checking to see if the user trying to login already exists
-    req.con.query("select * from users where username = ? or email = ?", [username, req.body.email], function(err, users){
+    req.con.query("select * from users where email = ?", [email], function(err, users){
         // if there are any errors, return the error
         if (err)
             return done(err);
 
-        // check to see if theres already a user with that username
+        // check to see if theres already a user with that email
         if (users.length > 0) {
             console.log('Email in use');
-            return done(null, false, req.flash('message', 'That email or username is already taken.'));
+            return done(null, false, req.flash('message', 'That email or email is already taken.'));
         } else {
 
-            // if there is no user with that username, create 
+            // if there is no user with that email, create 
 
             var now = new Date();
             date.format(now, 'YYYY-MM-DD'); 
 
             var passwordHash = bcrypt.hashSync(password, saltRounds);
 
-            var sql = "INSERT INTO users (email, username, password, registration_date) VALUES (?, ?, ?, ?)";
-            req.con.query(sql, [ req.body.email, username, passwordHash, now], function(err, user) {
+            var sql = "INSERT INTO users (name, email, password, registration_date, type) VALUES (?, ?, ?, ?, ?)";
+            req.con.query(sql, [ req.body.name, email, passwordHash, now, req.body.usertype], function(err, user) {
                 if(err) console.log(err);
                 else{
                     return done(null, user.insertId, req.flash('message', 'Signed Up Successful'));
@@ -88,7 +86,7 @@ passport.serializeUser(function(userId, done){
 });
 
 passport.deserializeUser(function(req, id, done){
-    req.con.query("select * from users where user_id = ? ", [id], function (err, users){
+    req.con.query("select * from users where id = ? ", [id], function (err, users){
         done(err, users[0]);
     });
 });
