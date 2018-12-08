@@ -4,21 +4,22 @@
 //     addCardView2();
 // } 
 
-function addCardView1() {
+function addCardView1(name, review, location, description, stars) {
 $('.hotels_container .inner_container').append(
     '<div class="card col-sm-4 col-md-4 col-lg-3" >\
         <img class="card-img-top" src="/images/photo2.jpg" alt="Card image cap">\
         <div class="card-body">\
-            <h5 class="card-title">Hotel title</h5>\
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card\'s content.</p>\
+            <h5 class="card-title">'+name+'</h5>\
+            <p class="card-text">'+description+'</p>\
         </div>\
         <ul class="list-group list-group-flush">\
-            <li class="list-group-item">Cras justo odio</li>\
-            <li class="list-group-item">Dapibus ac facilisis in</li>\
+            <li class="list-group-item">Review: '+ review +'</li>\
+            <li class="list-group-item">Stars: '+ stars +'</li>\
+            <li class="list-group-item">Location: '+ location +'</li>\
         </ul>\
         <div class="card-body">\
-            <a href="#" class="card-link">Card link</a>\
-            <a href="#" class="card-link">Another link</a>\
+            <a href="#" class="card-link">Check Hotel</a>\
+            <a href="#" class="card-link">Reserve</a>\
         </div>\
     </div>'
 );
@@ -68,19 +69,16 @@ $(function () {
             e.preventDefault();
             $.ajax({
                 type: 'get',
-                url: '/hotels',
+                url: '/hotels/getHotels',
                 data: $('form').serialize(),
                 success: function (data) {
-                    var i;
                     emptyHotels();
-                    for (i = 0; i < 10; i++) {
-                    addCardView1();
-                    } 
-                    alert("");
-
+                    data.forEach(function(hotel){
+                        addCardView1(hotel.name, hotel.review, hotel.location, hotel.description, hotel.stars);
+                    });
                 },
                 error: function(xhr, textStatus, errorThrown){
-
+                    alert('erroor while fetching hotels');
                 }
             });
         });

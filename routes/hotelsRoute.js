@@ -2,13 +2,19 @@ var express = require('express');
 var router = express.Router();
 
 
-router.get('/',isAuthenticated, function(req, res, next){
+router.get('/', isAuthenticated, function(req, res, next){
 	res.render('hotels', {message: req.flash('message')});
 });
 
 router.get('/getHotels', isAuthenticated, function(req, res, next){
-  console.log(req.body);
-  res.render('hotels', {message: req.flash('message')});
+  var sql = "SELECT * FROM hotels where approved = ?";
+    req.con.query(sql, [1], function(err, hotels) {
+        if(err) console.log(err);
+        else{
+          res.status(202).send(hotels);
+        }  
+    });
+ 
 });
 
 

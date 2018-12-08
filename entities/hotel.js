@@ -1,10 +1,16 @@
 var Hotel={
-    getAllHotels: getAllHotels
+    getAllApprovedHotels: getAllApprovedHotels
 
 };
 
-function getAllHotels(req){
-
+var getAllApprovedHotels = function(req){
+    var sql = "SELECT * FROM hotels where approved = ?";
+            req.con.query(sql, [1], function(err, hotels) {
+                if(err) console.log(err);
+                else{
+                    return hotels;
+                }  
+            });
 }
 
 
