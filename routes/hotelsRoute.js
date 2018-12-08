@@ -5,7 +5,13 @@ var router = express.Router();
 module.exports = function(passport) {
 
 router.get('/',isAuthenticated, function(req, res, next){
+  console.log("checkin: "+req.query.checkin);
 	res.render('hotels', {message: req.flash('message')});
+});
+
+router.get('/getHotels', isAuthenticated, function(req, res, next){
+  console.log(req.body);
+  res.render('hotels', {message: req.flash('message')});
 });
 
 

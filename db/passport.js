@@ -1,6 +1,7 @@
 var LocalStrategy     = require('passport-local').Strategy;
 var bcrypt            = require('bcrypt');
-var date                = require('date-and-time');
+var date              = require('date-and-time');
+
 const saltRounds = 10;
 
 module.exports = function(passport) {
@@ -29,7 +30,6 @@ passport.use('sign-in', new LocalStrategy({
         }
         let now = new Date();
         date.format(now, '[YYYY-MM-DD]'); 
-        console.log(now);
         req.con.query("UPDATE users SET last_login_date = ? WHERE username = ? " , [now, username], function(err, updatedRows){
             if(err) console.log(err);
         return done(null, rows[0].user_id, req.flash('message','Signed In Successfully'));

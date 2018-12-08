@@ -1,4 +1,8 @@
 body{
+    background-image: url("/images/coverpic.jpg");
+    background-repeat: repeat;
+    background-size: 150px;
+    /* background-size: cover; */
 
 }
 .container{
@@ -20,15 +24,15 @@ body{
     margin: auto;
     text-align: center;
     width:100%;
-    height: 100px;
-    background-color: #4673ae;
+    background-color: #a3a3c2;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     color: white;
+    padding: 20px;
 
 }
 .heading h3{
-    line-height:100px;
+    line-height:50px;
 }
 .hotels_container{
     background-color:#d9d9d9;
