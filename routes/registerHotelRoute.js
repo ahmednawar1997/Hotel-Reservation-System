@@ -4,10 +4,9 @@ var router = express.Router();
 router.get("/", isAuthenticated, (req, res, next) => {
   res.render("registerHotel");
 });
+
 router.post("/", isAuthenticated, (req, res, next) => {
-  var query = "INSERT INTO  hotels (name, location) VALUES (?,?)";
-  req.con.query(query, [req.body.hotelname, req.body.location], (err, rows) => {
-    if (err) throw err;
+  dbAccess.insertHotel(req).then(() => {
     res.send("POSTED HOTEL");
   });
 });
