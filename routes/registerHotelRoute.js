@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+var dbAccess = require("../entities/hotel");
 
 router.get("/", isAuthenticated, (req, res, next) => {
   res.render("registerHotel");
