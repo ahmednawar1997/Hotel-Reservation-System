@@ -32,15 +32,44 @@
                     <div class="form-group row">
                         <label for="example-date-input" class="col-2 col-form-label">Check-in Date</label>
                         <div class="col-3">
-                            <input class="form-control" type="date" value="2018-08-19" name="checkin">
+                            <input class="form-control" type="date" value='<%= query.checkin%>'' name="checkin">
                         </div>
                         <label for="example-date-input" class="col-2 col-form-label">Check-out Date</label>
                         <div class="col-3">
-                            <input class="form-control" type="date" value="2019-08-19" name="checkout">
+                            <input class="form-control" type="date" value='<%= query.checkout%>'' name="checkout">
                         </div>
                         <div class="col-2">
                             <input class="btn btn-outline-dark" type="submit">
                         </div>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input filter_checkbox" type="checkbox" name="pool" value="true" <%=query.pool?'checked':''%>>
+                        <label class="form-check-label" for="pool">Pool</label>
+                    </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input filter_checkbox" type="checkbox" name="restaurant" value="true" <%=query.restaurant?'checked':''%>>
+                        <label class="form-check-label" for="restaurant">Restaurant</label>
+                    </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input filter_checkbox" type="checkbox" name="bar" value="true" <%=query.bar?'checked':''%>>
+                        <label class="form-check-label" for="bar">Bar</label>
+                    </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input filter_checkbox" type="checkbox" name="wifi" value="true" <%=query.wifi?'checked':''%>>
+                        <label class="form-check-label" for="wifi">Wifi</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input filter_checkbox" type="checkbox" name="gym" value="true" <%=query.gym?'checked':''%>>
+                        <label class="form-check-label" for="gym">Gym</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input filter_checkbox" type="checkbox" name="kids_area" value="true" <%=query.kids_area?'checked':''%>>
+                        <label class="form-check-label" for="kids_area">Kids Area</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input filter_checkbox" type="checkbox" name="spa" value="true" <%=query.spa?'checked':''%>>
+                        <label class="form-check-label" for="spa">Spa</label>
                     </div>
                 </form>
             </div>
@@ -82,6 +111,19 @@
         crossorigin="anonymous"></script>
 
     <script src="javascripts/hotels.js"></script>
+    <script>
+
+    $(function () {
+
+    $('.filter_checkbox').change(function(e) {
+            $('form').submit();
+        });
+
+
+    });
+
+    
+    </script>
 </body>
 
 </html>

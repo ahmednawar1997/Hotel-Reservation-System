@@ -63,6 +63,7 @@ $('.stacked_view').click(function(){
 });
 
 
+
 // $(function () {
 
 //         $('#pickDate').on('submit', function (e) {
@@ -76,6 +77,36 @@ $('.stacked_view').click(function(){
 //                     data.forEach(function(hotel){
 //                         addCardView1(hotel.name, hotel.review, hotel.location, hotel.description, hotel.stars);
 //                     });
+//                 },
+//                 error: function(xhr, textStatus, errorThrown){
+//                     alert('erroor while fetching hotels');
+//                 }
+//             });
+//         });
+
+
+//     });
+
+
+
+
+
+
+// $(function () {
+
+//     $('.filter_checkbox').change(function(e) {
+//             //e.preventDefault();
+//             var facilities = [];
+//             $.each($(".filter_checkbox:checked"), function(){            
+//                 facilities.push($(this).attr('name'));
+//             });
+//             console.log(facilities.join(", "));
+//             $.ajax({
+//                 type: 'get',
+//                 url: '/hotels/fetchHotelsWithFilter',
+//                 data: $('form').serialize(),
+//                 success: function (hotels) {
+//                     alert('hey');
 //                 },
 //                 error: function(xhr, textStatus, errorThrown){
 //                     alert('erroor while fetching hotels');

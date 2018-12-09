@@ -67,7 +67,8 @@ function getAllApprovedHotels(req) {
 
 function getAllApprovedHotelsWithFacilities(req) {
   var sql =
-    "SELECT * FROM hotels, facilities where approved = ? AND hotels.id = facilities.hotel_id;";
+    "SELECT * FROM hotels, facilities where approved = ? AND hotels.id = facilities.hotel_id";
+  sql = addFacilitiesToQuery(req, sql);
   return new Promise((resolve, reject) => {
     req.con.query(sql, [1], function(err, hotels) {
       if (err) console.log(err);
@@ -81,3 +82,31 @@ module.exports = {
   getAllApprovedHotels: getAllApprovedHotels,
   getAllApprovedHotelsWithFacilities: getAllApprovedHotelsWithFacilities
 };
+
+
+function addFacilitiesToQuery(req, sql){
+  if(req.query.pool){
+    sql = sql + " AND facilities.pool = 1";
+  }
+  if(req.query.restaurant){
+    sql = sql + " AND facilities.restaurant= 1";
+  }
+  if(req.query.bar){
+    sql = sql + " AND facilities.bar = 1";
+  }
+  if(req.query.wifi){
+    sql = sql + " AND facilities.wifi = 1";
+  }
+  if(req.query.gym){
+    sql = sql + " AND facilities.gym = 1";
+  }
+  if(req.query.kids_area){
+    sql = sql + " AND facilities.kids_area = 1";
+  }
+  if(req.query.spa){
+    sql = sql + " AND facilities.spa = 1";
+  }
+  sql = sql + ";";
+  return sql;
+}
+
