@@ -63,25 +63,25 @@ $('.stacked_view').click(function(){
 });
 
 
-$(function () {
+// $(function () {
 
-        $('#pickDate').on('submit', function (e) {
-            e.preventDefault();
-            $.ajax({
-                type: 'get',
-                url: '/hotels/getHotels',
-                data: $('form').serialize(),
-                success: function (data) {
-                    emptyHotels();
-                    data.forEach(function(hotel){
-                        addCardView1(hotel.name, hotel.review, hotel.location, hotel.description, hotel.stars);
-                    });
-                },
-                error: function(xhr, textStatus, errorThrown){
-                    alert('erroor while fetching hotels');
-                }
-            });
-        });
+//         $('#pickDate').on('submit', function (e) {
+//             e.preventDefault();
+//             $.ajax({
+//                 type: 'get',
+//                 url: '/hotels/getHotels',
+//                 data: $('form').serialize(),
+//                 success: function (data) {
+//                     emptyHotels();
+//                     data.forEach(function(hotel){
+//                         addCardView1(hotel.name, hotel.review, hotel.location, hotel.description, hotel.stars);
+//                     });
+//                 },
+//                 error: function(xhr, textStatus, errorThrown){
+//                     alert('erroor while fetching hotels');
+//                 }
+//             });
+//         });
 
 
-    });
+//     });
