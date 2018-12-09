@@ -24,8 +24,7 @@
     <div class="container">
         <div class="jumbotron">
             <div class="heading">
-                <h3>Hotels</h3><button type="button" class="btn btn-outline-dark stacked_view">Stacked View</button>
-                <button type="button" class="btn btn-outline-dark horizontal_view">Horizontal View</button>
+                <h3>Hotels</h3>
             </div>
 
             <div>
@@ -49,30 +48,25 @@
         <div class="hotels_container">
             <div class="row inner_container" style="margin:0;">
                     <% hotels.forEach(function(hotel){%>
-
-                <div class="card mb-3 all_hotels" name="">
-                    <div class="row"  style="overflow:hidden">
-                        <img class=" hotel-image col-3 img-fluid" src="/images/photo2.jpg" alt="Hotel image cap">
-                        <div class="col-4"><strong>Facilities</strong>
+                        <div class="card col-sm-4 col-md-4 col-lg-3" >
+                            <img class="card-img-top" src="/images/photo2.jpg" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title"><%=hotel.name%></h5>
+                                <p class="card-text"><%=hotel.description%></p>
+                            </div>
                             <ul class="list-group list-group-flush">
-                            <li class="list-group-item  py-0">Pool: <%=hotel.pool===1?'Yes':'No' %></li>
-                            <li class="list-group-item  py-0">Restaraunt: <%=hotel.restaurant===1?'Yes':'No' %></li>
-                            <li class="list-group-item  py-0">Bar: <%=hotel.bar===1?'Yes':'No' %></li>
-                          </ul>
+                                <li class="list-group-item">Customers Review: <%=hotel.review%></li>
+                                
+                                <li class="list-group-item">Stars: <% for(var i=0; i < hotel.stars; i++){%><span class="fa fa-star checked"></span><% }%></li>
+                                <li class="list-group-item">Location: <%=hotel.location%></li>
+                            </ul>
+                            <div class="card-body">
+                                <a href="#" class="card-link">Check Hotel</a>
+                                <a href="#" class="card-link">Reserve</a>
+                            </div>
                         </div>
-                        <div class="col-4"><ul class="list-group list-group-flush">
-                            <li class="list-group-item  py-0">Wifi: <%=hotel.wifi===1?'Yes':'No' %></li>
-                            <li class="list-group-item  py-0">Gym: <%=hotel.gym===1?'Yes':'No' %></li>
-                            <li class="list-group-item  py-0">Kids Area: <%=hotel.kids_area===1?'Yes':'No' %></li>
-                            <li class="list-group-item  py-0">Spa: <%=hotel.spa===1?'Yes':'No' %></li>
-                          </ul>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title"><%=hotel.name%></h5>
-                        <p class="card-text"><%=hotel.description%></p>
-                    </div>
-                </div>
+
+                
                 <% }) %>
 
             </div>
