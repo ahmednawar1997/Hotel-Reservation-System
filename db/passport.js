@@ -1,8 +1,6 @@
 var LocalStrategy     = require('passport-local').Strategy;
-var bcrypt            = require('bcrypt');
 var date              = require('date-and-time');
 
-const saltRounds = 10;
 
 module.exports = function(passport) {
 
@@ -25,7 +23,8 @@ passport.use('sign-in', new LocalStrategy({
         
         var dbPassword  = rows[0].password;
 
-        if(!bcrypt.compareSync(password, dbPassword)){
+        
+        if(password !== dbPassword){
             return done(null, false, req.flash('message','Invalid email or password.'));
         }
         let now = new Date();
@@ -65,7 +64,7 @@ function(req, email, password, done) {
             var now = new Date();
             date.format(now, 'YYYY-MM-DD'); 
 
-            var passwordHash = bcrypt.hashSync(password, saltRounds);
+            var passwordHash = password;
 
             var sql = "INSERT INTO users (name, email, password, registration_date, type) VALUES (?, ?, ?, ?, ?)";
             req.con.query(sql, [ req.body.name, email, passwordHash, now, req.body.usertype], function(err, user) {

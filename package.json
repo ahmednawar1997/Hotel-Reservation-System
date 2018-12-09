@@ -6,7 +6,6 @@
     "start": "nodemon ./bin/server.js"
   },
   "dependencies": {
-    "bcrypt": "^3.0.2",
     "body-parser": "^1.18.3",
     "connect-flash": "^0.1.1",
     "date-and-time": "^0.6.3",
