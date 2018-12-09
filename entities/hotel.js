@@ -77,10 +77,24 @@ function getAllApprovedHotelsWithFacilities(req) {
   });
 }
 
+function getHotelDetails(req){
+  var sql = "SELECT * FROM hotels, facilities where approved = ? AND hotels.id = ? AND hotels.id = facilities.hotel_id";
+  return new Promise((resolve, reject) => {
+    req.con.query(sql, [1, req.params.hotel_id], function(err, hotels) {
+      if (err) console.log(err);
+      resolve(hotels[0]);
+    });
+  });
+
+
+
+}
+
 module.exports = {
   insertHotel: insertHotel,
   getAllApprovedHotels: getAllApprovedHotels,
-  getAllApprovedHotelsWithFacilities: getAllApprovedHotelsWithFacilities
+  getAllApprovedHotelsWithFacilities: getAllApprovedHotelsWithFacilities,
+  getHotelDetails : getHotelDetails
 };
 
 
