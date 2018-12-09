@@ -1,4 +1,3 @@
-function getAllHotels(req) {}
 function insertHotel(req) {
   var query =
     "INSERT INTO  hotels (name, location, owner_id, stars, description) VALUES (?,?,?,?,?)";
@@ -23,7 +22,29 @@ function insertHotel(req) {
   });
 }
 
+function getAllApprovedHotels(req) {
+  var sql = "SELECT * FROM hotels where approved = ?";
+  return new Promise((resolve, reject) => {
+    req.con.query(sql, [1], function(err, hotels) {
+      if (err) console.log(err);
+      resolve(hotels);
+    });
+  });
+}
+
+function getAllApprovedHotelsWithFacilities(req) {
+  var sql =
+    "SELECT * FROM hotels, facilities where approved = ? AND hotels.id = facilities.hotel_id;";
+  return new Promise((resolve, reject) => {
+    req.con.query(sql, [1], function(err, hotels) {
+      if (err) console.log(err);
+      resolve(hotels);
+    });
+  });
+}
+
 module.exports = {
-  getAllHotels: getAllHotels,
-  insertHotel: insertHotel
+  insertHotel: insertHotel,
+  getAllApprovedHotels: getAllApprovedHotels,
+  getAllApprovedHotelsWithFacilities: getAllApprovedHotelsWithFacilities
 };
