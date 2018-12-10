@@ -31,7 +31,7 @@ app.use(
   })
 );
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   req.con = DB.con;
   next();
 });
@@ -42,15 +42,15 @@ app.use(passport.session());
 
 app.use("/", require("./routes/indexRoute")(passport));
 app.use("/hotels", require("./routes/hotelsRoute"));
-app.use("/register-hotel", require("./routes/registerHotelRoute"));
+app.use("/owner", require("./routes/ownerRoute"));
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler, if the request passes through the routes
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};

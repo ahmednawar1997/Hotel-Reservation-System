@@ -1,0 +1,67 @@
+<html>
+
+<head>
+    <title>Hotel</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous" />
+    <link rel="stylesheet" type="text/css" href="assets/css/registration.css" />
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-between">
+        <a class="navbar-brand" href="#">Lab4</a>
+        <ul class="navbar-nav mr-auto"></ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/register"> Register</a>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="/login"> Login</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <div class="jumbotron">
+            <form class="reg-form" action="/register-hotel" method="POST">
+                <div class="form-group">
+                    <div class="form-group row">
+                        <label for="hotelname" class="col-2 col-form-label">Hotel Name</label>
+                        <div class="col-6">
+                            <input class="form-control" name="hotelname" type="text" id="hotelname" required />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="location" class="col-2 col-form-label">Location</label>
+                        <div class="col-6">
+                            <input class="form-control" name="location" type="text" required />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="stars" class="col-2 col-form-label">Stars</label>
+                        <div class="col-6">
+                            <input class="form-control" name="stars" type="text" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="description" class="col-2 col-form-label">Desciption</label>
+                        <div class="col-6">
+                            <textarea class="form-control" name="description" rows="10" cols="30" required></textarea>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group row">
+                        <div class="col-2 col-form-label"></div>
+                        <div class="col-6">
+                            <button type="submit" class="btn btn-dark btn-block">
+                                Add Room
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
