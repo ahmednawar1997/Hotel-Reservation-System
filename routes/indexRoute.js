@@ -13,6 +13,7 @@ router.get('/', function(req, res, next) {
 	
 
 router.get('/login', function(req, res, next) {
+	req.logOut();
 	res.render('login', {message: req.flash('message')});
 });
 
@@ -37,7 +38,7 @@ router.post('/register', passport.authenticate('sign-up', {
 
 
 router.get('/home', isAuthenticated, function(req, res, next) {
-	res.render('home', {message: req.flash('message') });
+	res.render('home', {message: req.flash('message')});
 });
 
 

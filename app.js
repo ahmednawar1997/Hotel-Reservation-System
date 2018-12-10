@@ -40,12 +40,19 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+app.use(function(req, res, next){
+  res.locals.user = req.user;
+  next();
+});
+
 app.use("/", require("./routes/indexRoute")(passport));
 app.use("/hotels", require("./routes/hotelsRoute"));
 app.use("/owner", require("./routes/ownerRoute"));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
+  console.log("Cannot find path: " + req.path);
   next(createError(404));
 });
 

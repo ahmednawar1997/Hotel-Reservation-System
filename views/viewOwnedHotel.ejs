@@ -1,126 +1,100 @@
-<html>
+<%- include partials/header %>
 
-<head>
-    <title>Hotel</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
-        crossorigin="anonymous">
-
-    <link rel="stylesheet" type="text/css" href="/stylesheets/registration.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous"></script>
-</head>
-
-<body>
-
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-between">
-        <a class="navbar-brand" href="/"><img style="max-width:40px;" src="/images/hotel_icon.png" alt=""></a>
-        <ul class="navbar-nav mr-auto">
-            <li class='nav-item'><a class="nav-link" href="/hotels">
-                    Hotels <span class="fa fa-bed"><span></a></li>
-        </ul>
-        <ul class="navbar-nav">
-            <li class='nav-item'><a class="nav-link" href="/logout"><i class="fas fa-sign-out-alt"></i>
-                    Logout</a></li>
-        </ul>
-    </nav>
-
-    <div class="container">
-        <div class="card mb-3">
-            <img class="card-img-top img-fluid" src="/images/photo2.jpg" alt="Card image cap" style="height:70%">
-            <div class="card-body">
-                <h5 class="card-title">
-                    <%= hotel.name%>
-                </h5>
-                <div class="row" style="height: 300px;">
-                    <div class="col-2"></div>
-                    <div class="col-4">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><strong>Facilities</strong></li>
-                            <li class="list-group-item">Pool:
-                                <%=hotel.pool===1?'Yes':'No'%>
-                            </li>
-                            <li class="list-group-item">Bar:
-                                <%=hotel.bar===1?'Yes':'No'%>
-                            </li>
-                            <li class="list-group-item">Wifi:
-                                <%=hotel.wifi===1?'Yes':'No'%>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-4">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Gym:
-                                <%=hotel.gym===1?'Yes':'No'%>
-                            </li>
-                            <li class="list-group-item">Spa:
-                                <%=hotel.Spa===1?'Yes':'No'%>
-                            </li>
-                            <li class="list-group-item">Restaurant:
-                                <%=hotel.Restaurant===1?'Yes':'No'%>
-                            </li>
-                            <li class="list-group-item">Kids Area:
-                                <%=hotel.kids_area===1?'Yes':'No'%>
-                            </li>
-                        </ul>
-                    </div>
-
+<div class="container">
+    <div class="card mb-3">
+        <img class="card-img-top img-fluid" src="/images/photo2.jpg" alt="Card image cap" style="height:70%">
+        <div class="card-body">
+            <h5 class="card-title">
+                <%= hotel.name%>
+            </h5>
+            <div class="row" style="height: 300px;">
+                <div class="col-2"></div>
+                <div class="col-4">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><strong>Facilities</strong></li>
+                        <li class="list-group-item">Pool:
+                            <%=hotel.pool===1?'Yes':'No'%>
+                        </li>
+                        <li class="list-group-item">Bar:
+                            <%=hotel.bar===1?'Yes':'No'%>
+                        </li>
+                        <li class="list-group-item">Wifi:
+                            <%=hotel.wifi===1?'Yes':'No'%>
+                        </li>
+                    </ul>
                 </div>
-                <div class="row">
-                    <p class="card-text col-10">
-                        <%= hotel.description%>
-                    </p>
-                    <div class="col-2">
-                        <button type="button" class="btn btn-outline-info">Edit</button>
-                        <button type="button" class="btn btn-outline-info" id="showRoomForm" onclick="showRoomsForm('<%= hotel.id %>')">Add
-                            Rooms
-                        </button>
-                    </div>
-
-
+                <div class="col-4">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Gym:
+                            <%=hotel.gym===1?'Yes':'No'%>
+                        </li>
+                        <li class="list-group-item">Spa:
+                            <%=hotel.Spa===1?'Yes':'No'%>
+                        </li>
+                        <li class="list-group-item">Restaurant:
+                            <%=hotel.Restaurant===1?'Yes':'No'%>
+                        </li>
+                        <li class="list-group-item">Kids Area:
+                            <%=hotel.kids_area===1?'Yes':'No'%>
+                        </li>
+                    </ul>
                 </div>
+
+            </div>
+            <div class="row">
+                <p class="card-text col-10">
+                    <%= hotel.description%>
+                </p>
+                <div class="col-2">
+                    <button type="button" class="btn btn-outline-info">Edit</button>
+                    <button type="button" class="btn btn-outline-info" id="showRoomForm" onclick="showRoomsForm('<%= hotel.id %>')">Add
+                        Rooms
+                    </button>
+                </div>
+
+
             </div>
         </div>
     </div>
+</div>
 
-    <% rooms.forEach(function(room){ %>
-        <div class="container">
-            <div class="row jumbotron">
+<% rooms.forEach(function(room){ %>
+<div class="container">
+    <div class="row jumbotron">
 
-                <div class="col-5">
-                    <img class=" hotel-image col-9 img-fluid" src="/images/photo2.jpg" alt="Hotel image cap">
-                </div>
-                <ul>
-                    <li><strong>Room Type:</strong>
-                        <%=room.room_type%>
-                    </li>
-                    <li><strong>View: </strong>
-                        <%=room.room_view%>
-                    </li>
-                    <li><strong>Number Of Rooms: </strong>
-                        <%=room.number_of_rooms%>
-                    </li>
-                    <li><strong>Price: </strong> $
-                        <%=room.price%>
-                    </li>
-                </ul>
-
-            </div>
+        <div class="col-5">
+            <img class=" hotel-image col-9 img-fluid" src="/images/photo2.jpg" alt="Hotel image cap">
         </div>
-        <%})%>
+        <ul>
+            <li><strong>Room Type:</strong>
+                <%=room.room_type%>
+            </li>
+            <li><strong>View: </strong>
+                <%=room.room_view%>
+            </li>
+            <li><strong>Number Of Rooms: </strong>
+                <%=room.number_of_rooms%>
+            </li>
+            <li><strong>Price: </strong> $
+                <%=room.price%>
+            </li>
+        </ul>
 
-            <div id="roomFormDiv"></div>
+    </div>
+</div>
+<%})%>
+
+<div id="roomFormDiv"></div>
 
 
 
 
 
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-                crossorigin="anonymous"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-                crossorigin="anonymous"></script>
-            <script src="../javascripts/hotels.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+<script src="../javascripts/hotels.js"></script>
 </body>
 
 </html>

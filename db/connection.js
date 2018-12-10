@@ -3,9 +3,9 @@ var mysql = require("mysql");
 var con = mysql.createConnection({
   host: "127.0.0.1",
   user: "root",
-  password: "",
+  password: "root",
   database: "hotel_reservation_system",
-  port: 3306
+  port: 3307
 });
 con.connect(function (err) {
   if (err) {
