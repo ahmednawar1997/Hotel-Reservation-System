@@ -12,29 +12,29 @@
           <div class="form-group row">
             <label for="example-date-input" class="col-2 col-form-label">Check-in Date</label>
             <div class="col-3">
-                <input class="form-control" type="date" value='<%=query.checkout%>' name="checkin">
+                <input class="form-control" type="date" value='<%=query.checkin%>' name="checkin" readonly>
             </div>
             <label for="example-date-input" class="col-2 col-form-label">Check-out Date</label>
             <div class="col-3">
-            <input class="form-control" type="date" value='<%=query.checkout%>' name="checkout">
+            <input class="form-control" type="date" value='<%=query.checkout%>' name="checkout" readonly>
             </div>
           </div>
 
           <% rooms.forEach(function(room){%>
           <div class="form-group row">
-            <label for="city" class="col-6 col-form-label"><%= room.room_type%> <%= room.room_view%> <%= room.price%></label>
+            <label for="city" class="col-4 col-form-label"><%= room.room_type%> Room,  <%= room.room_view%> View, $<%= room.price%>/night</label>
             <div class="col-4">
-              <input class="form-control" name="city" type="text" />
+              <input class="form-control" name="numberOfRooms" type="text" placeholder="Number of rooms required"/>
             </div>
+          </div>
+              <input class="form-control" name="room_types" type="text" placeholder="Number of rooms required" value="<%=room.room_type%>" hidden/>
           </div>
           <%})%>
 
           <div class="form-group row">
             <div class="col-2 col-form-label"></div>
             <div class="col-6">
-              <button type="submit" class="btn btn-dark btn-block">
-                Reserve Room
-              </button>
+              <button type="submit" class="btn btn-dark btn-block">Confirm Reservation</button>
             </div>
           </div>
         </div>

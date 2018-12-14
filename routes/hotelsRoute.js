@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var Hotel = require("../entities/hotel");
 var Room = require("../entities/Room");
+var Reservation = require("../entities/Reservation");
 var date = require('date-and-time');
 
 router.get("/", isAuthenticated, function(req, res, next) {
@@ -35,6 +36,26 @@ router.get("/:hotel_id(\\d+)/reserve", isAuthenticated, function(req, res){
 
   });
 });
+
+
+router.post("/:hotel_id(\\d+)/reserve", isAuthenticated, function(req, res){
+
+  Reservation.insertReservation(req).then(function(reservation_id){
+
+    (req.body.room_types).forEach((room_type, index) => {
+      console.log("Index: " + index);
+      Reservation.insertReservedRoomsInReservation(req, reservation_id, index)
+      req.flash('message', 'Reservation Successful');
+      res.redirect('/home');
+    });
+
+  });
+
+  
+
+  
+});
+
 
 module.exports = router;
 
