@@ -55,8 +55,10 @@ function getAllApprovedHotels(req) {
 }
 
 function getAllApprovedHotelsWithFacilities(req) {
-  var sql = "SELECT * FROM hotels INNER JOIN facilities ON hotels.id = facilities.hotel_id AND hotels.approved = ? INNER JOIN hotel_locations ON hotels.id = hotel_locations.hotel_id;";
+  var sql = "SELECT * FROM hotels INNER JOIN facilities ON hotels.id = facilities.hotel_id AND hotels.approved = ? INNER JOIN hotel_locations ON hotels.id = hotel_locations.hotel_id";
   sql = addFacilitiesToQuery(req, sql);
+  sql = addLocationToQuery(req, sql);
+  console.log(sql);
   return new Promise((resolve, reject) => {
     req.con.query(sql, [1], function (err, hotels) {
       if (err) console.log(err);
@@ -111,6 +113,15 @@ module.exports = {
 };
 
 
+function addLocationToQuery(req, sql){
+  if(req.query.country !== undefined){
+    sql = sql + " AND hotel_locations.country LIKE'%" + req.query.country +"%'";
+  }
+  sql = sql + ";";
+  return sql;
+}
+
+
 function addFacilitiesToQuery(req, sql) {
   if (req.query.pool) {
     sql = sql + " AND facilities.pool = 1";
@@ -133,7 +144,6 @@ function addFacilitiesToQuery(req, sql) {
   if (req.query.spa) {
     sql = sql + " AND facilities.spa = 1";
   }
-  sql = sql + ";";
   return sql;
 }
 
