@@ -1,7 +1,7 @@
 function insertHotel(req) {
-  var query1 = "INSERT INTO  hotels (name, location, owner_id, stars, description) VALUES (?,?,?,?,?)";
+  var query1 = "INSERT INTO  hotels (name, owner_id, stars, description) VALUES (?,?,?,?)";
   var query2 = "INSERT INTO  facilities (hotel_id, pool, restaurant, bar, gym, kids_area, spa) VALUES (?,?,?,?,?,?,?)";
-  var query3 = "SELECT id FROM hotels WHERE owner_id=? AND name=?";
+  var query3 = "INSERT INTO  hotel_locations (hotel_id, country, city, district, street) VALUES (?,?,?,?,?)";
   facilities = {
     pool: req.body.pool ? 1 : 0,
     restaurant: req.body.restaurant ? 1 : 0,
@@ -12,17 +12,18 @@ function insertHotel(req) {
   };
 
   return new Promise((resolve, reject) => {
-    console.log(req.user);
-    req.con.query(query1, [req.body.hotelname, req.body.location, req.user.id, req.body.stars, req.body.description],
-      (err) => {
+    req.con.query(query1, [req.body.hotelname, req.user.id, req.body.stars, req.body.description],
+      (err, insertedHotel) => {
         if (err) throw err;
-        req.con.query(query3, [req.user.id, req.body.hotelname],
-          (err, rows) => {
+
+        req.con.query(query3, [insertedHotel.insertId, req.body.country, req.body.city, req.body.district, req.body.street],
+          (err) => {
             if (err) throw err;
-            var hotelId = rows[0].id;
-            req.con.query(query2, [hotelId, facilities.pool, facilities.restaurant, facilities.bar,
+
+            req.con.query(query2, [insertedHotel.insertId, facilities.pool, facilities.restaurant, facilities.bar,
               facilities.gym, facilities.kidsArea, facilities.spa], (err) => {
                 if (err) throw err;
+
                 resolve();
               }
             );
@@ -54,7 +55,7 @@ function getAllApprovedHotels(req) {
 }
 
 function getAllApprovedHotelsWithFacilities(req) {
-  var sql = "SELECT * FROM hotels, facilities where approved = ? AND hotels.id = facilities.hotel_id";
+  var sql = "SELECT * FROM hotels INNER JOIN facilities ON hotels.id = facilities.hotel_id AND hotels.approved = ? INNER JOIN hotel_locations ON hotels.id = hotel_locations.hotel_id;";
   sql = addFacilitiesToQuery(req, sql);
   return new Promise((resolve, reject) => {
     req.con.query(sql, [1], function (err, hotels) {
