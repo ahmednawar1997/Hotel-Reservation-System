@@ -10,11 +10,11 @@
                     <div class="form-group row">
                         <label for="example-date-input" class="col-2 col-form-label">Check-in Date</label>
                         <div class="col-3">
-                            <input class="form-control" type="date" value='<%= query.checkin%>'' name="checkin">
+                            <input class="form-control" type="date" value='<%= query.checkin%>' name="checkin" id="checkin">
                         </div>
                         <label for="example-date-input" class="col-2 col-form-label">Check-out Date</label>
                         <div class="col-3">
-                            <input class="form-control" type="date" value='<%= query.checkout%>'' name="checkout">
+                            <input class="form-control" type="date" value='<%= query.checkout%>' name="checkout" id="checkout">
                         </div>
                         <div class="col-2">
                             <input class="btn btn-outline-dark" type="submit">
@@ -76,7 +76,7 @@
                             </ul>
                             <div class="card-body">
                                 <a href="/hotels/<%= hotel.id%>" class="card-link">Check Hotel</a>
-                                <a href="#" class="card-link">Reserve</a>
+                                <a path="/hotels/<%= hotel.id%>/reserve" href='#' class="card-link reserveLink">Reserve</a>
                             </div>
                         </div>
 
@@ -100,9 +100,15 @@
 
     $(function () {
 
-    $('.filter_checkbox').change(function(e) {
-            $('form').submit();
+        $('.filter_checkbox').change(function(e) {
+                $('form').submit();
+            });
+
+
+        $('.reserveLink').click(function(e){
+            window.location = $(this).attr("path") + "?checkin=" + $("#checkin").val() + "&checkout=" + $("#checkout").val();
         });
+
     });
 
     

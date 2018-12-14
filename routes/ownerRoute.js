@@ -23,7 +23,7 @@ router.post("/register-hotel",isAuthenticated, isHotelOwner, (req, res, next) =>
 router.post("/:hotel_id(\\d+)/",isAuthenticated, isHotelOwner, (req, res, next) => {
   dbAccess.insertRooms(req).then(() => {
     dbAccess.getOwnedHotelDetails(req).then(hotelObj => {
-      res.render("viewOwnedHotel", {hotelObj: hotelObj, message: req.flash('message')});
+      res.render("viewOwnedHotel", {hotel: hotelObj.hotel, rooms:hotelObj.rooms, message: req.flash('message')});
     });
   })
 });

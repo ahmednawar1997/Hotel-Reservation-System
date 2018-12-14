@@ -1,0 +1,46 @@
+<%- include partials/header %>
+  <div class="container">
+    <div class="jumbotron">
+      <form class="reg-form" action="/hotels/<%=hotel.hotel_id%>/reserve" method="POST">
+        <div class="form-group">
+          <div class="form-group row">
+            <label for="hotelname" class="col-2 col-form-label">Hotel Name</label>
+            <div class="col-6">
+              <input class="form-control" name="hotelname" type="text" id="hotelname" value="<%= hotel.name%>" readonly />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="example-date-input" class="col-2 col-form-label">Check-in Date</label>
+            <div class="col-3">
+                <input class="form-control" type="date" value='<%=query.checkout%>' name="checkin">
+            </div>
+            <label for="example-date-input" class="col-2 col-form-label">Check-out Date</label>
+            <div class="col-3">
+            <input class="form-control" type="date" value='<%=query.checkout%>' name="checkout">
+            </div>
+          </div>
+
+          <% rooms.forEach(function(room){%>
+          <div class="form-group row">
+            <label for="city" class="col-6 col-form-label"><%= room.room_type%> <%= room.room_view%> <%= room.price%></label>
+            <div class="col-4">
+              <input class="form-control" name="city" type="text" />
+            </div>
+          </div>
+          <%})%>
+
+          <div class="form-group row">
+            <div class="col-2 col-form-label"></div>
+            <div class="col-6">
+              <button type="submit" class="btn btn-dark btn-block">
+                Reserve Room
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>

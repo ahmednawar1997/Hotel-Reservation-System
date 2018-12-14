@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var Hotel = require("../entities/hotel");
+var Room = require("../entities/Room");
 var date = require('date-and-time');
 
 router.get("/", isAuthenticated, function(req, res, next) {
@@ -22,6 +23,16 @@ router.get("/getHotels", isAuthenticated, function(req, res, next) {
 router.get("/:hotel_id(\\d+)/", isAuthenticated, function(req, res, next) {
   Hotel.getHotelDetails(req).then(hotel => {
     res.render("viewHotel", { message: req.flash('message'), hotel : hotel});
+  });
+});
+
+
+router.get("/:hotel_id(\\d+)/reserve", isAuthenticated, function(req, res){
+  Hotel.getHotelDetails(req).then(function(hotel){
+    Room.getRoomsByHotelId(req).then(function(rooms){
+      res.render("viewRegistration", { message: req.flash('message'), hotel: hotel, query: req.query, rooms: rooms});
+    });
+
   });
 });
 

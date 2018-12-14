@@ -20,17 +20,12 @@ function insertHotel(req) {
           (err) => {
             if (err) throw err;
 
-            req.con.query(query2, [insertedHotel.insertId, facilities.pool, facilities.restaurant, facilities.bar,
-              facilities.gym, facilities.kidsArea, facilities.spa], (err) => {
-                if (err) throw err;
-
-                resolve();
-              }
-            );
-          }
-        );
-      }
-    );
+            req.con.query(query2, [insertedHotel.insertId, facilities.pool, facilities.restaurant, facilities.bar, facilities.gym, facilities.kidsArea, facilities.spa], (err) => {
+              if (err) throw err;
+              resolve();
+            });
+          });
+      });
   });
 }
 
@@ -85,11 +80,15 @@ function getOwnedHotelDetails(req) {
       if (err) console.log(err);
       req.con.query(query2, [req.params.hotel_id], (err, rooms) => {
         if (err) console.log(err);
-        resolve({ hotel: hotels[0], rooms: rooms });
+        resolve({
+          hotel: hotels[0],
+          rooms: rooms
+        });
       });
     });
   });
 }
+
 function insertRooms(req) {
   var query = "INSERT INTO  room_type (room_type, hotel_id, room_view, price, number_of_rooms) VALUES (?,?,?,?,?)";
   return new Promise((resolve, reject) => {
@@ -113,9 +112,9 @@ module.exports = {
 };
 
 
-function addLocationToQuery(req, sql){
-  if(req.query.country !== undefined){
-    sql = sql + " AND hotel_locations.country LIKE'%" + req.query.country +"%'";
+function addLocationToQuery(req, sql) {
+  if (req.query.country !== undefined) {
+    sql = sql + " AND hotel_locations.country LIKE'%" + req.query.country + "%'";
   }
   sql = sql + ";";
   return sql;
@@ -146,4 +145,3 @@ function addFacilitiesToQuery(req, sql) {
   }
   return sql;
 }
-
