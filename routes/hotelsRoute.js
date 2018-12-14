@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-var Hotel = require("../entities/hotel");
+var Hotel = require("../entities/Hotel");
 var Room = require("../entities/Room");
 var Reservation = require("../entities/Reservation");
 var date = require('date-and-time');
