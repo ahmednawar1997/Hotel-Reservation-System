@@ -12,16 +12,16 @@ function getAllOwnerReservations(req) {
 }
 
 function getAllOwnerReservationsWithRoomsDetails(req) {
-    var query = "SELECT hotels.name as hotel_name,reservations.*,customers.*,reserved_rooms.* " +
-        "FROM reservations,hotels,customers,reserved_rooms " +
+    var query = "SELECT hotels.name as hotel_name,reservations.*,users.*,reserved_rooms.* " +
+        "FROM reservations,hotels,users,reserved_rooms " +
         "WHERE hotels.owner_id=? " +
         "AND reservations.hotel_id=hotels.id " +
-        "AND customers.id=reservations.customer_id " +
+        "AND users.id=reservations.customer_id " +
         "AND reserved_rooms.reservation_id=reservations.reservation_id";
     return new Promise((resolve, reject) => {
         req.con.query(query, [req.user.id], (err, detailedReservations) => {
             if (err) console.log(err);
-            console.log(detailedReservations);
+            console.log("TESTTT", detailedReservations);
             resolve(detailedReservations);
         });
     });

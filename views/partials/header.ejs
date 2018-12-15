@@ -21,15 +21,8 @@
                 <li class='nav-item'><a class="nav-link"><%=user.type%></a></li>
                 <% if ( user.type==='hotel_owner') { %>
                     <li class='nav-item'><a class="nav-link" href="/owner">My Hotels</a></li>
-<<<<<<< HEAD
-                <% } %>
-                <li class='nav-item'><a class="nav-link" href="/logout"><span class="fa fa-sign-out"></span>Logout</a></li>
-=======
-
-
                     <% } %>
                         <li class='nav-item'><a class="nav-link" href="/logout"><span class="fa fa-sign-out"></span>Logout</a></li>
->>>>>>> Adding owner reservations page
             </ul>
         </nav>
         <% if ( message&&message.length > 0 ) { %>

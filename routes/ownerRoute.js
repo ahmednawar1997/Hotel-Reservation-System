@@ -4,7 +4,7 @@ var Hotel = require("../entities/Hotel");
 var Room = require("../entities/Room");
 var reservations = require("../entities/mshReservations");
 
-router.get("/reservations", isHotelOwner, (req, res, next) => {
+router.get("/reservations", isAuthenticated, isHotelOwner, (req, res, next) => {
   reservations.getAllOwnerReservationsWithRoomsDetails(req).then(detailedReservations => {
     res.render("reservations", { message: req.flash('message'), detailedReservations });
   })
