@@ -89,17 +89,7 @@ function getOwnedHotelDetails(req) {
   });
 }
 
-function insertRooms(req) {
-  var query = "INSERT INTO  room_type (room_type, hotel_id, room_view, price, number_of_rooms) VALUES (?,?,?,?,?)";
-  return new Promise((resolve, reject) => {
-    console.log(req.user);
-    req.con.query(query, [req.body.roomType, req.params.hotel_id, req.body.view, req.body.price, req.body.quantity],
-      (err) => {
-        if (err) throw err;
-      });
-    resolve();
-  });
-}
+
 
 module.exports = {
   insertHotel: insertHotel,
@@ -107,8 +97,7 @@ module.exports = {
   getAllApprovedHotelsWithFacilities: getAllApprovedHotelsWithFacilities,
   getHotelDetails: getHotelDetails,
   getAllOwnedHotels: getAllOwnedHotels,
-  getOwnedHotelDetails: getOwnedHotelDetails,
-  insertRooms: insertRooms
+  getOwnedHotelDetails: getOwnedHotelDetails
 };
 
 

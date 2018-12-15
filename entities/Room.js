@@ -14,8 +14,17 @@ function insertReservation(req){
 
 }
 
-
-
+function insertRoom(req) {
+  var query = "INSERT INTO  room_type (room_type, hotel_id, room_view, price, number_of_rooms) VALUES (?,?,?,?,?)";
+  return new Promise((resolve, reject) => {
+    console.log(req.user);
+    req.con.query(query, [req.body.roomType, req.params.hotel_id, req.body.view, req.body.price, req.body.quantity],
+      (err) => {
+        if (err) throw err;
+      });
+    resolve();
+  });
+}
 
 
 
@@ -34,5 +43,6 @@ function insertReservation(req){
 
 module.exports = {
     insertReservation,
-    getRoomsByHotelId
+    getRoomsByHotelId,
+    insertRoom
   };

@@ -1,35 +1,36 @@
 var express = require("express");
 var router = express.Router();
-var dbAccess = require("../entities/hotel");
+var Hotel = require("../entities/Hotel");
+var Room = require("../entities/Room");
 
 router.get("/",isAuthenticated, isHotelOwner, (req, res, next) => {
-  dbAccess.getAllOwnedHotels(req).then(hotels => {
+  Hotel.getAllOwnedHotels(req).then(hotels => {
     res.render("ownersHotels", { message: req.flash('message'), hotels: hotels});
   });
 });
 
-router.get("/register-hotel",isAuthenticated, isHotelOwner, (req, res, next) => {
+router.get("/register-hotel", isAuthenticated, isHotelOwner, (req, res, next) => {
   res.render("registerHotel", { message: req.flash('message')});
 });
 
-router.post("/register-hotel",isAuthenticated, isHotelOwner, (req, res, next) => {
-  dbAccess.insertHotel(req).then(() => {
-    dbAccess.getAllOwnedHotels(req).then(hotels => {
+router.post("/register-hotel", isAuthenticated, isHotelOwner, (req, res, next) => {
+  Hotel.insertHotel(req).then(() => {
+    Hotel.getAllOwnedHotels(req).then(hotels => {
       res.render("ownersHotels", { message: req.flash('message'), hotels : hotels});
     });
   });
 });
 
-router.post("/:hotel_id(\\d+)/",isAuthenticated, isHotelOwner, (req, res, next) => {
-  dbAccess.insertRooms(req).then(() => {
-    dbAccess.getOwnedHotelDetails(req).then(hotelObj => {
+router.post("/:hotel_id(\\d+)/", isAuthenticated, isHotelOwner, (req, res, next) => {
+  Room.insertRoom(req).then(() => {
+    Hotel.getOwnedHotelDetails(req).then(hotelObj => {
       res.render("viewOwnedHotel", {hotel: hotelObj.hotel, rooms:hotelObj.rooms, message: req.flash('message')});
     });
   })
 });
 
-router.get("/:hotel_id(\\d+)/",isAuthenticated, isHotelOwner, (req, res, next) => {
-  dbAccess.getOwnedHotelDetails(req).then(hotelObj => {
+router.get("/:hotel_id(\\d+)/", isAuthenticated, isHotelOwner, (req, res, next) => {
+  Hotel.getOwnedHotelDetails(req).then(hotelObj => {
     res.render("viewOwnedHotel", { message: req.flash('message'), hotel: hotelObj.hotel, rooms:hotelObj.rooms});
   });
 });
