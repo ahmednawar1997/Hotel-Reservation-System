@@ -1,0 +1,140 @@
+<%- include partials/header %>
+
+<div class="card text-center">
+    <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+                <a class="nav-link active profile_navbar_item" id="profile_btn" data-toggle="tab" href="#profile">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link profile_navbar_item" data-toggle="tab" href="#upcoming_reservations_id">Upcoming
+                    Reservations</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link profile_navbar_item" data-toggle="tab" href="#past_reservations_id">Past
+                    Reservations</a>
+            </li>
+            <li class="nav-item ml-auto">
+                <a class="nav-link profile_navbar_item" href="/edit">Edit Profile</a>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body tab-pane active" id="profile">
+        <div class="card testimonial-card">
+            <div class="card-up default-color-dark">
+            </div>
+            <div class="avatar"><img src="/images/avatar.png" class="rounded-circle img-responsive" style="height: 25%; padding:20px;">
+            </div>
+
+            <div class="card-block">
+                <h4 class="card-title">
+                    <%= user.name%>
+                </h4>
+                <hr>
+                <p><i class="fa fa-envelope"></i><strong> Email: </strong>
+                    <%= user.email%>
+                </p>
+                <p><i class="fa fa-suitcase"></i><strong> Authority: </strong>
+                    <%= user.type%>
+                </p>
+                <p><i class="fa fa-calendar"></i><strong> Registration Date: </strong>
+                    <%= user.registration_date%>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="tab-content">
+    <div class="container upcoming_reservations tab-pane" id="upcoming_reservations_id">
+        <div class="card text-center">
+            <div class="card-header">
+                <strong>
+                    <p>Upcoming Reservations</p>
+                </strong>
+            </div>
+            <% reservations.forEach(function(reservation){%>
+            <div class="card-body reservations_body">
+                <h5 class="card-title">
+                    <%=reservation.hotel_name%>
+                </h5>
+                <p class="card-text">Check in Date:
+                    <%=reservation.check_in_date%>
+                </p>
+                <p class="card-text">Check out Date:
+                    <%=reservation.check_out_date%>
+                </p>
+                <small>
+                    <p class="card-text">Date Of Reservation:
+                        <%=reservation.reservation_date%>
+                    </p>
+                </small>
+
+                <a href="#" class="btn btn-danger cancel_button cancel_reservation" res_id="<%=reservation.reservation_id%>">Cancel Reservation</a>
+            </div>
+            <% }) %>
+        </div>
+    </div>
+    <div class="container upcoming_reservations tab-pane" id="past_reservations_id">
+        <div class="card text-center">
+            <div class="card-header">
+                <strong>
+                    <p>Past Reservations</p>
+                </strong>
+            </div>
+            <% reservations.forEach(function(reservation){%>
+            <div class="card-body reservations_body">
+                <h5 class="card-title">
+                    <%=reservation.hotel_name%>
+                </h5>
+                <p class="card-text">Check in Date:
+                    <%=reservation.check_in_date%>
+                </p>
+                <p class="card-text">Check out Date:
+                    <%=reservation.check_out_date%>
+                </p>
+                <small>
+                    <p class="card-text">Date Of Reservation:
+                        <%=reservation.reservation_date%>
+                    </p>
+                </small>
+
+
+                <a href="#" class="btn btn-danger cancel_button">Cancel
+                    Reservation</a>
+            </div>
+            <% }) %>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('.cancel_reservation').click(function (e) {
+
+            e.preventDefault();
+            $.ajax({
+                type: 'post',
+                url: '/reservation/cancel',
+                data: {reservation_id: $(this).attr('res_id')},
+                success: function (data) {
+                    window.location = '/user';
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    alert('fail');
+                }
+            });
+        });
+    });
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
+
+
+</body>
+<!--/.Card-->

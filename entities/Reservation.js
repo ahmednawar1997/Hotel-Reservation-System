@@ -35,19 +35,46 @@ function insertReservedRoomsInReservation(req, reservation_id, index){
   });
 
 }
+function getAllOwnerReservations(req) {
+  var query = "SELECT hotels.name as hotel_name, reservations.* " +
+      "FROM reservations, hotels, users " +
+      "WHERE hotels.owner_id = ? AND " +
+      "reservations.hotel_id = hotels.id " +
+      "AND users.id = reservations.customer_id";
+  return new Promise((resolve, reject) => {
+      req.con.query(query, [req.user.id], (err, reservations) => {
+          if (err) console.log(err);
+          resolve(reservations);
+      });
+  });
+}
+
+function getAllOwnerReservationsWithRoomsDetails(req) {
+  var query = "SELECT hotels.name as hotel_name, reservations.*, users.*, reserved_rooms.* " +
+      "FROM reservations, hotels, users, reserved_rooms " +
+      "WHERE hotels.owner_id=? " +
+      "AND reservations.hotel_id=hotels.id " +
+      "AND users.id=reservations.customer_id " +
+      "AND reserved_rooms.reservation_id=reservations.reservation_id";
+  return new Promise((resolve, reject) => {
+      req.con.query(query, [req.user.id], (err, detailedReservations) => {
+          if (err) console.log(err);
+          console.log("TESTTT", detailedReservations);
+          resolve(detailedReservations);
+      });
+  });
+}
 
 
-
-
-
-
-
-
-
-
-
-
-
+function cancelReservationFromCustomer(req, reservation_id) {
+  var query = "UPDATE reservations SET customer_approval = ? WHERE reservation_id = ?;";
+  return new Promise((resolve, reject) => {
+      req.con.query(query, [0, reservation_id], (err, updatedReservation) => {
+          if (err) console.log(err);
+          resolve(updatedReservation);
+      });
+  });
+}
 
 
 
@@ -56,5 +83,8 @@ function insertReservedRoomsInReservation(req, reservation_id, index){
 
 module.exports = {
     insertReservation,
-    insertReservedRoomsInReservation
+    insertReservedRoomsInReservation,
+    getAllOwnerReservations,
+    getAllOwnerReservationsWithRoomsDetails,
+    cancelReservationFromCustomer
   };

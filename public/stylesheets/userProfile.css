@@ -1,0 +1,9 @@
+.reservations_body{
+    border-bottom: 2px solid rgb(221, 214, 214);
+}
+.cancel_button{
+    margin-top: 20px;
+}
+.profile_navbar_item{
+    color: black;
+}

@@ -49,22 +49,6 @@ router.get('/logout', function(req, res){
 });
 
 
-router.get('/wat', function(req, res, next) {
-  var db = req.con;
-	var data = "";
-	db.query('SELECT * FROM users', function(err, rows){
-		if(err) throw err;
-		
-	  console.log('Data received from Db:\n');
-		console.log(rows);
-		var data = rows;
-		res.render('index', { title: 'User Information', dataGet: data });
-	});
-
-});
-
-
-
 module.exports = router;
 return router;
 }

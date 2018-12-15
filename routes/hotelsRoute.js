@@ -51,10 +51,8 @@ router.post("/:hotel_id(\\d+)/reserve", isAuthenticated, function(req, res){
 
   });
 
-  
-
-  
 });
+
 
 
 module.exports = router;
