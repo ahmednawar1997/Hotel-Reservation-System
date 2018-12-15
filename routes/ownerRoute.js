@@ -2,11 +2,11 @@ var express = require("express");
 var router = express.Router();
 var Hotel = require("../entities/Hotel");
 var Room = require("../entities/Room");
-var reservations = require("../entities/mshReservations");
+var Reservation = require("../entities/Reservation");
 
 router.get("/reservations", isAuthenticated, isHotelOwner, (req, res, next) => {
   console.log("Request fl route: ", req.body);
-  reservations.getAllOwnerReservationsWithRoomsDetailsBetweenDates(req).then(detailedReservations => {
+  Reservation.getAllOwnerReservationsWithRoomsDetailsBetweenDates(req).then(detailedReservations => {
     res.render("reservations", { message: req.flash('message'), detailedReservations });
   })
 
