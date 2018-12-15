@@ -1,5 +1,27 @@
 <%- include partials/header %>
 
+    <div class="container">
+        <div class="card">
+            <h4 class="card-header text-center">Reservations</h4>
+            <form action="/owner/reservations" method="GET" id="pickDate">
+                <div class="form-group row">
+                    <label for="example-date-input" class="col-2 col-form-label">Checkin Date</label>
+                    <div class="col-3">
+                        <input class="form-control" type="date" name="checkin" id="checkin">
+                    </div>
+                    <label for="example-date-input" class="col-2 col-form-label">Checkout Date</label>
+                    <div class="col-3">
+                        <input class="form-control" type="date" name="checkout" id="checkout">
+                    </div>
+                    <div class="col-2">
+                        <input class="btn btn-outline-dark" type="submit">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
     <% for(var i=0 ; i<detailedReservations.length; i++){ %>
         <div class="container">
             <div class="card">
@@ -17,10 +39,12 @@
                             <%}%>
                                 Resevation #
                                 <%= detailedReservations[i].reservation_id%>
+
                 </h5>
                 <div class="card-body">
                     <p class="card-title"><strong> <%=detailedReservations[i].hotel_name %> Hotel</strong> <br> Reservation by <%=detailedReservations[i].name %>
                     </p>
+                    <!-- <button type="button" class="btn btn-success">Approve</button> -->
                     <div id="accordion">
                         <div class="card">
 

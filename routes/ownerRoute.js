@@ -5,7 +5,8 @@ var Room = require("../entities/Room");
 var reservations = require("../entities/mshReservations");
 
 router.get("/reservations", isAuthenticated, isHotelOwner, (req, res, next) => {
-  reservations.getAllOwnerReservationsWithRoomsDetails(req).then(detailedReservations => {
+  console.log("Request fl route: ", req.body);
+  reservations.getAllOwnerReservationsWithRoomsDetailsBetweenDates(req).then(detailedReservations => {
     res.render("reservations", { message: req.flash('message'), detailedReservations });
   })
 
@@ -68,3 +69,14 @@ function isAuthenticated(req, res, next) {
 
 
 module.exports = router;
+
+function addCheckinAndCheckoutDates(req) {
+  var now = new Date();
+  date.format(now, '[YYYY-MM-DD]');
+  console.log(now);
+  var dateOnlyToday = JSON.stringify(now).substring(1, 11);
+  req.query.checkin = dateOnlyToday;
+  in10years = date.addDays(now, 3653);
+  var dateIn10Years = JSON.stringify(in10years).substring(1, 11);
+  req.query.checkout = dateIn10Years;
+}
