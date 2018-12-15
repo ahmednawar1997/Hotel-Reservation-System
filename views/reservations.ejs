@@ -1,0 +1,82 @@
+<%- include partials/header %>
+
+    <% for(var i=0 ; i<detailedReservations.length; i++){ %>
+        <div class="container">
+            <div class="card">
+                <h5 class="card-header">
+                    <% if(detailedReservations[i].hotel_approval===1){ %>
+                        <span class="checkmark">
+                            <div class="checkmark_circle"></div>
+                            <div class="checkmark_stem"></div>
+                            <div class="checkmark_kick"></div>
+                        </span>
+                        <%}else{%>
+                            <span class="checkmark">
+                                <div class="pending_circle"></div>
+                            </span>
+                            <%}%>
+                                Resevation #
+                                <%= detailedReservations[i].reservation_id%>
+                </h5>
+                <div class="card-body">
+                    <p class="card-title"><strong> <%=detailedReservations[i].hotel_name %> Hotel</strong> <br> Reservation by <%=detailedReservations[i].name %>
+                    </p>
+                    <div id="accordion">
+                        <div class="card">
+
+                            <h5 class="mb-0">
+                                <button class="btn btn-secondary btn-block collapsed" data-toggle="collapse" data-target="#<%=detailedReservations[i].reservation_id%>"
+                                    aria-expanded="false" aria-controls="<%=detailedReservations[i].reservation_id%>">
+                                    Guest Info
+                                </button>
+                            </h5>
+
+                            <div id="<%=detailedReservations[i].reservation_id%>" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                                <div class="card-body">
+                                    <ul>
+                                        <li>Customer Name:
+                                            <%= detailedReservations[i].name%>
+                                        </li>
+                                        <li>Email:
+                                            <%= detailedReservations[i].email%>
+                                        </li>
+                                        <li>Check-in Date:
+                                            <%= detailedReservations[i].check_in_date%>
+                                        </li>
+                                        <li>Check-out Date:
+                                            <%= detailedReservations[i].check_out_date%>
+                                        </li>
+                                        <ul>
+                                            <% var reservationID = detailedReservations[i].reservation_id %>
+                                                <li>
+                                                    <%= detailedReservations[i].number_of_rooms%>
+                                                        <%=detailedReservations[i].room_type %> rooms
+                                                </li>
+                                                <% while(detailedReservations[i+1] && detailedReservations[i+1].reservation_id === reservationID){ %>
+                                                    <li>
+                                                        <% i++ %>
+                                                            <%= detailedReservations[i].number_of_rooms%>
+                                                                <%=detailedReservations[i].room_type %> rooms
+                                                    </li>
+                                                    <%}%>
+                                        </ul>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <%}%>
+
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                crossorigin="anonymous"></script>
+            <script src="../javascripts/hotels.js"></script>
+            </body>
+
+            </html>

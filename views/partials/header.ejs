@@ -1,9 +1,11 @@
 <html>
+
 <head>
     <title>Hotel</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/stylesheets/registration.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/checkMark.css">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 </head>
@@ -19,16 +21,23 @@
                 <li class='nav-item'><a class="nav-link"><%=user.type%></a></li>
                 <% if ( user.type==='hotel_owner') { %>
                     <li class='nav-item'><a class="nav-link" href="/owner">My Hotels</a></li>
+<<<<<<< HEAD
                 <% } %>
                 <li class='nav-item'><a class="nav-link" href="/logout"><span class="fa fa-sign-out"></span>Logout</a></li>
+=======
+
+
+                    <% } %>
+                        <li class='nav-item'><a class="nav-link" href="/logout"><span class="fa fa-sign-out"></span>Logout</a></li>
+>>>>>>> Adding owner reservations page
             </ul>
         </nav>
         <% if ( message&&message.length > 0 ) { %>
             <div class="form-control-feedback alert alert-success alert-dismissible fade show" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <strong>Message</strong>  <%= message %> 
-                </div>
-          <% } %>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>Message</strong> <%= message %>
+            </div>
+            <% } %>
     </div>
