@@ -48,7 +48,6 @@ app.use(function(req, res, next){
 
 app.use("/", require("./routes/indexRoute")(passport));
 app.use("/hotels", require("./routes/hotelsRoute"));
-app.use("/owner", require("./routes/ownerRoute"));
 app.use("/user", require("./routes/userRoute"));
 app.use("/reservation", require("./routes/reservationRoute"));
 

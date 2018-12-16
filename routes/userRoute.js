@@ -9,13 +9,12 @@ router.get("/", isAuthenticated, (req, res) => {
         Reservation.getAllOwnerPastReservations(req).then(function(pastReservations){
             if(req.user.type==="broker"){
                 Hotel.getAllNonApprovedHotels(req).then(function(notApprovedHotels){
-                    console.log(notApprovedHotels);
-                    res.render("customerProfile", {message: req.flash('message'), upcomingReservations: upcomingReservations,
+                    res.render("userProfile", {message: req.flash('message'), upcomingReservations: upcomingReservations,
                     pastReservations:pastReservations,notApprovedHotels:notApprovedHotels});
                 });
             }else{
             
-                res.render("customerProfile", {message: req.flash('message'), upcomingReservations: upcomingReservations,
+                res.render("userProfile", {message: req.flash('message'), upcomingReservations: upcomingReservations,
                 pastReservations:pastReservations,notApprovedHotels:{}});
             }
             });
@@ -23,11 +22,47 @@ router.get("/", isAuthenticated, (req, res) => {
 
 });
 
+router.get("/owner/reservations", isAuthenticated, isHotelOwner, (req, res, next) => {
+  console.log("Request fl route: ", req.body);
+  Reservation.getAllOwnerReservationsWithRoomsDetailsBetweenDates(req).then(detailedReservations => {
+    res.render("reservations", { message: req.flash('message'), detailedReservations });
+  })
+
+});
+
+router.get("/owner/hotels", isAuthenticated, isHotelOwner, (req, res, next) => {
+  Hotel.getAllOwnedHotels(req).then(hotels => {
+    res.render("ownersHotels", { message: req.flash('message'), hotels: hotels });
+  });
+});
+
+router.get("/owner/register-hotel", isAuthenticated, isHotelOwner, (req, res, next) => {
+  res.render("registerHotel", { message: req.flash('message') });
+});
 
 
+router.post("/owner/register-hotel", isAuthenticated, isHotelOwner, (req, res, next) => {
+  Hotel.insertHotel(req).then(() => {
+    Hotel.getAllOwnedHotels(req).then(hotels => {
+      res.render("ownersHotels", { message: req.flash('message'), hotels: hotels });
+    });
+  });
+});
 
 
+router.get("/owner/:hotel_id(\\d+)/", isAuthenticated, isHotelOwner, (req, res, next) => {
+    Hotel.getOwnedHotelDetails(req).then(hotelObj => {
+      res.render("viewOwnedHotel", { message: req.flash('message'), hotel: hotelObj.hotel, rooms: hotelObj.rooms });
+    });
+  });
 
+router.post("/owner/:hotel_id(\\d+)/", isAuthenticated, isHotelOwner, (req, res, next) => {
+  Room.insertRoom(req).then(() => {
+    Hotel.getOwnedHotelDetails(req).then(hotelObj => {
+      res.render("viewOwnedHotel", { hotel: hotelObj.hotel, rooms: hotelObj.rooms, message: req.flash('message') });
+    });
+  })
+});
 
 
 
