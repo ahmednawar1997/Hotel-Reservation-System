@@ -10,10 +10,6 @@ function getRoomsByHotelId(req){
 
 }
 
-function insertReservation(req){
-
-}
-
 function insertRoom(req) {
   var query = "INSERT INTO  room_type (room_type, hotel_id, room_view, price, number_of_rooms) VALUES (?,?,?,?,?)";
   return new Promise((resolve, reject) => {
@@ -30,19 +26,7 @@ function insertRoom(req) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 module.exports = {
-    insertReservation,
     getRoomsByHotelId,
     insertRoom
   };
