@@ -1,0 +1,15 @@
+-Rate your visit
+-Notify hotel owner when a user cancels his reservation
+-Fix add room bug ( when pressing several times on add room)
+-Notify the owner when the broker approves tge hotel
+-Complete filters in hotels searches (redesign)
+-Check if rooms are available when confirming the reservation
+-Show available rooms count in reservation page
+-Hotel may approve a reservation
+-Hotel may cancel a reservation within 30 seconds
+-A page to view checkins and checkouts on a specefic date
+-Complete viewHotel page with all the hotel details
+-Broker may suspend a hotel
+-Broker may reactivate a hotel
+-Broker may blacklista a customer
+-All money calculations and money owned features
