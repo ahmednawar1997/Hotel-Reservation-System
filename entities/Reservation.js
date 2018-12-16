@@ -20,8 +20,6 @@ function insertReservation(req){
 }
 
 
-
-
 function insertReservedRoomsInReservation(req, reservation_id, index){
   console.log("reserved rooms");
   var query = "INSERT INTO  reserved_rooms (reservation_id, room_type, number_of_rooms) VALUES (?,?,?)";
@@ -48,6 +46,46 @@ function getAllOwnerReservations(req) {
       });
   });
 }
+  
+function getAllOwnerUpcomingReservations(req) {
+  var query = "SELECT hotels.name as hotel_name, reservations.* " +
+      "FROM reservations, hotels, users " +
+      "WHERE hotels.owner_id = ? AND " +
+      "reservations.hotel_id = hotels.id " +
+      "AND users.id = reservations.customer_id "+
+      "AND reservations.check_in_date>=?";
+  return new Promise((resolve, reject) => {
+    var now = new Date();
+    date.format(now, '[YYYY-MM-DD]');    
+      req.con.query(query, [req.user.id, now], (err, reservations) => {
+          if (err) console.log(err);
+          console.log(reservations);
+          resolve(reservations);
+      });
+  });
+}
+
+function getAllOwnerPastReservations(req) {
+  var query = "SELECT hotels.name as hotel_name, reservations.* " +
+      "FROM reservations, hotels, users " +
+      "WHERE hotels.owner_id = ? AND " +
+      "reservations.hotel_id = hotels.id " +
+      "AND users.id = reservations.customer_id "+
+      "AND reservations.check_in_date<?";
+  return new Promise((resolve, reject) => {
+    var now = new Date();
+    date.format(now, '[YYYY-MM-DD]');    
+      req.con.query(query, [req.user.id, now], (err, reservations) => {
+          if (err) console.log(err);
+          console.log(reservations);
+          resolve(reservations);
+      });
+  });
+}
+
+  
+
+  
 
 function getAllOwnerReservationsWithRoomsDetails(req) {
   var query = "SELECT hotels.name as hotel_name, reservations.*, users.*, reserved_rooms.* " +
@@ -86,5 +124,7 @@ module.exports = {
     insertReservedRoomsInReservation,
     getAllOwnerReservations,
     getAllOwnerReservationsWithRoomsDetails,
-    cancelReservationFromCustomer
+    cancelReservationFromCustomer,
+    getAllOwnerUpcomingReservations,
+    getAllOwnerPastReservations
   };

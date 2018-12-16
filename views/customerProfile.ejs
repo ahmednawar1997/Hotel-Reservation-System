@@ -14,6 +14,13 @@
                 <a class="nav-link profile_navbar_item" data-toggle="tab" href="#past_reservations_id">Past
                     Reservations</a>
             </li>
+
+            <li class="nav-item ml-auto">
+                <a class="nav-link profile_navbar_item" data-toggle="tab" href="#hotels_not_approved">Pending Hotels</a>
+            </li>
+            <% if ( user.type==='hotel_owner') { %>
+            <li class='nav-item'><a class="nav-link profile_navbar_item" href="/owner">My Hotels</a></li>
+            <% } %>
             <li class="nav-item ml-auto">
                 <a class="nav-link profile_navbar_item" href="/edit">Edit Profile</a>
             </li>
@@ -53,7 +60,7 @@
                     <p>Upcoming Reservations</p>
                 </strong>
             </div>
-            <% reservations.forEach(function(reservation){%>
+            <% upcomingReservations.forEach(function(reservation){%>
             <div class="card-body reservations_body">
                 <h5 class="card-title">
                     <%=reservation.hotel_name%>
@@ -70,7 +77,8 @@
                     </p>
                 </small>
 
-                <a href="#" class="btn btn-danger cancel_button cancel_reservation" res_id="<%=reservation.reservation_id%>">Cancel Reservation</a>
+                <a href="#" class="btn btn-danger cancel_button cancel_reservation" res_id="<%=reservation.reservation_id%>">Cancel
+                    Reservation</a>
             </div>
             <% }) %>
         </div>
@@ -82,7 +90,7 @@
                     <p>Past Reservations</p>
                 </strong>
             </div>
-            <% reservations.forEach(function(reservation){%>
+            <% pastReservations.forEach(function(reservation){%>
             <div class="card-body reservations_body">
                 <h5 class="card-title">
                     <%=reservation.hotel_name%>
@@ -98,24 +106,71 @@
                         <%=reservation.reservation_date%>
                     </p>
                 </small>
-
-
-                <a href="#" class="btn btn-danger cancel_button">Cancel
-                    Reservation</a>
+                <button type="submit" class="btn btn-outline-warning btn-sm cancel_button">Rate your visit</button>
             </div>
             <% }) %>
+        </div>
+    </div>
+    <div class="container upcoming_reservations tab-pane" id="hotels_not_approved">
+        <div class="card text-center">
+            <div class="card-header">
+                <strong>
+                    <p>Hotels Not Approved</p>
+                </strong>
+            </div>
+            <% if(notApprovedHotels&&notApprovedHotels.length>0){%>
+            <% notApprovedHotels.forEach(function(hotel){%>
+            <div class="card-body reservations_body">
+                <h5 class="card-title">
+                    <%=hotel.name%>
+                </h5>
+                <p class="card-text">Owner:
+                    <%=hotel.owner_name%>
+                </p>
+                <p class="card-text">Description:
+                    <%=hotel.description%>
+                </p>
+
+                <p class="card-text">Stars:
+                    <%=hotel.stars%>
+                </p>
+
+
+                <a href="#" class="btn btn-outline-success approve_btn" hotel_id="<%=hotel.id%>">Approve</a>
+            </div>
+            <% }) %>
+            <% } %>
         </div>
     </div>
 </div>
 <script>
     $(function () {
-        $('.cancel_reservation').click(function (e) {
+        $('.approve_btn').click(function (e) {
 
             e.preventDefault();
             $.ajax({
                 type: 'post',
+                url: '/hotels/approve',
+                data: {
+                    hotel_id: $(this).attr('hotel_id')
+                },
+                success: function (data) {
+                    window.location = '/user';
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    alert('fail');
+                }
+            });
+        });
+        $('.cancel_reservation').click(function (e) {
+            alert("cancel");
+            e.preventDefault();
+            $.ajax({
+                type: 'post',
                 url: '/reservation/cancel',
-                data: {reservation_id: $(this).attr('res_id')},
+                data: {
+                    reservation_id: $(this).attr('res_id')
+                },
                 success: function (data) {
                     window.location = '/user';
                 },

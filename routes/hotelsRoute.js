@@ -53,6 +53,17 @@ router.post("/:hotel_id(\\d+)/reserve", isAuthenticated, function(req, res){
 
 });
 
+router.post("/approve", isAuthenticated, function(req, res){
+
+  Hotel.approveHotel(req).then(function(hotel_id){
+    req.flash('message', 'Hotel Approved');
+    res.status(202).send('success');
+
+  });
+
+});
+
+
 
 
 module.exports = router;

@@ -48,6 +48,25 @@ function getAllApprovedHotels(req) {
     });
   });
 }
+function getAllNonApprovedHotels(req) {
+  var sql = "SELECT hotels.*, users.name as owner_name FROM hotels INNER JOIN users ON hotels.owner_id = users.id AND approved = ?";
+  return new Promise((resolve, reject) => {
+    req.con.query(sql, [0], function (err, hotels) {
+      if (err) console.log(err);
+      resolve(hotels);
+    });
+  });
+}
+
+function approveHotel(req){
+  var sql = "UPDATE hotels SET approved = ? WHERE id = ?;";
+  return new Promise((resolve, reject) => {
+    req.con.query(sql, [1, req.body.hotel_id], function (err, hotel) {
+      if (err) console.log(err);
+      resolve(hotel);
+    });
+  });
+}
 
 function getAllApprovedHotelsWithFacilities(req) {
   var sql = "SELECT * FROM hotels INNER JOIN facilities ON hotels.id = facilities.hotel_id AND hotels.approved = ? INNER JOIN hotel_locations ON hotels.id = hotel_locations.hotel_id";
@@ -97,7 +116,9 @@ module.exports = {
   getAllApprovedHotelsWithFacilities: getAllApprovedHotelsWithFacilities,
   getHotelDetails: getHotelDetails,
   getAllOwnedHotels: getAllOwnedHotels,
-  getOwnedHotelDetails: getOwnedHotelDetails
+  getOwnedHotelDetails: getOwnedHotelDetails,
+  getAllNonApprovedHotels,
+  approveHotel
 };
 
 

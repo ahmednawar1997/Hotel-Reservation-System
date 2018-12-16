@@ -5,8 +5,20 @@ var Room = require("../entities/Room");
 var Reservation = require("../entities/Reservation");
 
 router.get("/", isAuthenticated, (req, res) => {
-    Reservation.getAllOwnerReservations(req).then(function(reservations){
-        res.render("customerProfile", {message: req.flash('message'), reservations: reservations});
+    Reservation.getAllOwnerUpcomingReservations(req).then(function(upcomingReservations){
+        Reservation.getAllOwnerPastReservations(req).then(function(pastReservations){
+            if(req.user.type==="broker"){
+                Hotel.getAllNonApprovedHotels(req).then(function(notApprovedHotels){
+                    console.log(notApprovedHotels);
+                    res.render("customerProfile", {message: req.flash('message'), upcomingReservations: upcomingReservations,
+                    pastReservations:pastReservations,notApprovedHotels:notApprovedHotels});
+                });
+            }else{
+            
+                res.render("customerProfile", {message: req.flash('message'), upcomingReservations: upcomingReservations,
+                pastReservations:pastReservations,notApprovedHotels:{}});
+            }
+            });
     });
 
 });
