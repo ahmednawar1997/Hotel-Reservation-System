@@ -14,10 +14,12 @@
                 <a class="nav-link profile_navbar_item" data-toggle="tab" href="#past_reservations_id">Past
                     Reservations</a>
             </li>
-
+            <% if ( user.type==='broker') { %>
             <li class="nav-item ml-auto">
                 <a class="nav-link profile_navbar_item" data-toggle="tab" href="#hotels_not_approved">Pending Hotels</a>
             </li>
+            <% } %>
+
             <% if ( user.type==='hotel_owner') { %>
             <li class='nav-item'><a class="nav-link profile_navbar_item" href="/owner">My Hotels</a></li>
             <% } %>
