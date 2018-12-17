@@ -110,7 +110,7 @@
                         <%=reservation.reservation_date%>
                     </p>
                 </small>
-                <button type="submit" class="btn btn-outline-warning btn-sm rate_button" >Rate
+                <button type="submit" class="btn btn-outline-warning btn-sm rate_button">Rate
                     your visit</button>
                 <div class="rate_visit" hotel_id="<%=reservation.hotel_id%>">
                     <span class="fa fa-star first" value="1"></span>
@@ -156,83 +156,9 @@
         </div>
     </div>
 </div>
-<script>
-    $(function () {
-
-        $('.rate_button').click(function (e) {
-            e.preventDefault();
-            $(this).next('.rate_visit').show();
-        });
-
-        $('.fa.fa-star').hover(function (e) {
-            e.preventDefault();
-            $(this).prevUntil('.first').addBack().prev('.first').addBack().addClass('star_checked');
-
-        }, function () {
-            $(this).prevUntil('.first').addBack().prev('.first').addBack().removeClass("star_checked");
-        });
-
-
-        $('.fa.fa-star').click(function (e) {
-            e.preventDefault();
-
-            $.ajax({
-                type: 'post',
-                url: '/hotels/rate',
-                data: {
-                    hotel_id: $(this).parent('.rate_visit').attr('hotel_id'),
-                    customer_rating: $(this).attr('value')
-                },
-                success: function (data) {
-                    window.location = '/user';
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    alert('fail');
-                }
-            });
-
-        });
-
-
-        $('.approve_btn').click(function (e) {
-
-            e.preventDefault();
-            $.ajax({
-                type: 'post',
-                url: '/hotels/approve',
-                data: {
-                    hotel_id: $(this).attr('hotel_id')
-                },
-                success: function (data) {
-                    window.location = '/user';
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    alert('fail');
-                }
-            });
-        });
-        $('.cancel_reservation').click(function (e) {
-            alert("cancel");
-            e.preventDefault();
-            $.ajax({
-                type: 'post',
-                url: '/reservation/cancel',
-                data: {
-                    reservation_id: $(this).attr('res_id')
-                },
-                success: function (data) {
-                    window.location = '/user';
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    alert('fail');
-                }
-            });
-        });
-    });
-</script>
+<script src="/javascripts/userProfile.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
     crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
@@ -241,4 +167,3 @@
 
 
 </body>
-<!--/.Card-->

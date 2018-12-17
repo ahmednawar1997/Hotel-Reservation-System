@@ -1,4 +1,4 @@
--Rate your visit
+-Rate your visit(backend)
 -Notify hotel owner when a user cancels his reservation
 -Fix add room bug ( when pressing several times on add room)
 -Notify the owner when the broker approves tge hotel
@@ -11,5 +11,5 @@
 -Complete viewHotel page with all the hotel details
 -Broker may suspend a hotel
 -Broker may reactivate a hotel
--Broker may blacklista a customer
+-Broker may blacklist a customer
 -All money calculations and money owned features
