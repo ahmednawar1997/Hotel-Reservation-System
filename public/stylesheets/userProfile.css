@@ -1,12 +1,22 @@
-.reservations_body{
+.reservations_body {
     border-bottom: 2px solid rgb(221, 214, 214);
 }
-.cancel_button{
+
+.cancel_button {
     margin-top: 20px;
 }
-.profile_navbar_item{
+
+.profile_navbar_item {
     color: black;
 }
-.star_checked{
+
+.star_checked {
     color: orange;
+}
+
+ .rate_visit {
+     display: none;
+}
+.rate_button{
+    margin-top: 10px;
 }
