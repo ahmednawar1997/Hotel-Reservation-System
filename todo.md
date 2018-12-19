@@ -1,4 +1,3 @@
--Rate your visit(backend)
 -Notify hotel owner when a user cancels his reservation
 -Fix add room bug ( when pressing several times on add room)
 -Notify the owner when the broker approves tge hotel

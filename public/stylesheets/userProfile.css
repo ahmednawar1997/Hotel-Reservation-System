@@ -20,3 +20,6 @@
 .rate_button{
     margin-top: 10px;
 }
+.fa.fa-star:hover{
+    cursor: pointer;
+}

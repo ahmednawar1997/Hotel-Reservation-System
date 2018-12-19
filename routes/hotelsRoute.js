@@ -23,7 +23,11 @@ router.get("/getHotels", isAuthenticated, function(req, res, next) {
 
 router.get("/:hotel_id(\\d+)/", isAuthenticated, function(req, res, next) {
   Hotel.getHotelDetails(req).then(hotel => {
-    res.render("viewHotel", { message: req.flash('message'), hotel : hotel});
+    Hotel.getHotelAverageRating(req).then(avgRating=>{
+      hotel.avg_rating = avgRating.avgRating;
+      res.render("viewHotel", { message: req.flash('message'), hotel : hotel});
+    })
+
   });
 });
 

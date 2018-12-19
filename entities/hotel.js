@@ -82,14 +82,35 @@ function getAllApprovedHotelsWithFacilities(req) {
 }
 
 function getHotelDetails(req) {
-  var sql = "SELECT * FROM hotels, facilities where approved = ? AND hotels.id = ? AND hotels.id = facilities.hotel_id";
+  var sql = "SELECT hotels.*, facilities.* "+
+  "FROM hotels "+
+  "INNER JOIN facilities "+
+  "ON hotels.id = facilities.hotel_id "+
+  "WHERE hotels.id = 3";
   return new Promise((resolve, reject) => {
-    req.con.query(sql, [1, req.params.hotel_id], function (err, hotels) {
+    req.con.query(sql, [req.params.hotel_id], function (err, hotels) {
       if (err) console.log(err);
+      console.log(hotels[0]);
       resolve(hotels[0]);
     });
   });
 }
+
+function getHotelAverageRating(req) {
+  var sql = "SELECT AVG(customer_reviews.customer_review) AS avgRating " +
+  "FROM customer_reviews " +
+  "INNER JOIN reservations " +
+  "ON customer_reviews.reservation_id = reservations.reservation_id " +
+  "WHERE reservations.hotel_id = ?";
+  return new Promise((resolve, reject) => {
+    req.con.query(sql, [req.params.hotel_id], function (err, avgRating) {
+      if (err) console.log(err);
+      console.log(avgRating[0]);
+      resolve(avgRating[0]);
+    });
+  });
+}
+
 
 function getOwnedHotelDetails(req) {
   var query1 = "SELECT * FROM hotels, facilities where hotels.id = ? AND hotels.id = facilities.hotel_id";
@@ -118,7 +139,8 @@ module.exports = {
   getAllOwnedHotels: getAllOwnedHotels,
   getOwnedHotelDetails: getOwnedHotelDetails,
   getAllNonApprovedHotels,
-  approveHotel
+  approveHotel,
+  getHotelAverageRating
 };
 
 
