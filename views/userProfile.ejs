@@ -110,9 +110,9 @@
                         <%=reservation.reservation_date%>
                     </p>
                 </small>
-                <button type="submit" class="btn btn-outline-warning btn-sm rate_button">Rate
+                <button type="submit" class="btn btn-outline-warning btn-sm rate_button" review="<%=reservation.customer_review%>" <%=reservation.customer_review?'disabled':''%>>Rate
                     your visit</button>
-                <div class="rate_visit" hotel_id="<%=reservation.hotel_id%>">
+                <div class="rate_visit" hotel_id="<%=reservation.hotel_id%>" reservation_id="<%=reservation.reservation_id%>">
                     <span class="fa fa-star first" value="1"></span>
                     <span class="fa fa-star" value="2"></span>
                     <span class="fa fa-star" value="3"></span>

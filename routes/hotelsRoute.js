@@ -64,12 +64,18 @@ router.post("/approve", isAuthenticated, function(req, res){
 });
 
 router.post("/rate", isAuthenticated, function(req, res){
+  console.log("res__id: "+req.body.reservation_id);
+
+    Reservation.insertCustomerReview(req, req.body.reservation_id, req.body.customer_rating).then(function(reservation_id){
+      console.log(reservation_id);
+      req.flash('message', 'Rated your visit with ' + req.body.customer_rating + " stars successfully");
+      res.status(202).send('success');
+    });
 
 
-    console.log(req.body.hotel_id);
-    console.log(req.body.customer_rating);
-    req.flash('message', 'Rated your visit with ' + req.body.customer_rating + " stars successfully");
-    res.status(202).send('success');
+
+
+
 
 
 

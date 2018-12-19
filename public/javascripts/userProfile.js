@@ -17,13 +17,14 @@ $(function () {
 
     $('.fa.fa-star').click(function (e) {
         e.preventDefault();
-
+        alert('res_id: '+$(this).parent('.rate_visit').attr('reservation_id'));
         $.ajax({
             type: 'post',
             url: '/hotels/rate',
             data: {
                 hotel_id: $(this).parent('.rate_visit').attr('hotel_id'),
-                customer_rating: $(this).attr('value')
+                customer_rating: $(this).attr('value'),
+                reservation_id: $(this).parent('.rate_visit').attr('reservation_id')
             },
             success: function (data) {
                 window.location = '/user';
@@ -54,7 +55,6 @@ $(function () {
         });
     });
     $('.cancel_reservation').click(function (e) {
-        alert("cancel");
         e.preventDefault();
         $.ajax({
             type: 'post',
@@ -70,4 +70,8 @@ $(function () {
             }
         });
     });
+
+
+    $('.rate_button:disabled').text('Rated ' + $('.rate_button:disabled').attr('review') + ' stars').css({'color':'grey'});
+
 });

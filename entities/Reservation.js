@@ -66,12 +66,15 @@ function getAllOwnerUpcomingReservations(req) {
 }
 
 function getAllOwnerPastReservations(req) {
-  var query = "SELECT hotels.name as hotel_name, reservations.* " +
-      "FROM reservations, hotels, users " +
-      "WHERE hotels.owner_id = ? AND " +
-      "reservations.hotel_id = hotels.id " +
-      "AND users.id = reservations.customer_id "+
-      "AND reservations.check_in_date<?";
+  var query = "SELECT hotels.name as hotel_name, reservations.*, customer_reviews.customer_review "+
+  "FROM reservations "+
+  "INNER JOIN hotels "+
+  "ON reservations.hotel_id = hotels.id "+
+  "INNER JOIN users "+
+  "ON reservations.customer_id = users.id "+
+  "LEFT JOIN customer_reviews "+
+  "ON reservations.reservation_id=customer_reviews.reservation_id "+
+  "WHERE hotels.owner_id = ? AND reservations.check_in_date<?"
   return new Promise((resolve, reject) => {
     var now = new Date();
     date.format(now, '[YYYY-MM-DD]');    
@@ -82,6 +85,23 @@ function getAllOwnerPastReservations(req) {
       });
   });
 }
+
+
+
+function insertCustomerReview(req, reservation_id, customer_rating) {
+    var query = "INSERT INTO  customer_reviews (reservation_id, customer_review) VALUES (?,?)";
+    return new Promise((resolve, reject) => { 
+        req.con.query(query, [reservation_id, customer_rating], (err, customer_review) => {
+            if (err) console.log(err);
+            console.log(customer_review);
+            resolve(customer_review);
+        });
+    });
+  }
+  
+
+
+
 
   
 
@@ -146,6 +166,7 @@ function getAllOwnerReservationsWithRoomsDetailsBetweenDates(req) {
 module.exports = {
     insertReservation,
     insertReservedRoomsInReservation,
+    insertCustomerReview,
     getAllOwnerReservations,
     getAllOwnerReservationsWithRoomsDetails,
     cancelReservationFromCustomer,

@@ -10,12 +10,12 @@ router.get("/", isAuthenticated, (req, res) => {
             if(req.user.type==="broker"){
                 Hotel.getAllNonApprovedHotels(req).then(function(notApprovedHotels){
                     res.render("userProfile", {message: req.flash('message'), upcomingReservations: upcomingReservations,
-                    pastReservations:pastReservations,notApprovedHotels:notApprovedHotels});
+                    pastReservations: pastReservations, notApprovedHotels: notApprovedHotels});
                 });
             }else{
             
                 res.render("userProfile", {message: req.flash('message'), upcomingReservations: upcomingReservations,
-                pastReservations:pastReservations,notApprovedHotels:{}});
+                pastReservations: pastReservations, notApprovedHotels:{}});
             }
             });
     });
