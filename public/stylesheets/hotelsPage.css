@@ -1,3 +1,23 @@
+
+.filter_card{
+    position: sticky;
+    border:none;
+}
+.filters_div{
+    position: sticky;
+
+}
+.filter_header{
+    background-color: #877c5a;
+}
+
+.filter_body{
+    background-color: #dfdbce;
+
+}
+
+
+
 .card_container {
     border-radius: 15px;
 }
@@ -9,6 +29,11 @@
     opacity: 0.9;
     margin-bottom: 20px;
     /* background:rgba(0, 0, 0, 0.5); */
+
+}
+.filter_input{
+    padding-right:0;
+    padding-left:0;
 
 }
 

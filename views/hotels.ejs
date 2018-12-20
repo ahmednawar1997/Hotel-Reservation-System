@@ -1,132 +1,170 @@
 <%- include partials/header %>
-    <div class="container">
-        <div class="jumbotron">
-            <div class="heading">
-                <h3>Hotels</h3>
-            </div>
 
-            <div>
-                <form action="/hotels" method="GET" id="pickDate">
-                    <div class="form-group row">
-                        <label for="example-date-input" class="col-2 col-form-label">Check-in Date</label>
-                        <div class="col-3">
-                            <input class="form-control" type="date" value='<%= query.checkin%>' name="checkin" id="checkin">
+
+<div class="row">
+    <div class="col-3">
+        <div class="filters_div fixed-top">
+
+            <div class="card filter_card" style="height: 100%">
+                <h5 class="card-header filter_header">Filters</h5>
+                <div class="card-body filter_body">
+
+                    <form action="/hotels" method="GET" id="pickDate">
+                        <div class="form-group row">
+                            <label for="example-date-input" class="col-5 col-form-label filter_input">Check-in Date</label>
+                            <div class="col-7 filter_input">
+                                <input class="form-control" type="date" value='<%= query.checkin%>' name="checkin" id="checkin">
+                            </div>
+                            <label for="example-date-input" class="col-5 col-form-label filter_input">Check-out Date</label>
+                            <div class="col-7 filter_input">
+                                <input class="form-control" type="date" value='<%= query.checkout%>' name="checkout" id="checkout">
+                            </div>
+
                         </div>
-                        <label for="example-date-input" class="col-2 col-form-label">Check-out Date</label>
-                        <div class="col-3">
-                            <input class="form-control" type="date" value='<%= query.checkout%>' name="checkout" id="checkout">
+                        <div class="form-group row">
+                            <div class="col-6">
+                                <input class="form-control" type="text" value='<%= query.country%>' name="country"
+                                    placeholder="Country">
+                            </div>
+                            <div class="col-6">
+                                <input class="form-control" type="text" value='<%= query.city%>' name="city"
+                                    placeholder="City">
+                            </div>
                         </div>
-                        <div class="col-2">
-                            <input class="btn btn-outline-dark" type="submit">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="location" class="col-2 col-form-label">Country</label>
-                        <div class="col-3">
-                            <input class="form-control" type="text" value='<%= query.country%>' name="country">
-                        </div>
-                    </div>
-
-
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input filter_checkbox" type="checkbox" name="pool" value="true" <%=query.pool? 'checked': ''%>>
-                        <label class="form-check-label" for="pool">Pool</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input filter_checkbox" type="checkbox" name="restaurant" value="true" <%=query.restaurant?
-                            'checked': ''%>>
-                        <label class="form-check-label" for="restaurant">Restaurant</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input filter_checkbox" type="checkbox" name="bar" value="true" <%=query.bar? 'checked': ''%>>
-                        <label class="form-check-label" for="bar">Bar</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input filter_checkbox" type="checkbox" name="wifi" value="true" <%=query.wifi? 'checked': ''%>>
-                        <label class="form-check-label" for="wifi">Wifi</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input filter_checkbox" type="checkbox" name="gym" value="true" <%=query.gym? 'checked': ''%>>
-                        <label class="form-check-label" for="gym">Gym</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input filter_checkbox" type="checkbox" name="kids_area" value="true" <%=query.kids_area?
-                            'checked': ''%>>
-                        <label class="form-check-label" for="kids_area">Kids Area</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input filter_checkbox" type="checkbox" name="spa" value="true" <%=query.spa? 'checked': ''%>>
-                        <label class="form-check-label" for="spa">Spa</label>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-
-        <div class="container">
-                <% hotels.forEach(function(hotel){%>
-                <div class="wrapper">
-                    <div class="card_container">
-            
-
-                        <div class="row">
-                            <div class="col-3 align-self-center" style="padding-left: 25px;padding-right: 0px;">
-                                <img title="Check Hotel" class="card_image img-thumbnail" path="/hotels/<%= hotel.id%>" src="/images/photo2.jpg" alt="Check Hotel"></div>
-                            <div class="col-9">
-                                <div class="card_header">
-                                    <h4 style="display:inline;"><%=hotel.name%> </h4>
-                                    <% for(var i=0; i < hotel.stars; i++){%><span class="fa fa-star checked"></span><% }%>
-                                    <span class="review">Review<br><%=hotel.review%> </span>
-                                </div>
-                                <hr style="margin-left: 90px;">
-                                <div class="card_body">
-                                    <ul class="hotel_list">
-                                        <li><a class="hotel_item" href="#location"><Strong><span class="fa fa-map-marker fa-lg"></span></Strong>
-                                            <%=hotel.city%>, <%=hotel.country%></a></li>
-                                        <li><a class="hotel_item" href="#description" style="padding-bottom: 0"><Strong><i class="fa fa-align-justify fa-lg"></i></Strong>
-                                            <%=hotel.description%></a></li>
-                                    </ul>
-                                </div>
-                                <a path="/hotels/<%= hotel.id%>/reserve" href='#' id="about" class="btn btn-outline-light btn-sm reserveLink">Reserve</a>
+                        <div class="form-group row">
+                            <div class="col-6">
+                                <input class="form-control" type="text" value='' name="rating"
+                                    placeholder="Min Rating">
+                            </div>
+                            <div class="col-6">
+                                <input class="form-control" type="text" value='' name="price"
+                                    placeholder="Price">
                             </div>
                         </div>
 
-            
-                    </div>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input filter_checkbox" type="checkbox" name="pool" value="true" <%=query.pool?
+                                'checked' : '' %>>
+                            <label class="form-check-label" for="pool">Pool</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input filter_checkbox" type="checkbox" name="restaurant" value="true"
+                                <%=query.restaurant? 'checked' : '' %>>
+                            <label class="form-check-label" for="restaurant">Restaurant</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input filter_checkbox" type="checkbox" name="bar" value="true" <%=query.bar?
+                                'checked' : '' %>>
+                            <label class="form-check-label" for="bar">Bar</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input filter_checkbox" type="checkbox" name="wifi" value="true" <%=query.wifi?
+                                'checked' : '' %>>
+                            <label class="form-check-label" for="wifi">Wifi</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input filter_checkbox" type="checkbox" name="gym" value="true" <%=query.gym?
+                                'checked' : '' %>>
+                            <label class="form-check-label" for="gym">Gym</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input filter_checkbox" type="checkbox" name="kids_area" value="true"
+                                <%=query.kids_area? 'checked' : '' %>>
+                            <label class="form-check-label" for="kids_area">Kids Area</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input filter_checkbox" type="checkbox" name="spa" value="true" <%=query.spa?
+                                'checked' : '' %>>
+                            <label class="form-check-label" for="spa">Spa</label>
+                        </div>
+
+                        <br>
+                        <br>
+                        <input class="btn btn-outline-dark" id="about" style="float: right" type="submit">
+
+                    </form>
+
                 </div>
-                <% }) %>
             </div>
 
+
+
+        </div>
     </div>
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-
-    <script src="javascripts/hotels.js"></script>
-    <script>
-
-        $(function () {
-
-            $('.filter_checkbox').change(function (e) {
-                $('form').submit();
-            });
+    <div class="col-9">
+        <div class="container">
+            <% hotels.forEach(function(hotel){%>
+            <div class="wrapper">
+                <div class="card_container">
 
 
-            $('.reserveLink').click(function (e) {
-                window.location = $(this).attr("path") + "?checkin=" + $("#checkin").val() + "&checkout=" + $("#checkout").val();
-            });
+                    <div class="row">
+                        <div class="col-3 align-self-center" style="padding-left: 25px;padding-right: 0px;">
+                            <img title="Check Hotel" class="card_image img-thumbnail" path="/hotels/<%= hotel.id%>" src="/images/photo2.jpg"
+                                alt="Check Hotel"></div>
+                        <div class="col-9">
+                            <div class="card_header">
+                                <h4 style="display:inline;">
+                                    <%=hotel.name%>
+                                </h4>
+                                <% for(var i=0; i < hotel.stars; i++){%><span class="fa fa-star checked"></span>
+                                <% }%>
+                                <span class="review">Review<br>
+                                    <%=hotel.review%> </span>
+                            </div>
+                            <hr style="margin-left: 90px;">
+                            <div class="card_body">
+                                <ul class="hotel_list">
+                                    <li><a class="hotel_item" href="#location"><Strong><span class="fa fa-map-marker fa-lg"></span></Strong>
+                                            <%=hotel.city%>,
+                                            <%=hotel.country%></a></li>
+                                    <li><a class="hotel_item" href="#description" style="padding-bottom: 0"><Strong><i
+                                                    class="fa fa-align-justify fa-lg"></i></Strong>
+                                            <%=hotel.description%></a></li>
+                                </ul>
+                            </div>
+                            <a path="/hotels/<%= hotel.id%>/reserve" href='#' id="about" class="btn btn-outline-light btn-sm reserveLink">Reserve</a>
+                        </div>
+                    </div>
 
-            $('.card_image').click(function(){
-                window.location = $(this).attr("path");
-            })
 
+                </div>
+            </div>
+            <% }) %>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
+<script src="javascripts/hotels.js"></script>
+<script>
+    $(function () {
+
+        $('.filter_checkbox').change(function (e) {
+            $('form').submit();
         });
 
 
-    </script>
-    </body>
+        $('.reserveLink').click(function (e) {
+            window.location = $(this).attr("path") + "?checkin=" + $("#checkin").val() + "&checkout=" +
+                $("#checkout").val();
+        });
 
-    </html>
+        $('.card_image').click(function () {
+            window.location = $(this).attr("path");
+        })
+
+    });
+</script>
+</body>
+
+</html>
