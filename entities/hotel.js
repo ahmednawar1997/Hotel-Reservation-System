@@ -111,8 +111,9 @@ function getHotelDetailsAndRooms(req) {
 
 function getPremiumHotels(req) {
   var sql = "SELECT * " +
-    "FROM hotels " +
-    "WHERE hotels.premium=1";
+    "FROM hotels,hotel_locations " +
+    "WHERE hotels.premium=1 " +
+    "AND hotels.id=hotel_locations.hotel_id";
   return new Promise((resolve, reject) => {
     req.con.query(sql, [], function (err, hotels) {
       if (err) console.log(err);
@@ -166,7 +167,8 @@ module.exports = {
   getAllNonApprovedHotels,
   approveHotel,
   getHotelAverageRating,
-  getHotelDetailsAndRooms
+  getHotelDetailsAndRooms,
+  getPremiumHotels
 };
 
 

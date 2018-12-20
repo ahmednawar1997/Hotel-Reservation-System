@@ -24,8 +24,12 @@ router.get("/getHotels", isAuthenticated, function (req, res, next) {
 
 router.get("/:hotel_id(\\d+)/", isAuthenticated, function (req, res, next) {
   Hotel.getHotelDetailsAndRooms(req).then(hotels => {
-    console.log("HOTELSATY: ", hotels);
-    res.render("viewHotel2", { message: req.flash('message'), hotels: hotels });
+    Hotel.getPremiumHotels(req).then(premiumHotels => {
+      console.log("HOTELSATY: ", hotels);
+      res.render("viewHotel2", { message: req.flash('message'), hotels, premiumHotels })
+    })
+
+      ;
   })
 
 });

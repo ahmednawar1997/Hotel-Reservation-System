@@ -65,7 +65,7 @@
         <div class="container">
             <div class="card">
                 <h5 class="card-header">
-                    Near By Hotels
+                    Premium Hotels In This City
                     <!--Controls-->
 
                     <a class="btn-floating" href="#multi-item-example" data-slide="prev"><i class="fa fa-chevron-left"></i></a>
@@ -78,7 +78,7 @@
 
 
                     <div class="carousel-inner">
-                        <% for(var j=0; j<3; j++){%>
+                        <% for(var j=0; j<=premiumHotels.length/6; j++){%>
                             <%if(j===0){%>
                                 <div class="carousel-item active">
                                     <% }else{%>
@@ -88,27 +88,29 @@
 
                                                 <div class="row ">
                                                     <% for(var k=0; k<6; k++){ %>
-                                                        <div class="card col-sm-2 col-md-2 col-lg-2">
-                                                            <div class="container" align="center"><img src="/images/photo2.jpg"
-                                                                    class="rounded-circle img-responsive" style="width:100px; height:100px;">
-                                                                <h6><a href="/user/owner/<%= hotels[0].id%>" class="card-link">Santana
-                                                                        Hotel
-                                                                    </a></h6>
+                                                        <% if(premiumHotels.length>j*6+k ){%>
+                                                            <div class="card col-sm-2 col-md-2 col-lg-2">
+                                                                <div class="container" align="center"><img src="/images/photo2.jpg"
+                                                                        class="rounded-circle img-responsive" style="width:100px; height:100px;">
+                                                                    <h6><a href="/user/owner/<%= hotels[0].id%>" class="card-link">
+                                                                            <%=premiumHotels[j*6+k].name%>
+                                                                        </a></h6>
+                                                                </div>
+
+                                                                <ul class="list-group list-group-flush">
+
+                                                                    <li class="list-group-item">Stars:
+                                                                        <% for(var i=0; i < premiumHotels[j*6+k].stars; i++){%><span class="fa fa-star checked"></span><% }%>
+                                                                    </li>
+                                                                    <li class="list-group-item">
+                                                                        <%=premiumHotels[j*6+k].district%>
+                                                                    </li>
+                                                                </ul>
+
                                                             </div>
 
-                                                            <ul class="list-group list-group-flush">
 
-                                                                <li class="list-group-item">Stars:
-                                                                    <% for(var i=0; i < 3; i++){%><span class="fa fa-star checked"></span><% }%>
-                                                                </li>
-                                                                <li class="list-group-item">Location: ALEX
-                                                                </li>
-                                                            </ul>
-
-                                                        </div>
-
-
-                                                        <% } %>
+                                                            <% }} %>
                                                 </div>
 
 
