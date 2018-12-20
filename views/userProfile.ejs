@@ -8,11 +8,11 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link profile_navbar_item" data-toggle="tab" href="#upcoming_reservations_id">Upcoming
-                    Reservations</a>
+                    Reservations[<%=upcomingReservations.length%>]</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link profile_navbar_item" data-toggle="tab" href="#past_reservations_id">Past
-                    Reservations</a>
+                    Reservations[<%=pastReservations.length%>]</a>
             </li>
             <% if ( user.type==='broker') { %>
             <li class="nav-item ml-auto">

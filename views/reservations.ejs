@@ -37,8 +37,8 @@
                                 <div class="pending_circle"></div>
                             </span>
                             <%}%>
-                                Resevation #
-                                <%= detailedReservations[i].reservation_id%>
+                                Reservation #
+                                <%= detailedReservations[i].reservation_id%><span style="color:red"><%=detailedReservations[i].customer_approval===0?' Customer Cancelled':''%></span>
 
                 </h5>
                 <div class="card-body">
