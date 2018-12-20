@@ -1,7 +1,8 @@
 body{
-    background-image: url("/images/greenish.jpg");
-    background-repeat: repeat;
-    background-size: 150px;
+    background-image: url("/images/pyramids.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
     /* background-size: cover; */
 
 }
