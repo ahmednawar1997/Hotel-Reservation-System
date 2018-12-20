@@ -1,4 +1,3 @@
-
 .filter_card{
     position: sticky;
     border:none;
@@ -8,7 +7,7 @@
 
 }
 .filter_header{
-    background-color: #877c5a;
+    background-color: #bab198;
 }
 
 .filter_body{
@@ -48,7 +47,6 @@
     transition: all .2s ease-in-out;
 }
 
-.card_body {}
 
 hr {
     align: center;
