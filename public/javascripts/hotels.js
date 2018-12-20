@@ -185,3 +185,11 @@ function roomView(roomObj) {
         </div>'
     );
 }
+
+function showMap(url) {
+    $(function () {
+
+        $('#mapiframe').append('<iframe src="' + url + '"\
+                            width = "100%" height = "300" frameborder = "0" style = "margin-top: 10px;" allowfullscreen ></iframe >');
+    });
+}

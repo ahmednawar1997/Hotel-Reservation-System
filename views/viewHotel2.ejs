@@ -1,0 +1,176 @@
+<%- include partials/header %>
+
+    <body>
+        <section>
+            <div class="container py-3">
+                <div class="card">
+                    <div class="row ">
+                        <div class="col-md-4">
+                            <img src="/images/photo2.jpg" class="w-100" style="border-radius: 0% 5% 20% 5%;">
+
+
+                        </div>
+                        <div class="col-md-8 px-3">
+                            <div class="card-block px-3  col-lg-12">
+                                <h3 class="card-title col-lg-12">
+                                    <%= hotels[0].name%> Hotel
+                                </h3>
+                                <div class="card-text col-lg-12">
+                                    <%=hotels[0].description%>
+                                </div>
+                                <hr>
+                                <div class="col-lg-6"><strong>Location: </strong>
+                                    <%=hotels[0].street%>,
+                                        <%=hotels[0].district%>,
+                                            <%=hotels[0].city%>,
+                                                <%=hotels[0].country%>
+
+                                </div>
+                                <div class="col-lg-6"><strong>Stars: <% for(var i=0; i < hotels[0].stars; i++){%><span class="fa fa-star checked"></span><% }%></strong>
+                                </div>
+                                <div class="col-lg-12">
+                                    <strong>Available Facilities: </strong>
+                                    <%= getFacilities()%>
+                                </div>
+                                <div class="col-lg-12">
+                                    <strong>Rooms Offered: </strong>
+                                    <ul>
+                                        <%hotels.forEach(hotel => {%>
+                                            <li>
+                                                <%= hotel.room_type%> with a
+                                                    <%= hotel.room_view %> view.
+                                            </li>
+
+                                            <%})%>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-12 row">
+                                    <div class="col-lg-9"></div>
+                                    <div class="col-lg-3">
+                                        <% if(hotels[0].map_url){%>
+                                            <img onclick="showMap('<%=hotels[0].map_url%>'); this.onclick=null;" src="/images/google-maps-50.png" style="width:44px; height:44px;">
+                                            <%}%>
+                                                <a href="/hotels/<%=hotels[0].id%>/reserve" class="btn btn-primary">Reserve</a></div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div id="mapiframe"></div>
+                </div>
+            </div>
+        </section>
+        <div class="container">
+            <div class="card">
+                <h5 class="card-header">
+                    Near By Hotels
+                    <!--Controls-->
+
+                    <a class="btn-floating" href="#multi-item-example" data-slide="prev"><i class="fa fa-chevron-left"></i></a>
+                    <a class="btn-floating" href="#multi-item-example" data-slide="next"><i class="fa fa-chevron-right"></i></a>
+
+                    <!--/.Controls-->
+                </h5>
+
+                <div id="multi-item-example" class="carousel slide" data-ride="carousel">
+
+
+                    <div class="carousel-inner">
+                        <% for(var j=0; j<3; j++){%>
+                            <%if(j===0){%>
+                                <div class="carousel-item active">
+                                    <% }else{%>
+                                        <div class="carousel-item">
+                                            <%}%>
+
+
+                                                <div class="row ">
+                                                    <% for(var k=0; k<6; k++){ %>
+                                                        <div class="card col-sm-2 col-md-2 col-lg-2">
+                                                            <div class="container" align="center"><img src="/images/photo2.jpg"
+                                                                    class="rounded-circle img-responsive" style="width:100px; height:100px;">
+                                                                <h6><a href="/user/owner/<%= hotels[0].id%>" class="card-link">Santana
+                                                                        Hotel
+                                                                    </a></h6>
+                                                            </div>
+
+                                                            <ul class="list-group list-group-flush">
+
+                                                                <li class="list-group-item">Stars:
+                                                                    <% for(var i=0; i < 3; i++){%><span class="fa fa-star checked"></span><% }%>
+                                                                </li>
+                                                                <li class="list-group-item">Location: ALEX
+                                                                </li>
+                                                            </ul>
+
+                                                        </div>
+
+
+                                                        <% } %>
+                                                </div>
+
+
+
+                                        </div>
+
+                                        <% } %>
+
+
+                                </div>
+                    </div>
+
+
+
+                    <!-- <a class="carousel-control-prev" href="#multi-item-example" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#multi-item-example" role="button" data-slide="next">
+                <span class="btn-floating "><i class="fa fa-chevron-left"></i></span>
+                <span class="sr-only">Next</span>
+            </a> -->
+
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <% function getFacilities(){ %>
+            <ul class="row col-lg-12">
+                <% if(hotels[0].pool===1){ %>
+                    <li class="col-lg-3"><img src="/images/photo2.jpg" style="width:15px; height:15px;"> Pool</li>
+                    <% }if(hotels[0].bar===1) {%>
+                        <li class="col-lg-3"><img src="/images/photo2.jpg" style="width:15px; height:15px;"> Bar</li>
+                        <% }if(hotels[0].wifi===1){ %>
+                            <li class="col-lg-3"><img src="/images/photo2.jpg" style="width:15px; height:15px;"> Wifi</li>
+                            <% }if(hotels[0].gym===1){ %>
+                                <li class="col-lg-3"><img src="/images/photo2.jpg" style="width:15px; height:15px;"> Gym</li>
+                                <% }if(hotels[0].kids_area===1){ %>
+                                    <li class="col-lg-3"><img src="/images/photo2.jpg" style="width:15px; height:15px;">                                        Kids
+                                        Area
+                                    </li>
+                                    <% }if(hotels[0].spa===1){ %>
+                                        <li class="col-lg-3"><img src="/images/photo2.jpg" style="width:15px; height:15px;">                                            Spa</li>
+                                        <% }if(hotels[0].restaurant===1){ %>
+                                            <li class="col-lg-3"><img src="/images/photo2.jpg" style="width:15px; height:15px;">                                                Restaurant</li>
+                                            <% } %>
+            </ul>
+
+            <% } %>
+
+
+                <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+                    crossorigin="anonymous"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                    crossorigin="anonymous"></script>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                    crossorigin="anonymous"></script>
+                <script src="/javascripts/hotels.js"></script>
+
+
+
+    </body>

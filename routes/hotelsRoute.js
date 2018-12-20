@@ -5,47 +5,55 @@ var Room = require("../entities/Room");
 var Reservation = require("../entities/Reservation");
 var date = require('date-and-time');
 
-router.get("/", isAuthenticated, function(req, res, next) {
-  
-  if(req.query.checkin == undefined || req.query.checkout == undefined){
+router.get("/", isAuthenticated, function (req, res, next) {
+
+  if (req.query.checkin == undefined || req.query.checkout == undefined) {
     addCheckinAndCheckoutDates(req);
   }
   Hotel.getAllApprovedHotelsWithFacilities(req).then(hotels => {
-    
-    res.render("hotels", { message: req.flash('message'), hotels: hotels , query : req.query});
+
+    res.render("hotels", { message: req.flash('message'), hotels: hotels, query: req.query });
   });
 });
 
-router.get("/getHotels", isAuthenticated, function(req, res, next) {
+router.get("/getHotels", isAuthenticated, function (req, res, next) {
   Hotel.getAllApprovedHotelsWithFacilities(req).then(hotels => {
     res.status(202).send(hotels);
   });
 });
 
-router.get("/:hotel_id(\\d+)/", isAuthenticated, function(req, res, next) {
-  Hotel.getHotelDetails(req).then(hotel => {
-    Hotel.getHotelAverageRating(req).then(avgRating=>{
-      hotel.avg_rating = avgRating.avgRating;
-      res.render("viewHotel", { message: req.flash('message'), hotel : hotel});
-    })
+router.get("/:hotel_id(\\d+)/", isAuthenticated, function (req, res, next) {
+  Hotel.getHotelDetailsAndRooms(req).then(hotels => {
+    console.log("HOTELSATY: ", hotels);
+    res.render("viewHotel2", { message: req.flash('message'), hotels: hotels });
+  })
 
-  });
 });
 
+// router.get("/:hotel_id(\\d+)/", isAuthenticated, function (req, res, next) {
+//   Hotel.getHotelDetails(req).then(hotel => {
+//     Hotel.getHotelAverageRating(req).then(avgRating => {
+//       hotel.avg_rating = avgRating.avgRating;
+//       res.render("viewHotel", { message: req.flash('message'), hotel: hotel });
+//     })
 
-router.get("/:hotel_id(\\d+)/reserve", isAuthenticated, function(req, res){
-  Hotel.getHotelDetails(req).then(function(hotel){
-    Room.getRoomsByHotelId(req).then(function(rooms){
-      res.render("viewRegistration", { message: req.flash('message'), hotel: hotel, query: req.query, rooms: rooms});
+//   });
+// });
+
+
+router.get("/:hotel_id(\\d+)/reserve", isAuthenticated, function (req, res) {
+  Hotel.getHotelDetails(req).then(function (hotel) {
+    Room.getRoomsByHotelId(req).then(function (rooms) {
+      res.render("viewRegistration", { message: req.flash('message'), hotel: hotel, query: req.query, rooms: rooms });
     });
 
   });
 });
 
 
-router.post("/:hotel_id(\\d+)/reserve", isAuthenticated, function(req, res){
+router.post("/:hotel_id(\\d+)/reserve", isAuthenticated, function (req, res) {
 
-  Reservation.insertReservation(req).then(function(reservation_id){
+  Reservation.insertReservation(req).then(function (reservation_id) {
 
     (req.body.room_types).forEach((room_type, index) => {
       console.log("Index: " + index);
@@ -58,9 +66,9 @@ router.post("/:hotel_id(\\d+)/reserve", isAuthenticated, function(req, res){
 
 });
 
-router.post("/approve", isAuthenticated, function(req, res){
+router.post("/approve", isAuthenticated, function (req, res) {
 
-  Hotel.approveHotel(req).then(function(hotel_id){
+  Hotel.approveHotel(req).then(function (hotel_id) {
     req.flash('message', 'Hotel Approved');
     res.status(202).send('success');
 
@@ -68,14 +76,14 @@ router.post("/approve", isAuthenticated, function(req, res){
 
 });
 
-router.post("/rate", isAuthenticated, function(req, res){
-  console.log("res__id: "+req.body.reservation_id);
+router.post("/rate", isAuthenticated, function (req, res) {
+  console.log("res__id: " + req.body.reservation_id);
 
-    Reservation.insertCustomerReview(req, req.body.reservation_id, req.body.customer_rating).then(function(reservation_id){
-      console.log(reservation_id);
-      req.flash('message', 'Rated your visit with ' + req.body.customer_rating + " stars successfully");
-      res.status(202).send('success');
-    });
+  Reservation.insertCustomerReview(req, req.body.reservation_id, req.body.customer_rating).then(function (reservation_id) {
+    console.log(reservation_id);
+    req.flash('message', 'Rated your visit with ' + req.body.customer_rating + " stars successfully");
+    res.status(202).send('success');
+  });
 });
 
 
@@ -86,7 +94,7 @@ function isAuthenticated(req, res, next) {
   res.redirect("/login");
 }
 
-function addCheckinAndCheckoutDates(req){
+function addCheckinAndCheckoutDates(req) {
   var now = new Date();
   date.format(now, '[YYYY-MM-DD]');
   console.log(now);

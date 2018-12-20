@@ -58,7 +58,7 @@ function getAllNonApprovedHotels(req) {
   });
 }
 
-function approveHotel(req){
+function approveHotel(req) {
   var sql = "UPDATE hotels SET approved = ? WHERE id = ?;";
   return new Promise((resolve, reject) => {
     req.con.query(sql, [1, req.body.hotel_id], function (err, hotel) {
@@ -82,11 +82,11 @@ function getAllApprovedHotelsWithFacilities(req) {
 }
 
 function getHotelDetails(req) {
-  var sql = "SELECT hotels.*, facilities.* "+
-  "FROM hotels "+
-  "INNER JOIN facilities "+
-  "ON hotels.id = facilities.hotel_id "+
-  "WHERE hotels.id = ?";
+  var sql = "SELECT hotels.*, facilities.* " +
+    "FROM hotels " +
+    "INNER JOIN facilities " +
+    "ON hotels.id = facilities.hotel_id " +
+    "WHERE hotels.id = ?";
   return new Promise((resolve, reject) => {
     req.con.query(sql, [req.params.hotel_id], function (err, hotels) {
       if (err) console.log(err);
@@ -96,12 +96,37 @@ function getHotelDetails(req) {
   });
 }
 
+function getHotelDetailsAndRooms(req) {
+  var sql = "SELECT * " +
+    "FROM hotels, facilities, room_type, hotel_locations " +
+    "WHERE hotels.id=? AND hotels.id=facilities.hotel_id " +
+    "AND hotels.id=room_type.hotel_id AND hotels.id=hotel_locations.hotel_id ";
+  return new Promise((resolve, reject) => {
+    req.con.query(sql, [req.params.hotel_id], function (err, hotels) {
+      if (err) console.log(err);
+      resolve(hotels)
+    });
+  });
+}
+
+function getPremiumHotels(req) {
+  var sql = "SELECT * " +
+    "FROM hotels " +
+    "WHERE hotels.premium=1";
+  return new Promise((resolve, reject) => {
+    req.con.query(sql, [], function (err, hotels) {
+      if (err) console.log(err);
+      resolve(hotels)
+    });
+  });
+}
+
 function getHotelAverageRating(req) {
   var sql = "SELECT AVG(customer_reviews.customer_review) AS avgRating " +
-  "FROM customer_reviews " +
-  "INNER JOIN reservations " +
-  "ON customer_reviews.reservation_id = reservations.reservation_id " +
-  "WHERE reservations.hotel_id = ?";
+    "FROM customer_reviews " +
+    "INNER JOIN reservations " +
+    "ON customer_reviews.reservation_id = reservations.reservation_id " +
+    "WHERE reservations.hotel_id = ?";
   return new Promise((resolve, reject) => {
     req.con.query(sql, [req.params.hotel_id], function (err, avgRating) {
       if (err) console.log(err);
@@ -140,7 +165,8 @@ module.exports = {
   getOwnedHotelDetails: getOwnedHotelDetails,
   getAllNonApprovedHotels,
   approveHotel,
-  getHotelAverageRating
+  getHotelAverageRating,
+  getHotelDetailsAndRooms
 };
 
 
