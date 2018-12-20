@@ -98,9 +98,11 @@ function getHotelDetails(req) {
 
 function getHotelDetailsAndRooms(req) {
   var sql = "SELECT * " +
-    "FROM hotels, facilities, room_type, hotel_locations " +
+    "FROM hotels, facilities, hotel_locations " +
+    "LEFT JOIN room_type " +
+    "ON hotel_locations.hotel_id = room_type.hotel_id " +
     "WHERE hotels.id=? AND hotels.id=facilities.hotel_id " +
-    "AND hotels.id=room_type.hotel_id AND hotels.id=hotel_locations.hotel_id ";
+    "AND hotels.id=hotel_locations.hotel_id ";
   return new Promise((resolve, reject) => {
     req.con.query(sql, [req.params.hotel_id], function (err, hotels) {
       if (err) console.log(err);
