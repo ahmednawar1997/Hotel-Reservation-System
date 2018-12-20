@@ -11,6 +11,7 @@ router.get("/", isAuthenticated, function(req, res, next) {
     addCheckinAndCheckoutDates(req);
   }
   Hotel.getAllApprovedHotelsWithFacilities(req).then(hotels => {
+    
     res.render("hotels", { message: req.flash('message'), hotels: hotels , query : req.query});
   });
 });

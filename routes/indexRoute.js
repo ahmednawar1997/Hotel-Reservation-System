@@ -49,6 +49,11 @@ router.get('/logout', function(req, res){
 });
 
 
+router.get('/test', isAuthenticated, function(req, res){
+  	res.render('test', {message: req.flash('message')});
+});
+
+
 module.exports = router;
 return router;
 }

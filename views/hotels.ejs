@@ -61,44 +61,41 @@
                 </form>
             </div>
         </div>
-        <div class="hotels_container">
-            <div class="row inner_container" style="margin:0;">
+
+
+        <div class="container">
                 <% hotels.forEach(function(hotel){%>
-                    <div class="card col-sm-4 col-md-4 col-lg-3">
-                        <img class="card-img-top" src="/images/photo2.jpg" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <%=hotel.name%>
-                            </h5>
-                            <p class="card-text">
-                                <%=hotel.description%>
-                            </p>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Customers Review:
-                                <%=hotel.review%>
-                            </li>
+                <div class="wrapper">
+                    <div class="card_container">
+            
 
-                            <li class="list-group-item">Stars:
-                                <% for(var i=0; i < hotel.stars; i++){%><span class="fa fa-star checked"></span><% }%>
-                            </li>
-                            <li class="list-group-item">Location:
-                                <%=hotel.city%>,
-                                    <%=hotel.country%>
-                            </li>
-                        </ul>
-                        <div class="card-body">
-                            <a href="/hotels/<%= hotel.id%>" class="card-link">Check Hotel</a>
-                            <a path="/hotels/<%= hotel.id%>/reserve" href='#' class="card-link reserveLink">Reserve</a>
+                        <div class="row">
+                            <div class="col-3 align-self-center" style="padding-left: 25px;padding-right: 0px;">
+                                <img title="Check Hotel" class="card_image img-thumbnail" path="/hotels/<%= hotel.id%>" src="/images/photo2.jpg" alt="Check Hotel"></div>
+                            <div class="col-9">
+                                <div class="card_header">
+                                    <h4 style="display:inline;"><%=hotel.name%> </h4>
+                                    <% for(var i=0; i < hotel.stars; i++){%><span class="fa fa-star checked"></span><% }%>
+                                    <span class="review">Review<br><%=hotel.review%> </span>
+                                </div>
+                                <hr style="margin-left: 90px;">
+                                <div class="card_body">
+                                    <ul class="hotel_list">
+                                        <li><a class="hotel_item" href="#location"><Strong><span class="fa fa-map-marker fa-lg"></span></Strong>
+                                            <%=hotel.city%>, <%=hotel.country%></a></li>
+                                        <li><a class="hotel_item" href="#description" style="padding-bottom: 0"><Strong><i class="fa fa-align-justify fa-lg"></i></Strong>
+                                            <%=hotel.description%></a></li>
+                                    </ul>
+                                </div>
+                                <a path="/hotels/<%= hotel.id%>/reserve" href='#' id="about" class="btn btn-outline-light btn-sm reserveLink">Reserve</a>
+                            </div>
                         </div>
+
+            
                     </div>
-
-
-                    <% }) %>
-
+                </div>
+                <% }) %>
             </div>
-
-        </div>
 
     </div>
 
@@ -121,6 +118,10 @@
             $('.reserveLink').click(function (e) {
                 window.location = $(this).attr("path") + "?checkin=" + $("#checkin").val() + "&checkout=" + $("#checkout").val();
             });
+
+            $('.card_image').click(function(){
+                window.location = $(this).attr("path");
+            })
 
         });
 
