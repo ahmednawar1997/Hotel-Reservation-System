@@ -86,7 +86,7 @@ function getHotelDetails(req) {
   "FROM hotels "+
   "INNER JOIN facilities "+
   "ON hotels.id = facilities.hotel_id "+
-  "WHERE hotels.id = 3";
+  "WHERE hotels.id = ?";
   return new Promise((resolve, reject) => {
     req.con.query(sql, [req.params.hotel_id], function (err, hotels) {
       if (err) console.log(err);

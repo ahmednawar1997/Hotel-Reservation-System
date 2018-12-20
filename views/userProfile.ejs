@@ -81,8 +81,7 @@
                     </p>
                 </small>
 
-                <a href="#" class="btn btn-danger cancel_button cancel_reservation" res_id="<%=reservation.reservation_id%>">Cancel
-                    Reservation</a>
+                <button href="#" class="btn btn-danger cancel_button cancel_reservation" res_id="<%=reservation.reservation_id%>" <%=reservation.customer_approval===0?'disabled':''%>> <%=reservation.customer_approval===0?'You Cancelled':'Cancel Reservation'%></a>
             </div>
             <% }) %>
         </div>

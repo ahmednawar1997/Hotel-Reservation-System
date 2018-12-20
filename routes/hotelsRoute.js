@@ -78,13 +78,6 @@ router.post("/rate", isAuthenticated, function(req, res){
 
 
 
-
-
-
-
-
-
-
 });
 
 

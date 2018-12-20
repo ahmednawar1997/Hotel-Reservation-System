@@ -124,7 +124,7 @@ function showRoomsForm(hotel_id) {
         $('#roomFormDiv').append(
             '<div class="container">\
         <div class= "jumbotron">\
-        <form class="reg-form" action="/owner/'+ hotel_id + '" method="POST">\
+        <form class="reg-form" action="/user/owner/'+ hotel_id + '" method="POST">\
             <div class="form-group">\
                 <div class="form-group row">\
                     <label for="roomType" class="col-2 col-form-label">Room Type</label>\
