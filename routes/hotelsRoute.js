@@ -75,12 +75,7 @@ router.post("/rate", isAuthenticated, function(req, res){
       req.flash('message', 'Rated your visit with ' + req.body.customer_rating + " stars successfully");
       res.status(202).send('success');
     });
-
-
-
 });
-
-
 
 
 module.exports = router;

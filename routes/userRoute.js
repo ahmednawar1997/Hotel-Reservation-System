@@ -64,6 +64,12 @@ router.post("/owner/:hotel_id(\\d+)/", isAuthenticated, isHotelOwner, (req, res,
   })
 });
 
+router.get("/admin/hotels", isAuthenticated, function(req, res, next) {
+  Hotel.getAllApprovedHotels(req).then(hotels => {
+    res.render("brokerHotels", { hotels: hotels,  message: req.flash('message') });
+  });
+});
+
 
 
 function isHotelOwner(req, res, next) {

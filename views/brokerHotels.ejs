@@ -1,0 +1,61 @@
+<%- include partials/header %>
+    <div class="container">
+        <div class="jumbotron">
+            <div class="heading">
+                <h3>All Hotels</h3>
+            </div>            
+        </div>
+        <div class="hotels_container">
+            <div class="row inner_container" style="margin:0;">
+                <% hotels.forEach(function(hotel){%>
+                    <div class="card col-sm-4 col-md-4 col-lg-3">
+                        <img class="card-img-top" src="/images/photo2.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <%=hotel.name%>
+                            </h5>
+                            <p class="card-text">
+                                <%=hotel.description%>
+                            </p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Customers Review:
+                                <%=hotel.review%>
+                            </li>
+
+                            <li class="list-group-item">Stars:
+                                <% for(var i=0; i < hotel.stars; i++){%><span class="fa fa-star checked"></span><% }%>
+                            </li>
+                            <li class="list-group-item">Location:
+                                <%=hotel.city%>,
+                                    <%=hotel.country%>
+                            </li>
+                        </ul>
+                        <div class="card-body">
+                            <a href="/hotels/<%= hotel.id%>" class="card-link">Suspend Hotel</a>
+                            <a path="/hotels/<%= hotel.id%>/reserve" href='#' class="card-link reserveLink">Warn the hotel</a>
+                        </div>
+                    </div>
+
+
+                    <% }) %>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <script>
+
+
+    </script>
+    </body>
+
+    </html>

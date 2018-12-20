@@ -40,7 +40,7 @@ function getAllOwnedHotels(req) {
 }
 
 function getAllApprovedHotels(req) {
-  var sql = "SELECT * FROM hotels where approved = ?";
+  var sql = "SELECT * FROM hotels INNER JOIN hotel_locations ON hotels.id = hotel_locations.hotel_id where approved = ?";
   return new Promise((resolve, reject) => {
     req.con.query(sql, [1], function (err, hotels) {
       if (err) console.log(err);
