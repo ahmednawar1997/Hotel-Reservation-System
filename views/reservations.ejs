@@ -17,12 +17,12 @@
                     <div class="col-1"></div>
                     <div class="form-check col-9">
                         <div>
-                            <input class="form-check-input " type="checkbox" name="upcoming" value="true" checked>
+                            <input class="form-check-input " type="checkbox" name="upcoming" value="true">
                             <label class="form-check-label" for="upcoming">Upcoming Reservation</label>
                         </div>
                         <div>
-                            <input class="form-check-input " type="checkbox" name="upcoming" value="true" checked>
-                            <label class="form-check-label" for="upcoming">Past Reservation</label>
+                            <input class="form-check-input " type="checkbox" name="past" value="true">
+                            <label class="form-check-label" for="past">Past Reservation</label>
                         </div>
                     </div>
 
@@ -53,7 +53,7 @@
                                     <div class="checkmark_kick"></div>
                                 </span>
 
-                                <%}}else if(detailedReservations[i].hotel_approval===0 ){%>
+                                <%}}else if(detailedReservations[i].hotel_approval){%>
                                     <span class="checkmark">
                                         <div class="canceled_circle"></div>
                                     </span>
