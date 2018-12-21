@@ -157,7 +157,19 @@ function getOwnedHotelDetails(req) {
   });
 }
 
+function getCustomerReviews(req) {
+  var query = "SELECT * " +
+    "FROM customer_reviews, reservations, users " +
+    "WHERE customer_reviews.reservation_id=reservations.reservation_id " +
+    "AND reservations.customer_id=users.id";
 
+  return new Promise((resolve, reject) => {
+    req.con.query(query, [], function (err, reviews) {
+      if (err) console.log(err);
+      resolve(reviews);
+    });
+  });
+}
 
 module.exports = {
   insertHotel: insertHotel,
@@ -170,7 +182,8 @@ module.exports = {
   approveHotel,
   getHotelAverageRating,
   getHotelDetailsAndRooms,
-  getPremiumHotels
+  getPremiumHotels,
+  getCustomerReviews
 };
 
 
