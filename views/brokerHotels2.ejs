@@ -1,0 +1,70 @@
+<%- include partials/header %>
+
+    <% hotels.forEach(hotel => {%>
+        <div class="container">
+            <div class="card">
+                <h5 class="card-header">
+                    <% if(hotel.approved===1){ %>
+                        <span class="checkmark">
+                            <div class="checkmark_circle"></div>
+                            <div class="checkmark_stem"></div>
+                            <div class="checkmark_kick"></div>
+                        </span>
+                        <%}else{%>
+                            <span class="checkmark">
+                                <div class="pending_circle"></div>
+                            </span>
+                            <%}%>
+
+                                <%= hotel.name%> Hotel
+
+                </h5>
+                <div class="card-body">
+                    <p class="card-title"><strong> <%=hotel.name%> Hotel</strong> <br> Owned by
+                    </p>
+                    <!-- <button type="button" class="btn btn-success">Approve</button> -->
+                    <div id="accordion">
+                        <div class="card">
+
+                            <h5 class="mb-0">
+                                <button class="btn btn-secondary btn-block collapsed" data-toggle="collapse" data-target="#<%=hotel.id%>" aria-expanded="false"
+                                    aria-controls="<%=hotel.id%>">
+                                    Guest Info
+                                </button>
+                            </h5>
+
+                            <div id="<%=hotel.id%>" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                                <div class="card-body">
+                                    <ul>
+                                        <li>Name:
+
+                                        </li>
+                                        <li>Email:
+
+                                        </li>
+                                        <li>Check-in Date:
+
+                                        </li>
+                                        <li>Check-out Date:
+
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <%})%>
+
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                crossorigin="anonymous"></script>
+            <script src="/javascripts/hotels.js"></script>
+            </body>
+
+            </html>
