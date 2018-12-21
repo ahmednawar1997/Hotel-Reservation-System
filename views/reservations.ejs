@@ -13,12 +13,27 @@
                     <div class="col-3">
                         <input class="form-control" type="date" name="checkout" id="checkout">
                     </div>
-                    <div class="col-2">
+                    <div class="col-2"></div>
+                    <div class="col-1"></div>
+                    <div class="form-check col-9">
+                        <div>
+                            <input class="form-check-input " type="checkbox" name="upcoming" value="true" checked>
+                            <label class="form-check-label" for="upcoming">Upcoming Reservation</label>
+                        </div>
+                        <div>
+                            <input class="form-check-input " type="checkbox" name="upcoming" value="true" checked>
+                            <label class="form-check-label" for="upcoming">Past Reservation</label>
+                        </div>
+                    </div>
+
+                    <div class="col-1">
                         <input class="btn btn-outline-dark" type="submit">
                     </div>
                 </div>
-            </form>
+
         </div>
+        </form>
+    </div>
     </div>
 
 
@@ -27,18 +42,28 @@
             <div class="card">
                 <h5 class="card-header">
                     <% if(detailedReservations[i].hotel_approval===1){ %>
-                        <span class="checkmark">
-                            <div class="checkmark_circle"></div>
-                            <div class="checkmark_stem"></div>
-                            <div class="checkmark_kick"></div>
-                        </span>
-                        <%}else{%>
+                        <%if(detailedReservations[i].customer_approval===0){%>
                             <span class="checkmark">
-                                <div class="pending_circle"></div>
+                                <div class="canceled_circle"></div>
                             </span>
-                            <%}%>
-                                Reservation #
-                                <%= detailedReservations[i].reservation_id%><span style="color:red"><%=detailedReservations[i].customer_approval===0?' Customer Cancelled':''%></span>
+                            <%}else {%>
+                                <span class="checkmark">
+                                    <div class="checkmark_circle"></div>
+                                    <div class="checkmark_stem"></div>
+                                    <div class="checkmark_kick"></div>
+                                </span>
+
+                                <%}}else if(detailedReservations[i].hotel_approval===0 ){%>
+                                    <span class="checkmark">
+                                        <div class="canceled_circle"></div>
+                                    </span>
+                                    <%}else{%>
+                                        <span class="checkmark">
+                                            <div class="pending_circle"></div>
+                                        </span>
+                                        <%}%>
+                                            Reservation #
+                                            <%= detailedReservations[i].reservation_id%><span style="color:red"><%=detailedReservations[i].customer_approval===0?' Customer Cancelled':''%></span>
 
                 </h5>
                 <div class="card-body">

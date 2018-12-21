@@ -1,29 +1,33 @@
 var express = require("express");
-var multer  = require('multer');
+var multer = require('multer');
 var router = express.Router();
 var Hotel = require("../entities/Hotel");
 var Room = require("../entities/Room");
 var Reservation = require("../entities/Reservation");
 
 var storage = require('../helpers/uploadFile');
-var upload = multer({ storage: storage }); 
+var upload = multer({ storage: storage });
 
 
 router.get("/", isAuthenticated, (req, res) => {
-    Reservation.getAllOwnerUpcomingReservations(req).then(function(upcomingReservations){
-        Reservation.getAllOwnerPastReservations(req).then(function(pastReservations){
-            if(req.user.type==="broker"){
-                Hotel.getAllNonApprovedHotels(req).then(function(notApprovedHotels){
-                    res.render("userProfile", {message: req.flash('message'), upcomingReservations: upcomingReservations,
-                    pastReservations: pastReservations, notApprovedHotels: notApprovedHotels});
-                });
-            }else{
-            
-                res.render("userProfile", {message: req.flash('message'), upcomingReservations: upcomingReservations,
-                pastReservations: pastReservations, notApprovedHotels:{}});
-            }
-            });
+  Reservation.getAllOwnerUpcomingReservations(req).then(function (upcomingReservations) {
+    Reservation.getAllOwnerPastReservations(req).then(function (pastReservations) {
+      if (req.user.type === "broker") {
+        Hotel.getAllNonApprovedHotels(req).then(function (notApprovedHotels) {
+          res.render("userProfile", {
+            message: req.flash('message'), upcomingReservations: upcomingReservations,
+            pastReservations: pastReservations, notApprovedHotels: notApprovedHotels
+          });
+        });
+      } else {
+
+        res.render("userProfile", {
+          message: req.flash('message'), upcomingReservations: upcomingReservations,
+          pastReservations: pastReservations, notApprovedHotels: {}
+        });
+      }
     });
+  });
 
 });
 
@@ -56,10 +60,10 @@ router.post("/owner/register-hotel", isAuthenticated, isHotelOwner, upload.singl
 
 
 router.get("/owner/:hotel_id(\\d+)/", isAuthenticated, isHotelOwner, (req, res, next) => {
-    Hotel.getOwnedHotelDetails(req).then(hotelObj => {
-      res.render("viewOwnedHotel", { message: req.flash('message'), hotel: hotelObj.hotel, rooms: hotelObj.rooms });
-    });
+  Hotel.getOwnedHotelDetails(req).then(hotelObj => {
+    res.render("viewOwnedHotel", { message: req.flash('message'), hotel: hotelObj.hotel, rooms: hotelObj.rooms });
   });
+});
 
 router.post("/owner/:hotel_id(\\d+)/", isAuthenticated, isHotelOwner, (req, res, next) => {
   Room.insertRoom(req).then(() => {
@@ -69,15 +73,15 @@ router.post("/owner/:hotel_id(\\d+)/", isAuthenticated, isHotelOwner, (req, res,
   })
 });
 
-router.get("/admin/hotels", isAuthenticated, function(req, res, next) {
+router.get("/admin/hotels", isAuthenticated, function (req, res, next) {
   Hotel.getAllApprovedHotels(req).then(hotels => {
-    res.render("brokerHotels", { hotels: hotels,  message: req.flash('message') });
+    res.render("brokerHotels2", { hotels: hotels, message: req.flash('message') });
   });
 });
 
-router.get("/edit", isAuthenticated, function(req, res, next) {
-  
-    res.render("editUserForm", { message: req.flash('message') });
+router.get("/edit", isAuthenticated, function (req, res, next) {
+
+  res.render("editUserForm", { message: req.flash('message') });
 
 });
 
@@ -87,23 +91,23 @@ router.post("/uploadPicture", isAuthenticated, upload.single('avatar'), (req, re
 
 
 function isHotelOwner(req, res, next) {
-    if (req.user.type !== 'hotel_owner' && req.user.type !== 'broker') {
-        req.flash('message', 'You don\'t have authorization to complete this action');
-        res.redirect("/login");
-        return;
-        //req.path
-    }
-    return next();
+  if (req.user.type !== 'hotel_owner' && req.user.type !== 'broker') {
+    req.flash('message', 'You don\'t have authorization to complete this action');
+    res.redirect("/login");
+    return;
+    //req.path
+  }
+  return next();
 }
 
 
 function isAuthenticated(req, res, next) {
-    if (!req.isAuthenticated()) {
-        req.flash('message', 'You must be logged in to complete this action');
-        res.redirect("/login");
-        return;
-    }
-    return next();
+  if (!req.isAuthenticated()) {
+    req.flash('message', 'You must be logged in to complete this action');
+    res.redirect("/login");
+    return;
+  }
+  return next();
 }
 
 

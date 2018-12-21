@@ -32,3 +32,11 @@ This is a backup for the horizontal hotels view for later use
 </div> -->
 
 
+
+user/admin/hotels broker change layout like reservations
+Add hotel owner checkbox for passed and upcoming for reservations
+owner for upcoming reservations add approve or cancel
+Red button reservations
+My hotels structure same as reservations
+My hotels Approved or Not
+
