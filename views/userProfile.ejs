@@ -8,11 +8,13 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link profile_navbar_item" data-toggle="tab" href="#upcoming_reservations_id">Upcoming
-                    Reservations[<%=upcomingReservations.length%>]</a>
+                    Reservations[
+                    <%=upcomingReservations.length%>]</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link profile_navbar_item" data-toggle="tab" href="#past_reservations_id">Past
-                    Reservations[<%=pastReservations.length%>]</a>
+                    Reservations[
+                    <%=pastReservations.length%>]</a>
             </li>
             <% if ( user.type==='broker') { %>
             <li class="nav-item ml-auto">
@@ -40,136 +42,146 @@
             <% if ( !user.image_path) { %>
             <div class="avatar"><img src="/images/avatar.png" class="rounded-circle img-responsive" style="height: 25%; padding:20px;">
                 <% } else{%>
-            <div class="avatar"><img src="/uploads/<%=user.image_path%>" class="rounded-circle img-responsive" style="height: 25%; padding:20px;">
-            </div>
-            <% } %>
-
-            <div class="card-block">
-                <h4 class="card-title">
-                    <%= user.name%>
-                </h4>
-                <hr>
-                <p><i class="fa fa-envelope"></i><strong> Email: </strong>
-                    <%= user.email%>
-                </p>
-                <p><i class="fa fa-suitcase"></i><strong> Authority: </strong>
-                    <%= user.type%>
-                </p>
-                <p><i class="fa fa-calendar"></i><strong> Registration Date: </strong>
-                    <%= user.registration_date%>
-                </p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="tab-content">
-    <div class="container upcoming_reservations tab-pane" id="upcoming_reservations_id">
-        <div class="card text-center">
-            <div class="card-header">
-                <strong>
-                    <p>Upcoming Reservations</p>
-                </strong>
-            </div>
-            <% upcomingReservations.forEach(function(reservation){%>
-            <div class="card-body reservations_body">
-                <h5 class="card-title">
-                    <%=reservation.hotel_name%>
-                </h5>
-                <p class="card-text">Check in Date:
-                    <%=reservation.check_in_date%>
-                </p>
-                <p class="card-text">Check out Date:
-                    <%=reservation.check_out_date%>
-                </p>
-                <small>
-                    <p class="card-text">Date Of Reservation:
-                        <%=reservation.reservation_date%>
-                    </p>
-                </small>
-
-                <button href="#" class="btn btn-danger cancel_button cancel_reservation" res_id="<%=reservation.reservation_id%>" <%=reservation.customer_approval===0?'disabled':''%>> <%=reservation.customer_approval===0?'You Cancelled':'Cancel Reservation'%></a>
-            </div>
-            <% }) %>
-        </div>
-    </div>
-    <div class="container upcoming_reservations tab-pane" id="past_reservations_id">
-        <div class="card text-center">
-            <div class="card-header">
-                <strong>
-                    <p>Past Reservations</p>
-                </strong>
-            </div>
-            <% pastReservations.forEach(function(reservation){%>
-            <div class="card-body reservations_body">
-                <h5 class="card-title">
-                    <%=reservation.hotel_name%>
-                </h5>
-                <p class="card-text">Check in Date:
-                    <%=reservation.check_in_date%>
-                </p>
-                <p class="card-text">Check out Date:
-                    <%=reservation.check_out_date%>
-                </p>
-                <small>
-                    <p class="card-text">Date Of Reservation:
-                        <%=reservation.reservation_date%>
-                    </p>
-                </small>
-                <button type="submit" class="btn btn-outline-warning btn-sm rate_button" review="<%=reservation.customer_review%>" <%=reservation.customer_review?'disabled':''%>>Rate
-                    your visit</button>
-                <div class="rate_visit" hotel_id="<%=reservation.hotel_id%>" reservation_id="<%=reservation.reservation_id%>">
-                    <span class="fa fa-star first" value="1"></span>
-                    <span class="fa fa-star" value="2"></span>
-                    <span class="fa fa-star" value="3"></span>
-                    <span class="fa fa-star" value="4"></span>
-                    <span class="fa fa-star" value="5"></span>
+                <div class="avatar"><img src="/uploads/<%=user.image_path%>" class="rounded-circle img-responsive"
+                        style="height: 25%; padding:20px;">
                 </div>
+                <% } %>
 
+                <div class="card-block">
+                    <h4 class="card-title">
+                        <%= user.name%>
+                    </h4>
+                    <hr>
+                    <p><i class="fa fa-envelope"></i><strong> Email: </strong>
+                        <%= user.email%>
+                    </p>
+                    <p><i class="fa fa-suitcase"></i><strong> Authority: </strong>
+                        <%= user.type%>
+                    </p>
+                    <p><i class="fa fa-calendar"></i><strong> Registration Date: </strong>
+                        <%= user.registration_date%>
+                    </p>
+                </div>
             </div>
-            <% }) %>
         </div>
     </div>
-    <div class="container upcoming_reservations tab-pane" id="hotels_not_approved">
-        <div class="card text-center">
-            <div class="card-header">
-                <strong>
-                    <p>Hotels Not Approved</p>
-                </strong>
+
+    <div class="tab-content">
+        <div class="container upcoming_reservations tab-pane" id="upcoming_reservations_id">
+            <div class="card text-center">
+                <div class="card-header">
+                    <strong>
+                        <p>Upcoming Reservations</p>
+                    </strong>
+                </div>
+                <% upcomingReservations.forEach(function(reservation){%>
+                <div class="card-body reservations_body">
+                    <h5 class="card-title">
+                        <%=reservation.hotel_name%>
+                    </h5>
+                    <p class="card-text">Check in Date:
+                        <%=reservation.check_in_date%>
+                    </p>
+                    <p class="card-text">Check out Date:
+                        <%=reservation.check_out_date%>
+                    </p>
+                    <small>
+                        <p class="card-text">Date Of Reservation:
+                            <%=reservation.reservation_date%>
+                        </p>
+                    </small>
+
+                    <button href="#" class="btn btn-danger cancel_button cancel_reservation" res_id="<%=reservation.reservation_id%>"
+                        <%=reservation.customer_approval===0?'disabled':''%>>
+                        <%=reservation.customer_approval===0?'You Cancelled':'Cancel Reservation'%></a>
+                </div>
+                <% }) %>
             </div>
-            <% if(notApprovedHotels&&notApprovedHotels.length>0){%>
-            <% notApprovedHotels.forEach(function(hotel){%>
-            <div class="card-body reservations_body">
-                <h5 class="card-title">
-                    <%=hotel.name%>
-                </h5>
-                <p class="card-text">Owner:
-                    <%=hotel.owner_name%>
-                </p>
-                <p class="card-text">Description:
-                    <%=hotel.description%>
-                </p>
+        </div>
+        <div class="container upcoming_reservations tab-pane" id="past_reservations_id">
+            <div class="card text-center">
+                <div class="card-header">
+                    <strong>
+                        <p>Past Reservations</p>
+                    </strong>
+                </div>
+                <% pastReservations.forEach(function(reservation){%>
+                <div class="card-body reservations_body">
+                    <h5 class="card-title">
+                        <%=reservation.hotel_name%>
+                    </h5>
+                    <p class="card-text">Check in Date:
+                        <%=reservation.check_in_date%>
+                    </p>
+                    <p class="card-text">Check out Date:
+                        <%=reservation.check_out_date%>
+                    </p>
+                    <small>
+                        <p class="card-text">Date Of Reservation:
+                            <%=reservation.reservation_date%>
+                        </p>
+                    </small>
+                    <button type="submit" class="btn btn-outline-warning btn-sm rate_button" review="<%=reservation.customer_review%>"
+                        <%=reservation.customer_review?'disabled':''%>>Rate
+                        your visit</button>
+                    <div class="rate_visit" hotel_id="<%=reservation.hotel_id%>" reservation_id="<%=reservation.reservation_id%>">
+                        <span class="fa fa-star first" value="1"></span>
+                        <span class="fa fa-star" value="2"></span>
+                        <span class="fa fa-star" value="3"></span>
+                        <span class="fa fa-star" value="4"></span>
+                        <span class="fa fa-star" value="5"></span>
+                    </div>
+                    <div class="input-group customer_review visibilityClass">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="basic-addon1" style="background-color: orange; color: white">Review</span>
+                        </div>
+                        <input type="textarea" class="form-control text_area" aria-label="Review" aria-describedby="review">
+                      </div>
 
-                <p class="card-text">Stars:
-                    <%=hotel.stars%>
-                </p>
-
-
-                <a href="#" class="btn btn-outline-success approve_btn" hotel_id="<%=hotel.id%>">Approve</a>
+                </div>
+                <% }) %>
             </div>
-            <% }) %>
-            <% } %>
+        </div>
+        <div class="container upcoming_reservations tab-pane" id="hotels_not_approved">
+            <div class="card text-center">
+                <div class="card-header">
+                    <strong>
+                        <p>Hotels Not Approved</p>
+                    </strong>
+                </div>
+                <% if(notApprovedHotels&&notApprovedHotels.length>0){%>
+                <% notApprovedHotels.forEach(function(hotel){%>
+                <div class="card-body reservations_body">
+                    <h5 class="card-title">
+                        <%=hotel.name%>
+                    </h5>
+                    <p class="card-text">Owner:
+                        <%=hotel.owner_name%>
+                    </p>
+                    <p class="card-text">Description:
+                        <%=hotel.description%>
+                    </p>
+
+                    <p class="card-text">Stars:
+                        <%=hotel.stars%>
+                    </p>
+
+
+                    <a href="#" class="btn btn-outline-success approve_btn" hotel_id="<%=hotel.id%>">Approve</a>
+                </div>
+                <% }) %>
+                <% } %>
+            </div>
         </div>
     </div>
-</div>
-<script src="/javascripts/userProfile.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
+    <script src="/javascripts/userProfile.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 
 
 
-</body>
+    </body>

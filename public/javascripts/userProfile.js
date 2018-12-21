@@ -2,8 +2,26 @@ $(function () {
 
     $('.rate_button').click(function (e) {
         e.preventDefault();
-        $(this).next('.rate_visit').slideDown('slow');
-        $(this).text('Submit');
+        if (!$(this).attr('pressed')) {
+            $(this).next('.rate_visit').slideDown('slow');
+            $(this).text('Submit');
+        } else {
+            $.ajax({
+                type: 'post',
+                url: '/hotels/review',
+                data: {
+                    reservation_id: $(this).next('.rate_visit').attr('reservation_id'),
+                    customer_review: $(this).next().next('.customer_review').children('.text_area').val()
+                },
+                success: function (data) {
+                    window.location = '/user';
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    alert('fail');
+                }
+            });
+
+        }
     });
 
     $('.fa.fa-star').hover(function (e) {
@@ -17,7 +35,11 @@ $(function () {
 
     $('.fa.fa-star').click(function (e) {
         e.preventDefault();
-        alert('res_id: '+$(this).parent('.rate_visit').attr('reservation_id'));
+        $(this).parent().hide();
+        $(this).parent().next('.customer_review').removeClass('visibilityClass');
+        $(this).parent().prev('.rate_button').attr("pressed", "pressed");
+
+
         $.ajax({
             type: 'post',
             url: '/hotels/rate',
@@ -27,7 +49,8 @@ $(function () {
                 reservation_id: $(this).parent('.rate_visit').attr('reservation_id')
             },
             success: function (data) {
-                window.location = '/user';
+                // window.location = '/user';
+
             },
             error: function (xhr, textStatus, errorThrown) {
                 alert('fail');
@@ -35,6 +58,12 @@ $(function () {
         });
 
     });
+
+
+
+
+
+
 
 
     $('.approve_btn').click(function (e) {
@@ -71,7 +100,10 @@ $(function () {
         });
     });
 
-
-    $('.rate_button:disabled').text('Rated ' + $('.rate_button:disabled').attr('review') + ' stars').css({'color':'grey'});
+    $.each($('.rate_button:disabled'), function (index, value) {
+        $(this).text('Rated ' + $(this).attr('review') + ' stars').css({
+            'color': 'grey'
+        });;
+    });
 
 });

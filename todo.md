@@ -13,3 +13,4 @@
 -Broker may blacklist a customer
 -All money calculations and money owned features
 -Owner can approve reservation within 30 seconds
+-Customer add review comment

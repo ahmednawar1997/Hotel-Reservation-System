@@ -98,14 +98,18 @@ function insertCustomerReview(req, reservation_id, customer_rating) {
         });
     });
   }
-  
 
+  function insertCustomerReviewComment(req, reservation_id, customer_review) {
+    var query = "UPDATE customer_reviews SET customer_comment = ? WHERE reservation_id = ?";
+    return new Promise((resolve, reject) => { 
+        req.con.query(query, [customer_review, reservation_id], (err, customer_review) => {
+            if (err) console.log(err);
+            console.log(customer_review);
+            resolve(customer_review);
+        });
+    });
+  }
 
-
-
-  
-
-  
 
 function getAllOwnerReservationsWithRoomsDetails(req) {
   var query = "SELECT hotels.name as hotel_name, reservations.*, users.*, reserved_rooms.* " +
@@ -172,5 +176,6 @@ module.exports = {
     cancelReservationFromCustomer,
     getAllOwnerUpcomingReservations,
     getAllOwnerPastReservations,
-    getAllOwnerReservationsWithRoomsDetailsBetweenDates
+    getAllOwnerReservationsWithRoomsDetailsBetweenDates,
+    insertCustomerReviewComment
   };

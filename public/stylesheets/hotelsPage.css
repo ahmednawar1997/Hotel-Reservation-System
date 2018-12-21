@@ -15,15 +15,13 @@
 
 }
 
-
-
 .card_container {
     border-radius: 15px;
 }
 
 .wrapper {
     /* height: 30%; */
-    background-color: #eae3d3;
+    background-color: #cec2c2;
     border-radius: 15px;
     opacity: 0.9;
     margin-bottom: 20px;

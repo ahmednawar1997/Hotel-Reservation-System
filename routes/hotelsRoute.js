@@ -93,6 +93,15 @@ router.post("/rate", isAuthenticated, function (req, res) {
 });
 
 
+router.post("/review", isAuthenticated, function (req, res) {
+
+  Reservation.insertCustomerReviewComment(req, req.body.reservation_id, req.body.customer_review).then(function (reservation_id) {
+    console.log(reservation_id);
+    res.status(202).send('success');
+  });
+});
+
+
 module.exports = router;
 
 function isAuthenticated(req, res, next) {

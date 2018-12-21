@@ -23,3 +23,12 @@
 .fa.fa-star:hover{
     cursor: pointer;
 }
+.customer_review{
+    padding: 5px;
+    margin: auto;
+    width: 50%;
+    height:35px;
+}
+.visibilityClass{
+    display: none;
+}
