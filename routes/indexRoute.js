@@ -1,6 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var Hotel  = require('../entities/hotel');
+var multer  = require('multer');
+
+var storage = require('../helpers/uploadFile');
+var upload = multer({ storage: storage }); 
 
 
 module.exports = function(passport) {
@@ -30,7 +34,7 @@ router.get('/register', function(req, res, next) {
 });
 
 
-router.post('/register', passport.authenticate('sign-up', {
+router.post('/register', upload.single('avatar'), passport.authenticate('sign-up', {
 	successRedirect : '/home',
 	failureRedirect : '/register',
 	failureFlash : true 

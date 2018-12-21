@@ -29,7 +29,7 @@
                     Reservations</a></li>
             <% } %>
             <li class="nav-item ml-auto">
-                <a class="nav-link profile_navbar_item" href="/edit">Edit Profile</a>
+                <a class="nav-link profile_navbar_item" href="/user/edit">Edit Profile</a>
             </li>
         </ul>
     </div>
@@ -37,8 +37,12 @@
         <div class="card testimonial-card">
             <div class="card-up default-color-dark">
             </div>
+            <% if ( !user.image_path) { %>
             <div class="avatar"><img src="/images/avatar.png" class="rounded-circle img-responsive" style="height: 25%; padding:20px;">
+                <% } else{%>
+            <div class="avatar"><img src="/uploads/<%=user.image_path%>" class="rounded-circle img-responsive" style="height: 25%; padding:20px;">
             </div>
+            <% } %>
 
             <div class="card-block">
                 <h4 class="card-title">

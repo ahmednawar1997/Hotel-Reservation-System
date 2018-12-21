@@ -48,10 +48,13 @@ passport.use('sign-up', new LocalStrategy({
 },
 function(req, email, password, done) {
     // we are checking to see if the user trying to login already exists
+    console.log('sign up');
     req.con.query("select * from users where email = ?", [email], function(err, users){
         // if there are any errors, return the error
-        if (err)
-            return done(err);
+        console.log(email);
+        if (err){
+            console.log(err);
+            return done(err);}
 
         // check to see if theres already a user with that email
         if (users.length > 0) {
@@ -65,9 +68,8 @@ function(req, email, password, done) {
             date.format(now, 'YYYY-MM-DD'); 
 
             var passwordHash = password;
-
-            var sql = "INSERT INTO users (name, email, password, registration_date, type) VALUES (?, ?, ?, ?, ?)";
-            req.con.query(sql, [ req.body.name, email, passwordHash, now, req.body.usertype], function(err, user) {
+            var sql = "INSERT INTO users (name, email, password, registration_date, type, image_path) VALUES (?, ?, ?, ?, ?, ?)";
+            req.con.query(sql, [ req.body.name, email, passwordHash, now, req.body.usertype, req.file.filename], function(err, user) {
                 if(err) console.log(err);
                 else{
                     return done(null, user.insertId, req.flash('message', 'Signed Up Successful'));

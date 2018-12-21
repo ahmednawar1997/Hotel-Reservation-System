@@ -1,8 +1,13 @@
 var express = require("express");
+var multer  = require('multer');
 var router = express.Router();
 var Hotel = require("../entities/Hotel");
 var Room = require("../entities/Room");
 var Reservation = require("../entities/Reservation");
+
+var storage = require('../helpers/uploadFile');
+var upload = multer({ storage: storage }); 
+
 
 router.get("/", isAuthenticated, (req, res) => {
     Reservation.getAllOwnerUpcomingReservations(req).then(function(upcomingReservations){
@@ -41,7 +46,7 @@ router.get("/owner/register-hotel", isAuthenticated, isHotelOwner, (req, res, ne
 });
 
 
-router.post("/owner/register-hotel", isAuthenticated, isHotelOwner, (req, res, next) => {
+router.post("/owner/register-hotel", isAuthenticated, isHotelOwner, upload.single('avatar'), (req, res, next) => {
   Hotel.insertHotel(req).then(() => {
     Hotel.getAllOwnedHotels(req).then(hotels => {
       res.render("ownersHotels", { message: req.flash('message'), hotels: hotels });
@@ -70,6 +75,15 @@ router.get("/admin/hotels", isAuthenticated, function(req, res, next) {
   });
 });
 
+router.get("/edit", isAuthenticated, function(req, res, next) {
+  
+    res.render("editUserForm", { message: req.flash('message') });
+
+});
+
+router.post("/uploadPicture", isAuthenticated, upload.single('avatar'), (req, res, next) => {
+  console.log(req.file.filename);
+});
 
 
 function isHotelOwner(req, res, next) {

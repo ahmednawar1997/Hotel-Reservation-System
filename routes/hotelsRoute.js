@@ -52,6 +52,7 @@ router.get("/:hotel_id(\\d+)/reserve", isAuthenticated, function(req, res){
         res.render("viewRegistration", { message: req.flash('message'), hotel: hotel, query: req.query, rooms: rooms});    
         });
 
+    });
   });
 });
 
