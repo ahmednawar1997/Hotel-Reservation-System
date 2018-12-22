@@ -76,8 +76,10 @@
                                             <%= detailedReservations[i].reservation_id%><span style="color:red;float:right;"><%=detailedReservations[i].customer_approval===0?' Customer Cancelled':''%></span>
                                                 <%if(!detailedReservations[i].hotel_approval && detailedReservations[i].hotel_approval!==0 ){%>
 
-                                                    <button type="button" class="btn btn-danger btn-sm" style="float:right" id="cancelButton" value="<%=detailedReservations[i].reservation_id%>">Cancel</button>
-                                                    <button type="button" class="btn btn-success btn-sm" style="float:right; margin-right:5px" id="approveButton" value="<%=detailedReservations[i].reservation_id%>">Approve</button>
+                                                    <button type="button" class="btn btn-danger btn-sm" style="float:right" id="cancelButton<%=detailedReservations[i].reservation_id%>"
+                                                        onclick="cancelReservation('<%=detailedReservations[i].reservation_id%>')">Cancel</button>
+                                                    <button type="button" class="btn btn-success btn-sm" style="float:right; margin-right:5px" id="approveButton<%=detailedReservations[i].reservation_id%>"
+                                                        onclick="approveReservation('<%=detailedReservations[i].reservation_id%>')">Approve</button>
                                                     <%}%>
                 </h5>
                 <div class="card-body">
