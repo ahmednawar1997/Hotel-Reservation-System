@@ -1,4 +1,4 @@
-body{
+body {
     background-image: url("/images/pyramids.jpg");
     background-repeat: no-repeat;
     background-size: cover;
@@ -7,25 +7,37 @@ body{
     /* background-size: cover; */
 
 }
-.container{
+
+#brand_name {
+    color: white;
+    font-weight: bold;
+    margin: auto;
+    font-family: 'Annie Use Your Telescope', 'cursive, sans-serif'
+}
+
+.container {
     margin: 2% auto;
 }
-.reg-form{
+
+.reg-form {
     border-style: groove;
     border-width: 2px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
-.form-group{
+
+.form-group {
     padding: 10px;
 }
-.error{
+
+.error {
     border-color: #ff8080;
 }
-.heading{
+
+.heading {
     margin: auto;
     text-align: center;
-    width:100%;
+    width: 100%;
     background-color: #a3a3c2;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -33,24 +45,28 @@ body{
     padding: 20px;
 
 }
-.heading h3{
-    line-height:50px;
-}
-.hotels_container{
-    background-color:#d9d9d9;
-    padding: 10px; 
-    border-radius: 10px;
-}
-.hotels_container .row .card{
-   padding:10px; 
-   border-width:3px;
-   border-radius: 10px;
+
+.heading h3 {
+    line-height: 50px;
 }
 
-.hotel-image{
+.hotels_container {
+    background-color: #d9d9d9;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.hotels_container .row .card {
+    padding: 10px;
+    border-width: 3px;
+    border-radius: 10px;
+}
+
+.hotel-image {
     border-radius: 30px;
 
 }
-.card.mb-3 .row{
+
+.card.mb-3 .row {
     height: 15%;
 }
