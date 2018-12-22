@@ -30,9 +30,16 @@ router.get("/", isAuthenticated, (req, res) => {
   });
 
 });
+router.post("/owner/reservations", isAuthenticated, isHotelOwner, (req, res, next) => {
+  Reservation.changeHotelApproval(req).then(() => {
+    res.send("reservations");
+  })
+
+
+});
+
 
 router.get("/owner/reservations", isAuthenticated, isHotelOwner, (req, res, next) => {
-  console.log("Request fl route: ", req.body);
   Reservation.getAllOwnerReservationsWithRoomsDetailsBetweenDates(req).then(detailedReservations => {
     res.render("reservations", { message: req.flash('message'), detailedReservations });
   })

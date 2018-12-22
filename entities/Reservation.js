@@ -174,8 +174,15 @@ function getAllOwnerReservationsWithRoomsDetailsBetweenDates(req) {
     });
 }
 
-
-
+function changeHotelApproval(req) {
+    var query = "UPDATE reservations SET hotel_approval = ? WHERE reservation_id = ?;";
+    return new Promise((resolve, reject) => {
+        req.con.query(query, [req.body.hotel_approval, req.body.reservation_id], (err, updatedReservation) => {
+            if (err) console.log(err);
+            resolve(updatedReservation);
+        });
+    });
+}
 
 
 module.exports = {
@@ -188,5 +195,6 @@ module.exports = {
     getAllOwnerUpcomingReservations,
     getAllOwnerPastReservations,
     getAllOwnerReservationsWithRoomsDetailsBetweenDates,
-    insertCustomerReviewComment
+    insertCustomerReviewComment,
+    changeHotelApproval
 };

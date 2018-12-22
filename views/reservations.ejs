@@ -52,13 +52,13 @@
                     <% if(detailedReservations[i].hotel_approval===1){ %>
                         <%if(detailedReservations[i].customer_approval===0){%>
                             <span class="checkmark">
-                                <div class="canceled_circle"></div>
+                                <div id="color<%=detailedReservations[i].reservation_id%>" class="canceled_circle"></div>
                             </span>
                             <%}else {%>
                                 <span class="checkmark">
-                                    <div class="checkmark_circle"></div>
+                                    <div id="color<%=detailedReservations[i].reservation_id%>" class="checkmark_circle"></div>
                                     <div class="checkmark_stem"></div>
-                                    <div class="checkmark_kick"></div>
+                                    <div class="checkmark_kick%>"></div>
                                 </span>
 
                                 <%}}else if(detailedReservations[i].hotel_approval===0 ){%>
@@ -67,15 +67,17 @@
                                     </span>
                                     <%}else{%>
                                         <span class="checkmark">
-                                            <div class="pending_circle"></div>
+                                            <div id="color<%=detailedReservations[i].reservation_id%>" class="pending_circle"></div>
+                                            <div class="check1<%=detailedReservations[i].reservation_id%>"></div>
+                                            <div class="check2<%=detailedReservations[i].reservation_id%>"></div>
                                         </span>
                                         <%}%>
                                             Reservation #
                                             <%= detailedReservations[i].reservation_id%><span style="color:red;float:right;"><%=detailedReservations[i].customer_approval===0?' Customer Cancelled':''%></span>
-                                                <%if(!detailedReservations[i].hotel_approval){%>
+                                                <%if(!detailedReservations[i].hotel_approval && detailedReservations[i].hotel_approval!==0 ){%>
 
-                                                    <button type="button" class="btn btn-danger btn-sm" style="float:right">Cancel</button>
-                                                    <button type="button" class="btn btn-success btn-sm" style="float:right; margin-right:5px">Approved</button>
+                                                    <button type="button" class="btn btn-danger btn-sm" style="float:right" id="cancelButton" value="<%=detailedReservations[i].reservation_id%>">Cancel</button>
+                                                    <button type="button" class="btn btn-success btn-sm" style="float:right; margin-right:5px" id="approveButton" value="<%=detailedReservations[i].reservation_id%>">Approve</button>
                                                     <%}%>
                 </h5>
                 <div class="card-body">
@@ -138,6 +140,7 @@
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
                 crossorigin="anonymous"></script>
             <script src="/javascripts/hotels.js"></script>
+            <script src="/javascripts/reservations.js"></script>
             </body>
 
             </html>
