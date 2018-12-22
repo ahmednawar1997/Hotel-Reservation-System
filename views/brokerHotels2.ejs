@@ -14,13 +14,18 @@
                             <span class="checkmark">
                                 <div class="pending_circle"></div>
                             </span>
-                            <%}%>
+                        <%}%>
 
-                                <%= hotel.name%> Hotel
+                                <%= hotel.name%> Hotel 
+                                <% for(var i=0; i < hotel.stars; i++){%><span class="fa fa-star checked fa-xs star_checked"></span>
+                                <% }%>  
+                                <% if(hotel.premium===1){ %>
+                                <i style="color:#6849d1;float:right" title="Premium" class="fa fa-award fa-lg"></i>
+                                <%}%>
 
                 </h5>
                 <div class="card-body">
-                    <p class="card-title"><strong> <%=hotel.name%> Hotel</strong> <br> Owned by
+                    <p class="card-title"><strong> <%=hotel.name%> Hotel</strong> <br> Owned by: <%=hotel.hotel_owner_name%>
                     </p>
                     <!-- <button type="button" class="btn btn-success">Approve</button> -->
                     <div id="accordion">
@@ -29,7 +34,7 @@
                             <h5 class="mb-0">
                                 <button class="btn btn-secondary btn-block collapsed" data-toggle="collapse" data-target="#<%=hotel.id%>" aria-expanded="false"
                                     aria-controls="<%=hotel.id%>">
-                                    Guest Info
+                                    More Info
                                 </button>
                             </h5>
 

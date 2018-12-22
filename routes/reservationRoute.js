@@ -17,9 +17,7 @@ router.post("/cancel", isAuthenticated, function(req, res){
       req.flash('message', 'Reservation Cancelled');
       res.status(202).send('success');
   
-    });
-  
-  
+    });  
 });
 
 

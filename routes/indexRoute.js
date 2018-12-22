@@ -12,6 +12,7 @@ module.exports = function(passport) {
 
 
 router.get('/', function(req, res, next) {
+	console.log('starting app');
 	res.render('index');
 });
 	
