@@ -149,17 +149,14 @@ function getAllOwnerReservationsWithRoomsDetailsBetweenDates(req) {
     var i = 1;
     var queryParams = [req.user.id, 0, 0, 0];
     if (req.query.checkin) {
-        console.log("checkin: ", req.query.checkin);
         query = query + "AND reservations.check_in_date>=? ";
         queryParams[i++] = req.query.checkin;
     }
     if (req.query.checkout) {
-        console.log("checkout: ", req.query.checkout);
         query = query + "AND reservations.check_out_date<=?";
         queryParams[i++] = req.query.checkout;
     }
     if (req.query.upcoming && req.query.past) {
-        console.log("SUPP")
     } else if (req.query.upcoming) {
         query = query + "AND reservations.check_in_date>=?";
         queryParams[i++] = new Date();
@@ -171,8 +168,6 @@ function getAllOwnerReservationsWithRoomsDetailsBetweenDates(req) {
     return new Promise((resolve, reject) => {
         req.con.query(query, queryParams, (err, detailedReservations) => {
             if (err) console.log(err);
-            console.log("hagat el ", queryParams);
-            console.log("TEST: ", detailedReservations);
             resolve(detailedReservations);
         });
     });

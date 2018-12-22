@@ -45,12 +45,12 @@ router.get("/:hotel_id(\\d+)/", isAuthenticated, function (req, res, next) {
 // });
 
 
-router.get("/:hotel_id(\\d+)/reserve", isAuthenticated, function(req, res){
-  Hotel.getHotelDetails(req).then(function(hotel){
-    Room.getRoomsByHotelId(req).then(function(rooms){
-      Room.getAvailableRoomsIfReserved(req, req.params.hotel_id, req.query.checkin, req.query.checkout).then(function(availableRooms){
-        res.render("viewRegistration", { message: req.flash('message'), hotel: hotel, query: req.query, rooms: rooms});    
-        });
+router.get("/:hotel_id(\\d+)/reserve", isAuthenticated, function (req, res) {
+  Hotel.getHotelDetails(req).then(function (hotel) {
+    Room.getRoomsByHotelId(req).then(function (rooms) {
+      Room.getAvailableRoomsIfReserved(req, req.params.hotel_id, req.query.checkin, req.query.checkout).then(function (availableRooms) {
+        res.render("viewRegistration", { message: req.flash('message'), hotel: hotel, query: req.query, rooms: rooms });
+      });
 
     });
   });
