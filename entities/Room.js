@@ -25,7 +25,7 @@ function insertRoom(req) {
 
 
 function getNumberOfRooms(req, hotel_id, checkin, checkout){
-  var query = "SELECT number_of_reserved_rooms.room_type,total_number_of_rooms.room_view,total_number_of_rooms.price,sum1-sum2 AS free_rooms FROM "+
+  var query = "SELECT total_number_of_rooms.room_type,total_number_of_rooms.room_view,total_number_of_rooms.price,sum1-IFNULL(sum2, 0) AS free_rooms FROM "+
   "(SELECT room_type.room_type,room_type.room_view,room_type.price,SUM(room_type.number_of_rooms) AS sum1 "+
   "FROM room_type "+
   "WHERE room_type.hotel_id=? "  +

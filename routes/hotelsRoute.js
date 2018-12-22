@@ -56,6 +56,22 @@ router.get("/:hotel_id(\\d+)/reserve", isAuthenticated, function(req, res){
   });
 });
 
+router.get("/:hotel_id(\\d+)/book", isAuthenticated, function(req, res){
+  Hotel.getHotelDetails(req).then(function(hotel){
+      Room.getNumberOfRooms(req, req.params.hotel_id, req.query.checkin, req.query.checkout).then(function(availableRooms){
+        var checkin = req.query.checkin;
+        var checkout = req.query.checkout;
+        var data ={
+          hotel:hotel,
+          checkin: checkin,
+          checkout:checkout,
+          rooms:availableRooms
+        }
+        res.status(202).send(data);
+        });
+    });
+});
+
 
 router.post("/:hotel_id(\\d+)/reserve", isAuthenticated, function (req, res) {
 

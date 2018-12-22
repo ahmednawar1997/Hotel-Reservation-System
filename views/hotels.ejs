@@ -85,9 +85,6 @@
 
                 </div>
             </div>
-
-
-
         </div>
     </div>
 
@@ -102,9 +99,9 @@
                     <div class="row">
                         <div class="col-3 align-self-center" style="padding-left: 25px;padding-right: 0px;">
                             <% if ( !hotel.image_path) { %>
-                                <img title="Check Hotel" class="card_image img-thumbnail" path="/hotels/<%= hotel.id%>" src="/images/photo2.jpg">
+                            <img title="Check Hotel" class="card_image img-thumbnail" path="/hotels/<%= hotel.id%>" src="/images/photo2.jpg">
                             <% } else{%>
-                                <img title="Check Hotel" class="card_image img-thumbnail" path="/hotels/<%= hotel.id%>" src="/uploads/<%=hotel.image_path%>">
+                            <img title="Check Hotel" class="card_image img-thumbnail" path="/hotels/<%= hotel.id%>" src="/uploads/<%=hotel.image_path%>">
                             <% } %>
                         </div>
                         <div class="col-9">
@@ -128,7 +125,8 @@
                                             <%=hotel.description%></a></li>
                                 </ul>
                             </div>
-                            <a path="/hotels/<%= hotel.id%>/reserve" href='#' id="about" class="btn btn-outline-light btn-sm reserveLink">Reserve</a>
+                            <a path="/hotels/<%= hotel.id%>/reserve" href='#' id="about" class="btn btn-outline-light btn-sm reserveLink"
+                                data-toggle="modal" data-target="#exampleModal" data-hotel_id="<%=hotel.id%>">Reserve</a>
                         </div>
                     </div>
 
@@ -136,6 +134,42 @@
                 </div>
             </div>
             <% }) %>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="max-width: 70%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reservation_hotel_name"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="reservation_form" action="" method="POST">
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label">Check-in Date</label>
+                        <div class="col-3">
+                            <input id="reservation_checkin" class="form-control" type="date" name="checkin" readonly>
+                        </div>
+                        <label class="col-2 col-form-label">Check-out Date</label>
+                        <div class="col-3">
+                            <input id="reservation_checkout" class="form-control" type="date" name="checkout" readonly>
+                        </div>
+                    </div>
+                    <div id="reservation_rooms_div"></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="reservation_button">Book Now</button>
+            </div>
         </div>
     </div>
 </div>
@@ -152,18 +186,70 @@
     $(function () {
 
         $('.filter_checkbox').change(function (e) {
-            $('form').submit();
+            $('#pickDate').submit();
         });
 
 
-        $('.reserveLink').click(function (e) {
-            window.location = $(this).attr("path") + "?checkin=" + $("#checkin").val() + "&checkout=" +
-                $("#checkout").val();
-        });
+        // $('.reserveLink').click(function (e) {
+        //     window.location = $(this).attr("path") + "?checkin=" + $("#checkin").val() + "&checkout=" +
+        //         $("#checkout").val();
+        // });
 
         $('.card_image').click(function () {
             window.location = $(this).attr("path");
         })
+
+
+        $('#reservation_button').click(function (e) {
+            $('#reservation_form').submit();
+        });
+
+
+        $('#exampleModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var hotel_id = button.data('hotel_id');
+            $.ajax({
+                type: 'GET',
+                url: 'hotels/' + hotel_id + '/book',
+                data: {
+                    checkin: $("#checkin").val(),
+                    checkout: $("#checkout").val()
+                },
+                success: function (data) {
+                    updateReservationForm(data);
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    alert('fail');
+                }
+            });
+        });
+
+
+        function updateReservationForm(data) {
+            console.log(data);
+            $('#reservation_hotel_name').text(data.hotel.name);
+            $('#reservation_checkin').val(data.checkin);
+            $('#reservation_checkout').val(data.checkout);
+            $('#reservation_rooms_div').empty();
+
+            $.each(data.rooms, function (index, room) {
+                $('#reservation_rooms_div').append(
+                    '<div class="form-group row">\
+                <label class="col-4 col-form-label">' +
+                    room.room_type + ' Room, ' + room.room_view + ' View, $' + room.price +
+                    '/night</label>\
+                <div class="col-4">\
+                    <input class="form-control" name="numberOfRooms" type="number" placeholder="Number of rooms required" value="0"  min="0" max="' +
+                    room.free_rooms + '"/> Available Rooms on these dates: ' + room.free_rooms +
+                    '\
+                </div>\
+                </div>\
+                <input class="form-control" name="room_types" type="text" placeholder="Number of rooms required" value="' +
+                    room.room_type + '" hidden/>');
+            });
+
+            $('#reservation_form').attr('action', '/hotels/' + data.hotel.id + '/reserve');
+        }
 
     });
 </script>
