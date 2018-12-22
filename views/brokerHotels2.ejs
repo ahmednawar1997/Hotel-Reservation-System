@@ -1,75 +1,141 @@
 <%- include partials/header %>
 
-    <% hotels.forEach(hotel => {%>
-        <div class="container">
-            <div class="card">
-                <h5 class="card-header">
-                    <% if(hotel.approved===1){ %>
-                        <span class="checkmark">
-                            <div class="checkmark_circle"></div>
-                            <div class="checkmark_stem"></div>
-                            <div class="checkmark_kick"></div>
-                        </span>
-                        <%}else{%>
-                            <span class="checkmark">
-                                <div class="pending_circle"></div>
-                            </span>
-                        <%}%>
+<div class="container">
+    <div class="card">
+        <h5 class="card-header text-center">Search for a user</h5>
+        <form style="margin:0" action="/user/customers/view" method="GET">
+            <div class="form-group row">
+                <div class="col-1"></div>
+                <label for="example-date-input" class="col-3 col-form-label">Customer Name</label>
+                <div class="col-5">
+                    <input class="form-control" type="text" name="customer_name" id="customer_input">
+                    <input class="form-control" type="text" name="customer_id" id="customer_id" hidden>
+                </div>
+                <div class="col-2">
+                    <button class="btn btn btn-secondary" style="padding:5px 20px 5px 20px;float:right;" type="submit">Search</button>
+                </div>
+                <div class="col-1"></div>
+            </div>
 
-                                <%= hotel.name%> Hotel 
-                                <% for(var i=0; i < hotel.stars; i++){%><span class="fa fa-star checked fa-xs star_checked"></span>
-                                <% }%>  
-                                <% if(hotel.premium===1){ %>
-                                <i style="color:#6849d1;float:right" title="Premium" class="fa fa-award fa-lg"></i>
-                                <%}%>
 
-                </h5>
-                <div class="card-body">
-                    <p class="card-title"><strong> <%=hotel.name%> Hotel</strong> <br> Owned by: <%=hotel.hotel_owner_name%>
-                    </p>
-                    <!-- <button type="button" class="btn btn-success">Approve</button> -->
-                    <div id="accordion">
-                        <div class="card">
+    </div>
 
-                            <h5 class="mb-0">
-                                <button class="btn btn-secondary btn-block collapsed" data-toggle="collapse" data-target="#<%=hotel.id%>" aria-expanded="false"
-                                    aria-controls="<%=hotel.id%>">
-                                    More Info
-                                </button>
-                            </h5>
+</div>
 
-                            <div id="<%=hotel.id%>" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                                <div class="card-body">
-                                    <ul>
-                                        <li>Name:
 
-                                        </li>
-                                        <li>Email:
 
-                                        </li>
-                                        <li>Check-in Date:
 
-                                        </li>
-                                        <li>Check-out Date:
 
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+<% hotels.forEach(hotel => {%>
+<div class="container">
+    <div class="card">
+        <h5 class="card-header">
+            <% if(hotel.approved===1){ %>
+            <span class="checkmark">
+                <div class="checkmark_circle"></div>
+                <div class="checkmark_stem"></div>
+                <div class="checkmark_kick"></div>
+            </span>
+            <%}else{%>
+            <span class="checkmark">
+                <div class="pending_circle"></div>
+            </span>
+            <%}%>
+
+            <%= hotel.name%> Hotel
+            <% for(var i=0; i < hotel.stars; i++){%><span class="fa fa-star checked fa-xs star_checked"></span>
+            <% }%>
+            <% if(hotel.premium===1){ %>
+            <i style="color:#6849d1;float:right" title="Premium" class="fa fa-award fa-lg"></i>
+            <%}%>
+
+        </h5>
+        <div class="card-body">
+            <p class="card-title"><strong>
+                    <%=hotel.name%> Hotel</strong> <br> Owned by:
+                <%=hotel.hotel_owner_name%>
+            </p>
+            <!-- <button type="button" class="btn btn-success">Approve</button> -->
+            <div id="accordion">
+                <div class="card">
+
+                    <h5 class="mb-0">
+                        <button class="btn btn-secondary btn-block collapsed" data-toggle="collapse" data-target="#<%=hotel.id%>"
+                            aria-expanded="false" aria-controls="<%=hotel.id%>">
+                            More Info
+                        </button>
+                    </h5>
+
+                    <div id="<%=hotel.id%>" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                        <div class="card-body">
+                            <ul>
+                                <li>Name:
+
+                                </li>
+                                <li>Email:
+
+                                </li>
+                                <li>Check-in Date:
+
+                                </li>
+                                <li>Check-out Date:
+
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
 
-        <%})%>
+<%})%>
 
 
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-                crossorigin="anonymous"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-                crossorigin="anonymous"></script>
-            <script src="/javascripts/hotels.js"></script>
-            </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+<script src="/javascripts/hotels.js"></script>
+<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet">
+</link>
+<script src='https://cdn.rawgit.com/pguso/jquery-plugin-circliful/master/js/jquery.circliful.min.js'></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+    crossorigin="anonymous"></script>
 
-            </html>
+<script>
+    $(document).ready(function () {
+        $("#customer_input").autocomplete({
+
+            source: function (request, response) {
+                $.ajax({
+                    url: "/user/customers",
+                    dataType: "json",
+                    data: {
+                        customer_name: request.term
+                    },
+                    success: function (data) {
+                        response(
+                            $.map(data, function (customer, key) {
+                                return {
+                                    label: customer.name,
+                                    value: customer.id
+                                }
+                            })
+                        );
+                    }
+                });
+            },
+            select: function (event, ui) {
+                $('#customer_id').val(ui.item.value);
+                $('#customer_input').val(ui.item.label);
+                return false;
+
+            }
+        });
+    });
+</script>
+</body>
+
+</html>

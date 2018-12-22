@@ -1,0 +1,64 @@
+<%- include partials/header %>
+
+<div class="card text-center">
+    <div class="card-header">
+
+    </div>
+    <div class="card-body tab-pane active" id="profile">
+        <div class="card testimonial-card">
+            <div class="card-up default-color-dark">
+            </div>
+            <% if ( !customer[0].image_path) { %>
+            <div class="avatar"><img src="/images/avatar.png" class="rounded-circle img-responsive" style="width: 13%; padding:20px;">
+                <% } else{%>
+                <div class="avatar"><img src="/uploads/<%=customer[0].image_path%>" class="rounded-circle img-responsive"
+                        style="height: 25%; padding:20px;">
+                </div>
+                <% } %>
+
+                <div class="card-block">
+                    <h4 class="card-title">
+                        <%= customer[0].name%>
+                    </h4>
+                    <hr>
+                    <p><i class="fa fa-envelope"></i><strong> Email: </strong>
+                        <%= customer[0].email%>
+                    </p>
+                    <p><i class="fa fa-suitcase"></i><strong> Authority: </strong>
+                        <%= customer[0].type%>
+                    </p>
+                    <p><i class="fa fa-calendar"></i><strong> Registration Date: </strong>
+                        <%= customer[0].registration_date%>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-10"></div>
+                <div class="col-2">
+                    <% if(!customer[0].customer_id){ %>
+                    <form action="/user/<%= customer[0].id%>/blacklist" method="POST">
+                        <button id="blacklist_button" type="submit" class="btn btn-dark" style="margin-bottom: 10px;">Blacklist</button>
+                    </form>
+                    <%}else{%>
+                    <form action="/user/<%= customer[0].id%>/blacklist/remove" method="POST">
+                        <button type="submit" class="btn btn-dark" style="margin-bottom: 10px;">Remove From Blacklist</button>
+                    </form>
+                    <%}%>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
+
+
+</body>
