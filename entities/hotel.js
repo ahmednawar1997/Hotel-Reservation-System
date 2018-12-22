@@ -54,6 +54,7 @@ function getAllApprovedHotels(req) {
   return new Promise((resolve, reject) => {
     req.con.query(sql, [1], function (err, hotels) {
       if (err) console.log(err);
+      console.log(hotels);
       resolve(hotels);
     });
   });
@@ -91,6 +92,28 @@ function addPremiumHotel(req) {
 
 function removePremiumHotel(req) {
   var sql = "UPDATE hotels SET premium = ? WHERE id = ?;";
+  return new Promise((resolve, reject) => {
+    req.con.query(sql, [0, req.body.hotel_id], function (err, hotel) {
+      if (err) console.log(err);
+      resolve(hotel);
+    });
+  });
+}
+
+
+function suspendHotel(req) {
+  var sql = "UPDATE hotels SET suspended = ? WHERE id = ?;";
+  return new Promise((resolve, reject) => {
+    req.con.query(sql, [1, req.body.hotel_id], function (err, hotel) {
+      if (err) console.log(err);
+      resolve(hotel);
+    });
+  });
+}
+
+
+function reactivateHotel(req) {
+  var sql = "UPDATE hotels SET suspended = ? WHERE id = ?;";
   return new Promise((resolve, reject) => {
     req.con.query(sql, [0, req.body.hotel_id], function (err, hotel) {
       if (err) console.log(err);
@@ -213,7 +236,9 @@ module.exports = {
   getPremiumHotels,
   getCustomerReviews,
   addPremiumHotel,
-  removePremiumHotel
+  removePremiumHotel,
+  reactivateHotel,
+  suspendHotel
 };
 
 

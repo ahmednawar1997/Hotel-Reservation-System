@@ -17,7 +17,7 @@
                 </div>
                 <div class="col-1"></div>
             </div>
-            </form>
+        </form>
 
     </div>
 
@@ -57,10 +57,24 @@
 
         </h5>
         <div class="card-body">
-            <p class="card-title"><strong>
-                    <%=hotel.name%> Hotel</strong> <br> Owned by:
-                <%=hotel.hotel_owner_name%>
-            </p>
+            <div class="card-title row">
+                <p class="col-8"><strong>
+                        <%=hotel.name%> Hotel</strong> <br> Owned by:
+                    <%=hotel.hotel_owner_name%>
+                </p>
+                <div class="col-4">
+                    <% if(hotel.suspended===0){ %>
+
+                    <button type="button" class="btn btn-danger btn-sm suspend_button" style="float: right" hotel_id="<%=hotel.id%>">Suspend</button>
+                    <%}else{%>
+                    <button type="button" class="btn btn-warning btn-sm reactivate_button" style="float: right" hotel_id="<%=hotel.id%>">Re-activate</button>
+
+                    <%}%>
+
+                </div>
+            </div>
+
+
             <!-- <button type="button" class="btn btn-success">Approve</button> -->
             <div id="accordion">
                 <div class="card">
@@ -75,9 +89,18 @@
                     <div id="<%=hotel.id%>" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                         <div class="card-body">
                             <ul>
-                                <li><%=hotel.description%></li>
-                                <li>Located at: <%=hotel.street%>, <%=hotel.district%>,  <%=hotel.city%>, <%=hotel.country%></li>
-                                <li>Number of times this hotel was reserved: <%=hotel.res_count?hotel.res_count:'0'%></li>
+                                <li>
+                                    <%=hotel.description%>
+                                </li>
+                                <li>Located at:
+                                    <%=hotel.street%>,
+                                    <%=hotel.district%>,
+                                    <%=hotel.city%>,
+                                    <%=hotel.country%>
+                                </li>
+                                <li>Number of times this hotel was reserved:
+                                    <%=hotel.res_count?hotel.res_count:'0'%>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -100,91 +123,11 @@
 <script src='https://cdn.rawgit.com/pguso/jquery-plugin-circliful/master/js/jquery.circliful.min.js'></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
     crossorigin="anonymous"></script>
+    <script src="/javascripts/adminPage.js"></script>
+
 
 <script>
-    $(document).ready(function () {
-
-        $('.pending_circle').click(function () {
-            $.ajax({
-                type: 'post',
-                url: '/hotels/approve',
-                data: {
-                    hotel_id: $(this).attr('hotel_id')
-                },
-                success: function (data) {
-                    window.location = '/user/admin/hotels';
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    alert('fail');
-                }
-            });
-        });
-
-        $('.non_premium_button').click(function () {
-            $.ajax({
-                type: 'post',
-                url: '/hotels/premium',
-
-                data: {
-                    hotel_id: $(this).attr('hotel_id')
-                },
-                success: function (data) {
-                    window.location = '/user/admin/hotels';
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    alert('fail');
-                }
-            });
-        });
-
-        $('.premium_button').click(function () {
-            $.ajax({
-                type: 'post',
-                url: '/hotels/removepremium',
-                data: {
-                    hotel_id: $(this).attr('hotel_id')
-                },
-                success: function (data) {
-                    window.location = '/user/admin/hotels';
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    alert('fail');
-                }
-            });
-        });
-
-        $("#customer_input").autocomplete({
-
-            source: function (request, response) {
-                $.ajax({
-                    url: "/user/customers",
-                    dataType: "json",
-                    data: {
-                        customer_name: request.term
-                    },
-                    success: function (data) {
-                        response(
-                            $.map(data, function (customer, key) {
-                                return {
-                                    label: customer.name,
-                                    value: customer.id
-                                }
-                            })
-                        );
-                    }
-                });
-            },
-            select: function (event, ui) {
-                $('#customer_id').val(ui.item.value);
-                $('#customer_input').val(ui.item.label);
-                $('#user_search').prop('disabled', false);;
-
-                return false;
-
-            }
-        });
-    });
-</script>
+ </script>
 </body>
 
 </html>

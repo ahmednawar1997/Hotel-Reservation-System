@@ -111,6 +111,28 @@ router.post("/removepremium", isAuthenticated, function (req, res) {
 
 });
 
+router.post("/suspend", isAuthenticated, function (req, res) {
+
+  Hotel.suspendHotel(req).then(function (hotel_id) {
+    req.flash('message', 'Hotel is now suspended');
+    res.status(202).send('success');
+
+  });
+
+});
+
+router.post("/reactivate", isAuthenticated, function (req, res) {
+
+  Hotel.reactivateHotel(req).then(function (hotel_id) {
+    req.flash('message', 'Hotel is now reactivated');
+    res.status(202).send('success');
+
+  });
+
+});
+
+
+
 
 router.post("/rate", isAuthenticated, function (req, res) {
   Reservation.insertCustomerReview(req, req.body.reservation_id, req.body.customer_rating).then(function (reservation_id) {
