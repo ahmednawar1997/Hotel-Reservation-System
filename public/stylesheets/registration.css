@@ -70,3 +70,7 @@ body {
 .card.mb-3 .row {
     height: 15%;
 }
+#brand_name:hover{
+    transform: scale(1.1);
+    transition: all .2s ease-in-out;
+}

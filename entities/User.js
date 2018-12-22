@@ -8,14 +8,13 @@ function getAllCustomers(req, customer_name) {
         req.con.query(query, [],
             (err, customers) => {
                 if (err) throw err;
-                console.log(customers);
                 resolve(customers);
             });
     });
 }
 
 function getUserDetails(req, customer_id) {
-    var query = "SELECT * FROM users LEFT JOIN blacklist ON users.id = blacklist.customer_id AND users.id = ?";
+    var query = "SELECT * FROM users LEFT JOIN blacklist ON users.id = blacklist.customer_id WHERE users.id = ?";
     return new Promise((resolve, reject) => {
         req.con.query(query, [customer_id],
             (err, customer) => {

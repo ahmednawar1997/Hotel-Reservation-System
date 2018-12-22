@@ -36,6 +36,17 @@
     left:0;
     top:0;
 }
+
+.pending_circle:hover{
+    cursor: pointer;
+}
+.premium_button:hover{
+    cursor: pointer;
+}
+.non_premium_button:hover{
+    cursor: pointer;
+}
+
 .canceled_circle {
     position: absolute;
     width:22px;

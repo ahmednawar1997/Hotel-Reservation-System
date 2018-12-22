@@ -32,3 +32,8 @@
 .visibilityClass{
     display: none;
 }
+
+
+.any_btn:hover{
+    color:#e08106;
+}

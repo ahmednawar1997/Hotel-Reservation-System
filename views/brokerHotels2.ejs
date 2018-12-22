@@ -12,7 +12,8 @@
                     <input class="form-control" type="text" name="customer_id" id="customer_id" hidden>
                 </div>
                 <div class="col-2">
-                    <button class="btn btn btn-secondary" style="padding:5px 20px 5px 20px;float:right;" type="submit">Search</button>
+                    <button class="btn btn btn-secondary" id="user_search" style="padding:5px 20px 5px 20px;float:right;"
+                        type="submit" disabled>Search</button>
                 </div>
                 <div class="col-1"></div>
             </div>
@@ -38,7 +39,7 @@
             </span>
             <%}else{%>
             <span class="checkmark">
-                <div class="pending_circle"></div>
+                <div class="pending_circle" hotel_id="<%=hotel.id%>" title="Approve Hotel"></div>
             </span>
             <%}%>
 
@@ -46,7 +47,12 @@
             <% for(var i=0; i < hotel.stars; i++){%><span class="fa fa-star checked fa-xs star_checked"></span>
             <% }%>
             <% if(hotel.premium===1){ %>
-            <i style="color:#6849d1;float:right" title="Premium" class="fa fa-award fa-lg"></i>
+            <i style="color:#bf1c00;float:right" title="Click to remove premium" class="fa fa-award fa-lg premium_button"
+                hotel_id="<%=hotel.id%>"></i>
+            <%}else{%>
+            <i style="color:#6849d1;float:right" title="Click to add premium" class="fas fa-thumbs-down fa-lg non_premium_button"
+                hotel_id="<%=hotel.id%>"></i>
+
             <%}%>
 
         </h5>
@@ -106,6 +112,62 @@
 
 <script>
     $(document).ready(function () {
+
+        $('.pending_circle').click(function () {
+            $.ajax({
+                type: 'post',
+                url: '/hotels/approve',
+                data: {
+                    hotel_id: $(this).attr('hotel_id')
+                },
+                success: function (data) {
+                    window.location = '/user/admin/hotels';
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    alert('fail');
+                }
+            });
+        });
+
+        $('.non_premium_button').click(function () {
+            $.ajax({
+                type: 'post',
+                url: '/hotels/premium',
+
+                data: {
+                    hotel_id: $(this).attr('hotel_id')
+                },
+                success: function (data) {
+                    window.location = '/user/admin/hotels';
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    alert('fail');
+                }
+            });
+        });
+
+        $('.premium_button').click(function () {
+            $.ajax({
+                type: 'post',
+                url: '/hotels/removepremium',
+                data: {
+                    hotel_id: $(this).attr('hotel_id')
+                },
+                success: function (data) {
+                    window.location = '/user/admin/hotels';
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    alert('fail');
+                }
+            });
+        });
+
+
+
+
+
+
+
         $("#customer_input").autocomplete({
 
             source: function (request, response) {
@@ -130,6 +192,8 @@
             select: function (event, ui) {
                 $('#customer_id').val(ui.item.value);
                 $('#customer_input').val(ui.item.label);
+                $('#user_search').prop('disabled', false);;
+
                 return false;
 
             }

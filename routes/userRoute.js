@@ -96,7 +96,13 @@ router.get("/customers", isAuthenticated, function (req, res, next) {
 
 router.get("/customers/view", isAuthenticated, function (req, res, next) {
   User.getUserDetails(req, req.query.customer_id).then(customer => {
+    if(customer.length > 0){
     res.render("viewUser", { customer: customer, message: req.flash('message') });
+    }else{
+      req.flash('message', 'User Not Found');
+      res.redirect("/user/admin/hotels");
+
+    }
   });
 });
 

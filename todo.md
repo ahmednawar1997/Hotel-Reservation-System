@@ -24,3 +24,6 @@
 -Broker may unsuspend a hotel
 -Textbox to search for a customer
 -Then submit to view customer profile
+
+
+-filters in broker all hotels

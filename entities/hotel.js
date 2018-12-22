@@ -68,6 +68,27 @@ function approveHotel(req) {
   });
 }
 
+
+function addPremiumHotel(req) {
+  var sql = "UPDATE hotels SET premium = ? WHERE id = ?;";
+  return new Promise((resolve, reject) => {
+    req.con.query(sql, [1, req.body.hotel_id], function (err, hotel) {
+      if (err) console.log(err);
+      resolve(hotel);
+    });
+  });
+}
+
+function removePremiumHotel(req) {
+  var sql = "UPDATE hotels SET premium = ? WHERE id = ?;";
+  return new Promise((resolve, reject) => {
+    req.con.query(sql, [0, req.body.hotel_id], function (err, hotel) {
+      if (err) console.log(err);
+      resolve(hotel);
+    });
+  });
+}
+
 function getAllApprovedHotelsWithFacilities(req) {
   var sql = "SELECT * FROM hotels INNER JOIN facilities ON hotels.id = facilities.hotel_id AND hotels.approved = ? INNER JOIN hotel_locations ON hotels.id = hotel_locations.hotel_id";
   sql = addFacilitiesToQuery(req, sql);
@@ -180,7 +201,9 @@ module.exports = {
   getHotelAverageRating,
   getHotelDetailsAndRooms,
   getPremiumHotels,
-  getCustomerReviews
+  getCustomerReviews,
+  addPremiumHotel,
+  removePremiumHotel
 };
 
 
