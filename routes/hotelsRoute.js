@@ -16,12 +16,6 @@ router.get("/", isAuthenticated, function (req, res, next) {
   });
 });
 
-router.get("/getHotels", isAuthenticated, function (req, res, next) {
-  Hotel.getAllApprovedHotelsWithFacilities(req).then(hotels => {
-    res.status(202).send(hotels);
-  });
-});
-
 router.get("/:hotel_id(\\d+)/", isAuthenticated, function (req, res, next) {
   Hotel.getHotelDetailsAndRooms(req).then(hotels => {
     Hotel.getPremiumHotels(req).then(premiumHotels => {

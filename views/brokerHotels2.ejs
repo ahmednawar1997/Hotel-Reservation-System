@@ -17,7 +17,7 @@
                 </div>
                 <div class="col-1"></div>
             </div>
-
+            </form>
 
     </div>
 
@@ -75,18 +75,9 @@
                     <div id="<%=hotel.id%>" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                         <div class="card-body">
                             <ul>
-                                <li>Name:
-
-                                </li>
-                                <li>Email:
-
-                                </li>
-                                <li>Check-in Date:
-
-                                </li>
-                                <li>Check-out Date:
-
-                                </li>
+                                <li><%=hotel.description%></li>
+                                <li>Located at: <%=hotel.street%>, <%=hotel.district%>,  <%=hotel.city%>, <%=hotel.country%></li>
+                                <li>Number of times this hotel was reserved: <%=hotel.res_count?hotel.res_count:'0'%></li>
                             </ul>
                         </div>
                     </div>
@@ -161,12 +152,6 @@
                 }
             });
         });
-
-
-
-
-
-
 
         $("#customer_input").autocomplete({
 
