@@ -1,0 +1,164 @@
+*, *:before, *:after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+html, body {
+    font-size: 62.5%;
+    height: 100%;
+  }
+
+svg {
+    width: 2rem;
+    height: 2rem;
+  }
+  
+.svg-icon path {
+    stroke: rgba(255, 255, 255, 0.9);
+    fill: none;
+  }
+.svg-cam{
+    stroke: rgba(255, 255, 255, 0.7);
+  }
+  
+input, button {
+    outline: none;
+    border: none;
+  }
+  
+.cont {
+    position: relative;
+    height: 100%;
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  }
+  
+.demo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -20rem;
+    margin-top: -26.5rem;
+    width: 43rem;
+    height: 53rem;
+  }
+  
+.signup {
+    position: relative;
+    height: 100%;
+    padding: 1rem;
+    background: linear-gradient(to bottom, rgba(5, 5, 5, 0.38) 0%, rgba(0, 0, 0, 0.6) 100%);
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+  }
+.login {
+    position: relative;
+    height: 100%;
+    padding: 5rem;
+    background: linear-gradient(to bottom, rgba(5, 5, 5, 0.38) 0%, rgba(0, 0, 0, 0.6) 100%);
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+  }
+
+.signup_row {
+    height: 5rem;
+    padding-top: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    margin: 1.5rem;
+  }
+
+.login_row {
+    height: 5rem;
+    padding-top: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    margin: 2rem;
+  }
+
+.login_input {
+    display: inline-block;
+    width: 90%;
+    height: 100%;
+    padding-left: 1rem;
+    font-size: 1.5rem;
+    background: transparent;
+   color: #FDFCFD;
+  }
+
+.login_picture{
+    display: inline-block;
+    width: 22rem;
+    height: 100%;
+    padding-left: 1rem;
+    font-size: 1.5rem;
+    background: transparent;
+   color: #FDFCFD;
+  }
+.signup_submit {
+    position: relative;
+    width: 70%;
+    height: 4rem;
+    margin: 2rem 6.5rem 2.2rem;
+    color: rgba(255, 255, 255, 0.8);
+    background: #fca83c;
+    font-size: 1.5rem;
+    border-radius: 3rem;
+    cursor: pointer;
+  }
+.login_submit {
+  position: relative;
+  width: 70%;
+  height: 4rem;
+  margin: 2rem 5rem;
+  color: rgba(255, 255, 255, 0.8);
+  background: #fca83c;
+  font-size: 1.5rem;
+  border-radius: 3rem;
+  cursor: pointer;
+}
+
+  
+.reg_signup {
+    font-size: 1.3rem;
+    color: #ABA8AE;
+    padding-left: 10rem;
+  }
+  
+.login_signup a {
+    color: #fff;
+    cursor: pointer;  
+  }
+
+.login_signup {
+  font-size: 1.3rem;
+  color: #ABA8AE;
+  padding-left: 7rem;
+}
+
+.textaya{
+    color: rgba(255, 255, 255, 0.7);
+    font-size: medium;
+    padding-left: 1rem;
+  }
+
+.radio-input{
+      color: rgba(255, 255, 255, 0.7);
+      font-size:medium;
+      font-family: "Open Sans", Helvetica, Arial, sans-serif;
+      padding-left: 0.2rem;
+      padding-right: 1rem;
+      cursor: pointer;
+
+  }
+
+::placeholder{
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+.fa-camera{
+    color: #fff;
+    size: 4em;
+  }
