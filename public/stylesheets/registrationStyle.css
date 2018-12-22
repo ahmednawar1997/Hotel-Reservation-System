@@ -109,7 +109,7 @@ button {
   position: relative;
   width: 70%;
   height: 4rem;
-  margin: 2rem 6.5rem 2.2rem;
+  margin: 1rem 6.5rem 2.2rem;
   color: rgba(255, 255, 255, 0.8);
   background: #fca83c;
   font-size: 1.5rem;
@@ -129,7 +129,6 @@ button {
   cursor: pointer;
 }
 
-
 .reg_signup {
   font-size: 1.3rem;
   color: #ABA8AE;
@@ -147,27 +146,21 @@ button {
   padding-left: 7rem;
 }
 
-.textaya {
+.picture {
   color: rgba(255, 255, 255, 0.7);
-  font-size: medium;
+  font-size: 1.5rem;
   padding-left: 1rem;
 }
 
 .radio-input {
   color: rgba(255, 255, 255, 0.7);
-  font-size: medium;
+  font-size: 1.5rem;
   font-family: "Open Sans", Helvetica, Arial, sans-serif;
   padding-left: 0.2rem;
   padding-right: 1rem;
   cursor: pointer;
-
 }
 
 ::placeholder {
   color: rgba(255, 255, 255, 0.7);
-}
-
-.fa-camera {
-  color: #fff;
-  size: 4em;
 }

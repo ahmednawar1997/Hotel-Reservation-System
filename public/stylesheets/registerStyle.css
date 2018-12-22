@@ -1,0 +1,36 @@
+.jumbotron{
+    background-color: #252525bd;
+}
+
+.col-form-label{
+    color: #fff; 
+}
+
+.form-control{
+    background-color:#ffffffd9;
+}
+
+.form-check-label{
+    color:#fff;
+}
+
+.form-group{
+    padding-left:10%;
+    margin-top: 1rem;
+}
+
+.btn{
+    color: rgba(255, 255, 255, 0.8);
+    background: #fca83c;
+    border-radius: 3rem;
+}
+.form-check{
+    padding-right: 2.25rem;
+    padding-left: 0;
+}
+
+
+input[type=checkbox] {
+    margin:0.5rem;  
+  }
+  

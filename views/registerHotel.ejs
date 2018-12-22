@@ -1,6 +1,12 @@
 <%- include partials/header %>
+
+<head>
+  <link rel="stylesheet" href="/stylesheets/registerStyle.css">
+
+</head>
 <div class="container">
   <div class="jumbotron">
+    <h4 id="brand_name" style="text-align: center; color:white; font-size: 2rem;">Add Hotel</h4>
     <form class="reg-form" action="./register-hotel" method="POST" enctype="multipart/form-data">
       <div class="form-group">
         <div class="form-group row">
@@ -53,18 +59,17 @@
           <div class="col-6">
             <div class="form-check-inline">
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="pool" name="pool" />
+                <input class="align-baseline" type="checkbox" id="pool" name="pool" />
                 <label class="form-check-label" for="pool"> Pool </label>
               </div>
+
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="restaurant" name="restaurant" />
-                <label class="form-check-label" for="restaurant">
-                  Restaurant
-                </label>
+                <input class="align-baseline" type="checkbox" id="bar" name="bar" />
+                <label class="form-check-label" for="bar"> Bar </label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="bar" name="bar" />
-                <label class="form-check-label" for="bar"> Bar </label>
+                <input class="align-baseline" type="checkbox" id="restaurant" name="restaurant" />
+                <label class="form-check-label" for="restaurant">Restaurant</label>
               </div>
             </div>
 
@@ -72,18 +77,16 @@
 
             <div class="form-check-inline">
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="kidsArea" name="kidsArea" />
-                <label class="form-check-label" for="kidsArea">
-                  Kids Area
-                </label>
+                <input class="align-baseline" type="checkbox" id="gym" name="gym" />
+                <label class="form-check-label" for="gym"> Gym</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="gym" name="gym" />
-                <label class="form-check-label" for="gym"> Gym </label>
+                <input class="align-baseline" type="checkbox" id="spa" name="spa" />
+                <label class="form-check-label" for="spa"> Spa</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="spa" name="spa" />
-                <label class="form-check-label" for="spa"> Spa </label>
+                <input class="align-baseline" type="checkbox" id="kidsArea" name="kidsArea" />
+                <label class="form-check-label" for="kidsArea">Kids Area</label>
               </div>
             </div>
           </div>
@@ -91,11 +94,9 @@
         <div class="form-group row">
           <label for="example-text-input" class="col-2 col-form-label">Profile Picture</label>
           <div class="col-6">
-            <input class="form-control" id="profilePic" name="avatar" type="file">
+            <input id="profilePic" name="avatar" type="file" style="color:#fff;">
           </div>
         </div>
-
-
         <div class="form-group row">
           <div class="col-2 col-form-label"></div>
           <div class="col-6">
