@@ -21,14 +21,14 @@
           </div>
 
           <% rooms.forEach(function(room){%>
-          <div class="form-group row">
-            <label for="city" class="col-4 col-form-label"><%= room.room_type%> Room,  <%= room.room_view%> View, $<%= room.price%>/night</label>
-            <div class="col-4">
-              <input class="form-control" name="numberOfRooms" type="number" placeholder="Number of rooms required" value="0"/>
+            <div class="form-group row">
+              <label for="city" class="col-4 col-form-label"><%= room.room_type%> Room,  <%= room.room_view%> View, $<%= room.price%>/night</label>
+              <div class="col-4">
+                <input class="form-control" name="numberOfRooms" type="number" placeholder="Number of rooms required" value="0"  min="0" max="<%=room.free_rooms%>"/> Available Rooms on these dates: <%=room.free_rooms%>
+              </div>
             </div>
-          </div>
-              <input class="form-control" name="room_types" type="text" placeholder="Number of rooms required" value="<%=room.room_type%>" hidden/>
-          </div>
+                <input class="form-control" name="room_types" type="text" placeholder="Number of rooms required" value="<%=room.room_type%>" hidden/>
+            </div>
           <%})%>
 
           <div class="form-group row">
