@@ -10,7 +10,6 @@ function insertReservation(req) {
         req.con.query(query, [req.params.hotel_id, req.user.id, req.body.checkin, req.body.checkout, now],
             (err, insertedReservation) => {
                 if (err) throw err;
-                console.log("inserted res");
 
                 resolve(insertedReservation.insertId);
             });
@@ -21,7 +20,6 @@ function insertReservation(req) {
 
 
 function insertReservedRoomsInReservation(req, reservation_id, index) {
-    console.log("reserved rooms");
     var query = "INSERT INTO  reserved_rooms (reservation_id, room_type, number_of_rooms) VALUES (?,?,?)";
     return new Promise((resolve, reject) => {
         req.con.query(query, [reservation_id, req.body.room_types[index], req.body.numberOfRooms[index]],
@@ -59,7 +57,6 @@ function getAllOwnerUpcomingReservations(req) {
         date.format(now, '[YYYY-MM-DD]');
         req.con.query(query, [req.user.id, now], (err, reservations) => {
             if (err) console.log(err);
-            console.log(reservations);
             resolve(reservations);
         });
     });
@@ -80,7 +77,6 @@ function getAllOwnerPastReservations(req) {
         date.format(now, '[YYYY-MM-DD]');
         req.con.query(query, [req.user.id, now], (err, reservations) => {
             if (err) console.log(err);
-            console.log(reservations);
             resolve(reservations);
         });
     });
@@ -93,7 +89,6 @@ function insertCustomerReview(req, reservation_id, customer_rating) {
     return new Promise((resolve, reject) => {
         req.con.query(query, [reservation_id, customer_rating], (err, customer_review) => {
             if (err) console.log(err);
-            console.log(customer_review);
             resolve(customer_review);
         });
     });
@@ -104,7 +99,6 @@ function insertCustomerReviewComment(req, reservation_id, customer_review) {
     return new Promise((resolve, reject) => {
         req.con.query(query, [customer_review, reservation_id], (err, customer_review) => {
             if (err) console.log(err);
-            console.log(customer_review);
             resolve(customer_review);
         });
     });
@@ -121,7 +115,6 @@ function getAllOwnerReservationsWithRoomsDetails(req) {
     return new Promise((resolve, reject) => {
         req.con.query(query, [req.user.id], (err, detailedReservations) => {
             if (err) console.log(err);
-            console.log("TESTTT", detailedReservations);
             resolve(detailedReservations);
         });
     });

@@ -26,7 +26,6 @@ router.get("/:hotel_id(\\d+)/", isAuthenticated, function (req, res, next) {
   Hotel.getHotelDetailsAndRooms(req).then(hotels => {
     Hotel.getPremiumHotels(req).then(premiumHotels => {
       Hotel.getCustomerReviews(req).then(reviews => {
-        console.log("HOTELSATY: ", reviews);
         res.render("viewHotel2", { message: req.flash('message'), hotels, premiumHotels, reviews });
       });
     });
@@ -78,7 +77,6 @@ router.post("/:hotel_id(\\d+)/reserve", isAuthenticated, function (req, res) {
   Reservation.insertReservation(req).then(function (reservation_id) {
 
     (req.body.room_types).forEach((room_type, index) => {
-      console.log("Index: " + index);
       Reservation.insertReservedRoomsInReservation(req, reservation_id, index)
       req.flash('message', 'Reservation Successful');
       res.redirect('/home');
@@ -99,10 +97,7 @@ router.post("/approve", isAuthenticated, function (req, res) {
 });
 
 router.post("/rate", isAuthenticated, function (req, res) {
-  console.log("res__id: " + req.body.reservation_id);
-
   Reservation.insertCustomerReview(req, req.body.reservation_id, req.body.customer_rating).then(function (reservation_id) {
-    console.log(reservation_id);
     req.flash('message', 'Rated your visit with ' + req.body.customer_rating + " stars successfully");
     res.status(202).send('success');
   });
@@ -112,7 +107,6 @@ router.post("/rate", isAuthenticated, function (req, res) {
 router.post("/review", isAuthenticated, function (req, res) {
 
   Reservation.insertCustomerReviewComment(req, req.body.reservation_id, req.body.customer_review).then(function (reservation_id) {
-    console.log(reservation_id);
     res.status(202).send('success');
   });
 });
@@ -129,7 +123,6 @@ function isAuthenticated(req, res, next) {
 function addCheckinAndCheckoutDates(req) {
   var now = new Date();
   date.format(now, '[YYYY-MM-DD]');
-  console.log(now);
   var dateOnlyToday = JSON.stringify(now).substring(1, 11);
   req.query.checkin = dateOnlyToday;
   now = date.addDays(now, 2);

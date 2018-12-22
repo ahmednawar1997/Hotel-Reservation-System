@@ -72,7 +72,6 @@ function getAllApprovedHotelsWithFacilities(req) {
   var sql = "SELECT * FROM hotels INNER JOIN facilities ON hotels.id = facilities.hotel_id AND hotels.approved = ? INNER JOIN hotel_locations ON hotels.id = hotel_locations.hotel_id";
   sql = addFacilitiesToQuery(req, sql);
   sql = addLocationToQuery(req, sql);
-  console.log(sql);
   return new Promise((resolve, reject) => {
     req.con.query(sql, [1], function (err, hotels) {
       if (err) console.log(err);
@@ -90,7 +89,6 @@ function getHotelDetails(req) {
   return new Promise((resolve, reject) => {
     req.con.query(sql, [req.params.hotel_id], function (err, hotels) {
       if (err) console.log(err);
-      console.log(hotels[0]);
       resolve(hotels[0]);
     });
   });
@@ -133,7 +131,6 @@ function getHotelAverageRating(req) {
   return new Promise((resolve, reject) => {
     req.con.query(sql, [req.params.hotel_id], function (err, avgRating) {
       if (err) console.log(err);
-      console.log(avgRating[0]);
       resolve(avgRating[0]);
     });
   });

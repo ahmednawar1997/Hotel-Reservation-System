@@ -13,7 +13,6 @@ function getRoomsByHotelId(req){
 function insertRoom(req) {
   var query = "INSERT INTO  room_type (room_type, hotel_id, room_view, price, number_of_rooms) VALUES (?,?,?,?,?)";
   return new Promise((resolve, reject) => {
-    console.log(req.user);
     req.con.query(query, [req.body.roomType, req.params.hotel_id, req.body.view, req.body.price, req.body.quantity],
       (err) => {
         if (err) throw err;
@@ -51,9 +50,6 @@ function getNumberOfRooms(req, hotel_id, checkin, checkout){
     req.con.query(query, [hotel_id, hotel_id, checkin, checkin, checkin, checkout , checkin , checkin , checkout],
       (err, availableRooms) => {
         if (err) throw err;
-        console.log("AVAILABLE ROOMS");
-        console.log(availableRooms);
-        console.log(availableRooms.length);
         resolve(availableRooms);
       });
 
