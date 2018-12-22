@@ -2,8 +2,7 @@
 
     <div class="container">
         <div class="card">
-            <h3 class="card-header text-center">Reservations <button class="btn btn btn-secondary" style="padding:5px 20px 5px 20px;float:right;"
-                    type="submit">Search</button></h3>
+            <h3 class="card-header text-center">Reservations</h3>
             <form action="/user/owner/reservations" method="GET" id="pickDate">
                 <div class="form-group row col-12">
                     <label for="example-date-input" class="col-2 col-form-label">Checkin Date</label>
@@ -18,7 +17,7 @@
                 </div>
                 <div class="row col-12">
                     <label for="state" class="col-2">Reservation State</label>
-                    <select id="state" class="form-control col-3">
+                    <select id="state" name="state" class="form-control col-3">
                         <option value="all">All</option>
                         <option value="pending">Pending Reservations</option>
                         <option value="approved">Approved Reservations</option>
@@ -26,7 +25,7 @@
                     </select>
                     <div class="col-1"></div>
                     <label for="interval" class="col-2">Reservation Interval</label>
-                    <select id="interval" class="form-control col-3">
+                    <select id="interval" name="interval" class="form-control col-3">
                         <option value="all">All</option>
                         <option value="upcoming">Upcoming Reservations</option>
                         <option value="past">Past Reservations</option>
@@ -35,7 +34,7 @@
 
 
                 <div class="col-12">
-
+                    <button class="btn btn btn-secondary" style="padding:5px 20px 5px 20px;float:right;" type="submit">Search</button>
 
                 </div>
         </div>

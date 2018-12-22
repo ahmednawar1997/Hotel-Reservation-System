@@ -153,16 +153,24 @@ function getAllOwnerReservationsWithRoomsDetailsBetweenDates(req) {
         queryParams[i++] = req.query.checkin;
     }
     if (req.query.checkout) {
-        query = query + "AND reservations.check_out_date<=?";
+        query = query + "AND reservations.check_out_date<=? ";
         queryParams[i++] = req.query.checkout;
     }
-    if (req.query.upcoming && req.query.past) {
-    } else if (req.query.upcoming) {
-        query = query + "AND reservations.check_in_date>=?";
+    if (req.query.interval === "all") {
+    } else if (req.query.interval === "upcoming") {
+        query = query + "AND reservations.check_in_date>=? ";
         queryParams[i++] = new Date();
-    } else if (req.query.past) {
-        query = query + "AND reservations.check_in_date<=?";
+    } else if (req.query.interval === "past") {
+        query = query + "AND reservations.check_in_date<=? ";
         queryParams[i++] = new Date();
+    }
+    if (req.query.state === "all") {
+    } else if (req.query.state === "cancelled") {
+        query = query + "AND (reservations.hotel_approval=0 OR reservations.customer_approval=0) ";
+    } else if (req.query.state === "pending") {
+        query = query + "AND reservations.hotel_approval IS NULL ";
+    } else if (req.query.state === "approved") {
+        query = query + "AND reservations.hotel_approval=1 AND (reservations.customer_approval=1 OR reservations.customer_approval IS NULL) ";
     }
 
     return new Promise((resolve, reject) => {
