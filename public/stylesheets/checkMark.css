@@ -45,6 +45,11 @@
 }
 .non_premium_button:hover{
     cursor: pointer;
+}.suspend_button{
+    cursor: pointer;
+}
+.reactivate_button{
+    cursor: pointer;
 }
 
 .canceled_circle {

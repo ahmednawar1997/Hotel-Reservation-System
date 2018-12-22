@@ -65,9 +65,9 @@
                 <div class="col-4">
                     <% if(hotel.suspended===0){ %>
 
-                    <button type="button" class="btn btn-danger btn-sm suspend_button" style="float: right" hotel_id="<%=hotel.id%>">Suspend</button>
+                        <i class="fas fa-pause-circle fa-2x suspend_button" title="Suspend The Hotel"style="color:red;float:right"  hotel_id="<%=hotel.id%>"></i> 
                     <%}else{%>
-                    <button type="button" class="btn btn-warning btn-sm reactivate_button" style="float: right" hotel_id="<%=hotel.id%>">Re-activate</button>
+                        <i class="far fa-play-circle fa-2x reactivate_button" title="Reactivate The Hotel"style="color:green;float:right"  hotel_id="<%=hotel.id%>"></i> 
 
                     <%}%>
 
