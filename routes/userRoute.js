@@ -74,11 +74,18 @@ router.get("/owner/:hotel_id(\\d+)/", isAuthenticated, isHotelOwner, (req, res, 
   });
 });
 
+// router.post("/owner/:hotel_id(\\d+)/", isAuthenticated, isHotelOwner, (req, res, next) => {
+//   Room.insertRoom(req).then(() => {
+//     Hotel.getOwnedHotelDetails(req).then(hotelObj => {
+//       res.render("viewOwnedHotel", { hotel: hotelObj.hotel, rooms: hotelObj.rooms, message: req.flash('message') });
+//     });
+//   })
+// });
 router.post("/owner/:hotel_id(\\d+)/", isAuthenticated, isHotelOwner, (req, res, next) => {
   Room.insertRoom(req).then(() => {
-    Hotel.getOwnedHotelDetails(req).then(hotelObj => {
-      res.render("viewOwnedHotel", { hotel: hotelObj.hotel, rooms: hotelObj.rooms, message: req.flash('message') });
-    });
+
+    res.redirect('/user/owner/hotels');
+
   })
 });
 

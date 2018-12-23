@@ -40,34 +40,36 @@
                                     <div class="col-12">
                                         <strong>Rooms Offered: </strong>
                                         <ul style="list-style-type: none;">
-                                            <% var hotelID = hotels[i].hotel_id %>
+                                            <% var hotelID = hotels[i].id %>
                                                 <%if(hotels[i].room_type){ %>
-                                                    <li>
+                                                    <li style="text-transform: capitalize;">
                                                         <%= getRoomIcon(hotels[i].room_type)%>
-                                                            <%= hotels[i].room_type%> with a
+                                                            <%= hotels[i].room_type%> with
                                                                 <%= hotels[i].room_view %> view.
                                                     </li>
 
                                                     <%}else{%>
                                                         <li>No rooms to offer</li>
                                                         <%}%>
-                                                            <% while(hotels[i+1] && hotels[i+1].room_type && hotels[i+1].hotel_id === hotelID){ %>
+                                                            <% while(hotels[i+1] && hotels[i+1].room_type && hotels[i+1].id === hotelID){ %>
                                                                 <%i++%>
-                                                                    <li>
+                                                                    <li style="text-transform: capitalize;">
                                                                         <%= getRoomIcon(hotels[i].room_type)%>
-                                                                            <%= hotels[i].room_type%> with a
+                                                                            <%= hotels[i].room_type%> with
                                                                                 <%= hotels[i].room_view %> view.
                                                                     </li>
                                                                     <%}%>
-                                                                        </li><i class="fas fa-plus-circle" title="Add Room"
-                                                                            style="cursor:pointer"></i></li>
+
                                         </ul>
                                     </div>
                                     <div class="col-12 row">
-                                        <div class="col-9"></div>
-                                        <div class="col-3">
+
+                                        <div class="col-12">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRoomModal" data-whatever='<%=hotels[i].id%>'
+                                                style="float:right;">Add Room
+                                            </button>
                                             <% if(hotels[i].map_url){%>
-                                                <img onclick="showMap('<%=hotels[i].map_url%>'); this.onclick=null;" src="/images/google-maps-50.png" style="width:44px; height:44px;float:right;">
+                                                <img onclick="showMap('<%=hotels[i].map_url%>'); this.onclick=null;" src="/images/google-maps-50.png" style="width:44px; height:44px;float:right;cursor:pointer">
                                                 <%}%>
                                         </div>
 
@@ -122,6 +124,62 @@
                                         <%}
                                 } %>
 
+
+                                            <div class="modal fade" id="addRoomModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">New Rooms Form</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+
+                                                            <form id="addRoomForm" action="" method="POST">
+                                                                <div class="form-group">
+                                                                    <div class="form-group row">
+                                                                        <label for="roomType" class="col-4 col-form-label">Room
+                                                                            Type
+                                                                        </label>
+                                                                        <div class="col-6">
+                                                                            <input class="form-control" name="roomType" type="text" id="roomType" required />
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <label for="view" class="col-4 col-form-label">View</label>
+                                                                        <div class="col-6">
+                                                                            <input class="form-control" name="view" type="text" required />
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <label for="price" class="col-4 col-form-label">Price</label>
+                                                                        <div class="col-6">
+                                                                            <input class="form-control" name="price" type="text" required />
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <label for="quantity" class="col-4 col-form-label">Identical
+                                                                            Rooms Quantity</label>
+                                                                        <div class="col-6">
+                                                                            <input class="form-control" name="quantity" type="text" required />
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                        <button type="submit" class="btn btn-primary">Add
+                                                                            Room
+                                                                        </button>
+                                                                    </div>
+
+                                                            </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            </div>
 
                                             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
                                                 crossorigin="anonymous"></script>
