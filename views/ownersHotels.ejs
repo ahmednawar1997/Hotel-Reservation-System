@@ -1,53 +1,114 @@
 <%- include partials/header %>
-<div class="container">
-<div class="hotels_container">
-        <div class="row inner_container" style="margin:0;">
-            <% hotels.forEach(function(hotel){%>
-                <div class="card col-sm-4 col-md-4 col-lg-3">
-                    <img class="card-img-top" src="/images/photo2.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <%=hotel.name%>
-                        </h5>
-                        <p class="card-text">
-                            <%=hotel.description%>
-                        </p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Customers Review:
-                            <%=hotel.review%>
-                        </li>
 
-                        <li class="list-group-item">Stars:
-                            <% for(var i=0; i < hotel.stars; i++){%><span class="fa fa-star checked"></span><% }%>
-                        </li>
-                        <li class="list-group-item">Location:
-                            <%=hotel.location%>
-                        </li>
-                    </ul>
-                    <div class="card-body">
-                        <a href="/user/owner/<%= hotel.id%>" class="card-link">Check Hotel</a>
-                        <a href="#" class="card-link">Reserve</a>
+    <body>
+        <% for(var i=0 ; i<hotels.length; i++){ %>
+            <section>
+                <div class="container py-3">
+                    <div class="card">
+                        <h1 class="card-header" align='center'>
+                            <%= hotels[i].name%> Hotel
+                        </h1>
+                        <div class="row ">
+                            <div class="col-4">
+                                <img src="/images/photo2.jpg" class="w-100" style="height:300px; border-radius: 0% 0% 20% 0%;">
+                            </div>
+                            <div class="col-8 px-3">
+                                <div class="card-block px-3  col-12">
+
+                                    <div class="card-text col-12">
+                                        <%=hotels[i].description%>
+                                    </div>
+                                    <hr>
+                                    <div class="col-6"><strong>Stars:
+                                            <%      for(var j=0; j < hotels[i].stars; j++){%>
+                                                <span><i class="text-warning fa fa-star"></i></span>
+                                                <% }%></strong>
+                                    </div>
+                                    <div class="col-6"><strong>Location: </strong>
+                                        <%=hotels[i].street%>,
+                                            <%=hotels[i].district%>,
+                                                <%=hotels[i].city%>,
+                                                    <%=hotels[i].country%>
+
+                                    </div>
+
+                                    <div class="col-12">
+                                        <strong>Available Facilities: </strong>
+                                        <%= getFacilities()%>
+                                    </div>
+                                    <div class="col-12">
+                                        <strong>Rooms Offered: </strong>
+                                        <ul>
+                                            <% var hotelID = hotels[i].hotel_id %>
+                                                <%if(hotels[i].room_type){ %>
+                                                    <li>
+                                                        <%= hotels[i].room_type%> with a
+                                                            <%= hotels[i].room_view %> view.
+                                                    </li>
+
+                                                    <%}else{%>
+                                                        <li>No rooms to offer</li>
+                                                        <%}%>
+                                                            <% while(hotels[i+1] && hotels[i+1].room_type && hotels[i+1].hotel_id === hotelID){ %>
+                                                                <%i++%>
+                                                                    <li>
+                                                                        <%= hotels[i].room_type%> with a
+                                                                            <%= hotels[i].room_view %> view.
+                                                                    </li>
+                                                                    <%}%>
+                                        </ul>
+                                    </div>
+                                    <div class="col-12 row">
+                                        <div class="col-9"></div>
+                                        <div class="col-3">
+                                            <% if(hotels[i].map_url){%>
+                                                <img onclick="showMap('<%=hotels[i].map_url%>'); this.onclick=null;" src="/images/google-maps-50.png" style="width:44px; height:44px;float:right;">
+                                                <%}%>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div id="mapiframe"></div>
                     </div>
                 </div>
+            </section>
+            <% } %>
+
+                <% function getFacilities(){ %>
+                    <!-- <ul class="row col-12" style="list-style-type: none;">
+                        <% if(hotels[0].pool===1){ %>
+                            <li class="col-3"><img src="/images/photo2.jpg" style="width:15px; height:15px;"> Pool</li>
+                            <% }if(hotels[0].bar===1) {%>
+                                <li class="col-3"><img src="/images/photo2.jpg" style="width:15px; height:15px;"> Bar</li>
+                                <% }if(hotels[0].wifi===1){ %>
+                                    <li class="col-3"><img src="/images/photo2.jpg" style="width:15px; height:15px;"> Wifi</li>
+                                    <% }if(hotels[0].gym===1){ %>
+                                        <li class="col-3"><img src="/images/photo2.jpg" style="width:15px; height:15px;">                                            Gym</li>
+                                        <% }if(hotels[0].kids_area===1){ %>
+                                            <li class="col-3"><img src="/images/photo2.jpg" style="width:15px; height:15px;">                                                Kids
+                                                Area
+                                            </li>
+                                            <% }if(hotels[0].spa===1){ %>
+                                                <li class="col-3"><img src="/images/photo2.jpg" style="width:15px; height:15px;">                                                    Spa</li>
+                                                <% }if(hotels[0].restaurant===1){ %>
+                                                    <li class="col-3"><img src="/images/photo2.jpg" style="width:15px; height:15px;">                                                        Restaurant</li>
+                                                    <% } %>
+                    </ul> -->
+
+                    <% } %>
 
 
-                <% }) %>
-
-        </div>
-
-    </div>
-</div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                            crossorigin="anonymous"></script>
+                        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                            crossorigin="anonymous"></script>
 
 
-    <script>
+                        <script src="/javascripts/hotels.js"></script>
+    </body>
 
-
-    </script>
-</body>
-
-</html>
+    </html>

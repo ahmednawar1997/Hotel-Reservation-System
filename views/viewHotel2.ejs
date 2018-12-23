@@ -55,10 +55,11 @@
                                 <div class="col-12 row">
                                     <div class="col-9"></div>
                                     <div class="col-3">
+                                        <a data-toggle="modal" data-target="#exampleModal" data-hotel_id="<%=hotels[0].id%>" class="btn btn-primary" style="float:right;">Reserve</a>
                                         <% if(hotels[0].map_url){%>
-                                            <img onclick="showMap('<%=hotels[0].map_url%>'); this.onclick=null;" src="/images/google-maps-50.png" style="width:44px; height:44px;">
+                                            <img onclick="showMap('<%=hotels[0].map_url%>'); this.onclick=null;" src="/images/google-maps-50.png" style="width:46px; height:42px;float:right;margin-right:4px">
                                             <%}%>
-                                                <a data-toggle="modal" data-target="#exampleModal" data-hotel_id="<%=hotels[0].id%>" class="btn btn-primary">Reserve</a></div>
+                                    </div>
 
                                 </div>
 

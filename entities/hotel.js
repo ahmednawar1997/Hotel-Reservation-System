@@ -38,19 +38,35 @@ function getAllOwnedHotels(req) {
     });
   });
 }
+function getAllOwnedHotelsWithRoomsAndFacilities(req) {
+  var sql = "SELECT * " +
+    "FROM hotels, facilities, hotel_locations " +
+    "LEFT JOIN room_type " +
+    "ON hotel_locations.hotel_id = room_type.hotel_id " +
+    "WHERE hotels.owner_id=? " +
+    "AND hotels.id=facilities.hotel_id " +
+    "AND hotels.id=hotel_locations.hotel_id " +
+    "ORDER BY hotels.name";
+  return new Promise((resolve, reject) => {
+    req.con.query(sql, [req.user.id], function (err, hotels) {
+      if (err) console.log(err);
+      resolve(hotels)
+    });
+  });
+}
 
 function getAllApprovedHotels(req) {
-  var sql = "SELECT hotels.*, hotel_locations.*, users.name AS hotel_owner_name, T1.res_count "+
-  "FROM hotels "+
-  "INNER JOIN hotel_locations "+
-  "ON hotels.id = hotel_locations.hotel_id "+
-  "INNER JOIN users "+
-  "ON hotels.owner_id = users.id "+
-  "LEFT JOIN " +
-  "(SELECT hotels.id, COUNT(*) AS res_count FROM " +
-  "hotels INNER JOIN reservations ON hotels.id = reservations.hotel_id "+
-  "GROUP BY hotels.id) AS T1 "+
-  "ON T1.id= hotels.id";
+  var sql = "SELECT hotels.*, hotel_locations.*, users.name AS hotel_owner_name, T1.res_count " +
+    "FROM hotels " +
+    "INNER JOIN hotel_locations " +
+    "ON hotels.id = hotel_locations.hotel_id " +
+    "INNER JOIN users " +
+    "ON hotels.owner_id = users.id " +
+    "LEFT JOIN " +
+    "(SELECT hotels.id, COUNT(*) AS res_count FROM " +
+    "hotels INNER JOIN reservations ON hotels.id = reservations.hotel_id " +
+    "GROUP BY hotels.id) AS T1 " +
+    "ON T1.id= hotels.id";
   return new Promise((resolve, reject) => {
     req.con.query(sql, [1], function (err, hotels) {
       if (err) console.log(err);
@@ -238,7 +254,8 @@ module.exports = {
   addPremiumHotel,
   removePremiumHotel,
   reactivateHotel,
-  suspendHotel
+  suspendHotel,
+  getAllOwnedHotelsWithRoomsAndFacilities
 };
 
 

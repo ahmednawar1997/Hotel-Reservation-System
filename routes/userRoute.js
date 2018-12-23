@@ -48,7 +48,8 @@ router.get("/owner/reservations", isAuthenticated, isHotelOwner, (req, res, next
 });
 
 router.get("/owner/hotels", isAuthenticated, isHotelOwner, (req, res, next) => {
-  Hotel.getAllOwnedHotels(req).then(hotels => {
+  Hotel.getAllOwnedHotelsWithRoomsAndFacilities(req).then(hotels => {
+    console.log("output: ", hotels)
     res.render("ownersHotels", { message: req.flash('message'), hotels: hotels });
   });
 });
@@ -96,9 +97,9 @@ router.get("/customers", isAuthenticated, function (req, res, next) {
 
 router.get("/customers/view", isAuthenticated, function (req, res, next) {
   User.getUserDetails(req, req.query.customer_id).then(customer => {
-    if(customer.length > 0){
-    res.render("viewUser", { customer: customer, message: req.flash('message') });
-    }else{
+    if (customer.length > 0) {
+      res.render("viewUser", { customer: customer, message: req.flash('message') });
+    } else {
       req.flash('message', 'User Not Found');
       res.redirect("/user/admin/hotels");
 
