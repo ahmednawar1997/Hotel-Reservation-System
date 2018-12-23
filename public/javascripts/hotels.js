@@ -186,12 +186,17 @@ function roomView(roomObj) {
     );
 }
 
-function showMap(url) {
+function showMap(url, id) {
     $(function () {
-
-        $('#mapiframe').append('<iframe src="' + url + '"\
+        if ($('#mapiframe' + id).html() === '') {
+            $('#mapiframe' + id).html('<iframe src="' + url + '"\
                             width = "100%" height = "300" frameborder = "0" style = "margin-top: 10px;" allowfullscreen ></iframe >');
+        } else {
+            $('#mapiframe' + id).toggle('slow');
+        }
     });
+
+
 }
 
 $('#addRoomModal').on('show.bs.modal', function (event) {

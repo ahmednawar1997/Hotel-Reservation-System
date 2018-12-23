@@ -3,17 +3,20 @@
     <body>
         <% for(var i=0 ; i<hotels.length; i++){ %>
             <section>
-                <div class="container py-3">
+                <div class="container">
                     <div class="card">
                         <h1 class="card-header" align='center'>
                             <%= hotels[i].name%> Hotel
+                                <% if(hotels[i].approved){ %>
+                                    <i class="far fa-check-circle" title="Approved Hotel" style="float:right; color:grey"></i>
+                                    <%}%>
                         </h1>
                         <div class="row ">
                             <div class="col-4">
                                 <img src="/images/photo2.jpg" class="w-100" style="height:300px; border-radius: 0% 0% 20% 0%;">
                             </div>
-                            <div class="col-8 px-3">
-                                <div class="card-block px-3  col-12">
+                            <div class="col-8">
+                                <div class="card-block col-12">
 
                                     <div class="card-text col-12" style="padding-top: 20px">
                                         <%=hotels[i].description%>
@@ -59,27 +62,21 @@
                                                                                 <%= hotels[i].room_view %> view.
                                                                     </li>
                                                                     <%}%>
-
                                         </ul>
                                     </div>
-                                    <div class="col-12 row">
-
-                                        <div class="col-12">
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRoomModal" data-whatever='<%=hotels[i].id%>'
-                                                style="float:right;">Add Room
-                                            </button>
-                                            <% if(hotels[i].map_url){%>
-                                                <img onclick="showMap('<%=hotels[i].map_url%>'); this.onclick=null;" src="/images/google-maps-50.png" style="width:44px; height:44px;float:right;cursor:pointer">
-                                                <%}%>
-                                        </div>
-
-                                    </div>
-
                                 </div>
-                            </div>
 
+                            </div>
+                            <div class="col-12" style="padding:20px; padding-right:50px">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRoomModal" data-whatever='<%=hotels[i].id%>'
+                                    style="float:right;">Add Room
+                                </button>
+                                <% if(hotels[i].map_url){%>
+                                    <img onclick="showMap('<%=hotels[i].map_url%>','<%= hotels[i].id%>');" src="/images/google-maps-50.png" style="width:44px; height:44px;float:right;cursor:pointer">
+                                    <%}%>
+                            </div>
                         </div>
-                        <div id="mapiframe"></div>
+                        <div id="mapiframe<%=hotels[i].id%>"></div>
                     </div>
                 </div>
             </section>
