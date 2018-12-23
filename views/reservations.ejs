@@ -1,148 +1,152 @@
 <%- include partials/header %>
 
-    <div class="container">
-        <div class="card">
-            <h3 class="card-header text-center">Reservations</h3>
-            <form action="/user/owner/reservations" method="GET" id="pickDate">
-                <div class="form-group row col-12">
-                    <label for="example-date-input" class="col-2 col-form-label">Checkin Date</label>
-                    <div class="col-3">
-                        <input class="form-control" type="date" name="checkin" id="checkin">
-                    </div>
-                    <div class="col-1"></div>
-                    <label for="example-date-input" class="col-2 col-form-label">Checkout Date</label>
-                    <div class="col-3">
-                        <input class="form-control" type="date" name="checkout" id="checkout">
-                    </div>
+<div class="container">
+    <div class="card">
+        <h3 class="card-header text-center">Reservations</h3>
+        <form action="/user/owner/reservations" method="GET" id="pickDate">
+            <div class="form-group row col-12">
+                <label for="example-date-input" class="col-2 col-form-label">Checkin Date</label>
+                <div class="col-3">
+                    <input class="form-control" type="date" name="checkin" id="checkin">
                 </div>
-                <div class="row col-12">
-                    <label for="state" class="col-2">Reservation State</label>
-                    <select id="state" name="state" class="form-control col-3">
-                        <option value="all">All</option>
-                        <option value="pending">Pending Reservations</option>
-                        <option value="approved">Approved Reservations</option>
-                        <option value="cancelled">Cancelled Reservations</option>
-                    </select>
-                    <div class="col-1"></div>
-                    <label for="interval" class="col-2">Reservation Interval</label>
-                    <select id="interval" name="interval" class="form-control col-3">
-                        <option value="all">All</option>
-                        <option value="upcoming">Upcoming Reservations</option>
-                        <option value="past">Past Reservations</option>
-                    </select>
+                <div class="col-1"></div>
+                <label for="example-date-input" class="col-2 col-form-label">Checkout Date</label>
+                <div class="col-3">
+                    <input class="form-control" type="date" name="checkout" id="checkout">
                 </div>
+            </div>
+            <div class="row col-12">
+                <label for="state" class="col-2">Reservation State</label>
+                <select id="state" name="state" class="form-control col-3">
+                    <option value="all">All</option>
+                    <option value="pending">Pending Reservations</option>
+                    <option value="approved">Approved Reservations</option>
+                    <option value="cancelled">Cancelled Reservations</option>
+                </select>
+                <div class="col-1"></div>
+                <label for="interval" class="col-2">Reservation Interval</label>
+                <select id="interval" name="interval" class="form-control col-3">
+                    <option value="all">All</option>
+                    <option value="upcoming">Upcoming Reservations</option>
+                    <option value="past">Past Reservations</option>
+                </select>
+            </div>
 
 
-                <div class="col-12">
-                    <button class="btn btn btn-secondary" style="padding:5px 20px 5px 20px;float:right;" type="submit">Search</button>
+            <div class="col-12">
+                <button class="btn btn btn-secondary" style="padding:5px 20px 5px 20px;float:right;" type="submit">Search</button>
 
-                </div>
-        </div>
-
-    </div>
-    </form>
-    </div>
+            </div>
     </div>
 
+</div>
+</form>
+</div>
+</div>
 
-    <% for(var i=0 ; i<detailedReservations.length; i++){ %>
-        <div class="container">
-            <div class="card">
-                <h5 class="card-header">
-                    <% if(detailedReservations[i].hotel_approval===1){ %>
-                        <%if(detailedReservations[i].customer_approval===0){%>
-                            <span class="checkmark">
-                                <div id="color<%=detailedReservations[i].reservation_id%>" class="canceled_circle"></div>
-                            </span>
-                            <%}else {%>
-                                <span class="checkmark">
-                                    <div id="color<%=detailedReservations[i].reservation_id%>" class="checkmark_circle"></div>
-                                    <div class="checkmark_stem"></div>
-                                    <div class="checkmark_kick%>"></div>
-                                </span>
 
-                                <%}}else if(detailedReservations[i].hotel_approval===0 ){%>
-                                    <span class="checkmark">
-                                        <div class="canceled_circle"></div>
-                                    </span>
-                                    <%}else{%>
-                                        <span class="checkmark">
-                                            <div id="color<%=detailedReservations[i].reservation_id%>" class="pending_circle"></div>
-                                            <div class="check1<%=detailedReservations[i].reservation_id%>"></div>
-                                            <div class="check2<%=detailedReservations[i].reservation_id%>"></div>
-                                        </span>
-                                        <%}%>
-                                            Reservation #
-                                            <%= detailedReservations[i].reservation_id%><span style="color:red;float:right;"><%=detailedReservations[i].customer_approval===0?' Customer Cancelled':''%></span>
-                                                <%if(!detailedReservations[i].hotel_approval && detailedReservations[i].hotel_approval!==0 ){%>
+<% for(var i=0 ; i<detailedReservations.length; i++){ %>
+<div class="container">
+    <div class="card">
+        <h5 class="card-header">
+            <% if(detailedReservations[i].hotel_approval===1){ %>
+            <%if(detailedReservations[i].customer_approval===0){%>
+            <span class="checkmark">
+                <div id="color<%=detailedReservations[i].reservation_id%>" class="canceled_circle"></div>
+            </span>
+            <%}else {%>
+            <span class="checkmark">
+                <div id="color<%=detailedReservations[i].reservation_id%>" class="checkmark_circle"></div>
+                <div class="checkmark_stem"></div>
+                <div class="checkmark_kick%>"></div>
+            </span>
 
-                                                    <button type="button" class="btn btn-danger btn-sm" style="float:right" id="cancelButton<%=detailedReservations[i].reservation_id%>"
-                                                        onclick="cancelReservation('<%=detailedReservations[i].reservation_id%>')">Cancel</button>
-                                                    <button type="button" class="btn btn-success btn-sm" style="float:right; margin-right:5px" id="approveButton<%=detailedReservations[i].reservation_id%>"
-                                                        onclick="approveReservation('<%=detailedReservations[i].reservation_id%>')">Approve</button>
-                                                    <%}%>
-                </h5>
-                <div class="card-body">
-                    <p class="card-title"><strong> <%=detailedReservations[i].hotel_name %> Hotel</strong> <br> Reservation by <%=detailedReservations[i].name %>
-                    </p>
-                    <!-- <button type="button" class="btn btn-success">Approve</button> -->
-                    <div id="accordion">
-                        <div class="card">
+            <%}}else if(detailedReservations[i].hotel_approval===0 ){%>
+            <span class="checkmark">
+                <div class="canceled_circle"></div>
+            </span>
+            <%}else{%>
+            <span class="checkmark">
+                <div id="color<%=detailedReservations[i].reservation_id%>" class="pending_circle"></div>
+                <div class="check1<%=detailedReservations[i].reservation_id%>"></div>
+                <div class="check2<%=detailedReservations[i].reservation_id%>"></div>
+            </span>
+            <%}%>
+            Reservation #
+            <%= detailedReservations[i].reservation_id%><span style="color:red;float:right;">
+                <%=detailedReservations[i].customer_approval===0?' Customer Cancelled':''%></span>
+            <%if(!detailedReservations[i].hotel_approval && detailedReservations[i].hotel_approval!==0 ){%>
 
-                            <h5 class="mb-0">
-                                <button class="btn btn-secondary btn-block collapsed" data-toggle="collapse" data-target="#<%=detailedReservations[i].reservation_id%>"
-                                    aria-expanded="false" aria-controls="<%=detailedReservations[i].reservation_id%>">
-                                    Guest Info
-                                </button>
-                            </h5>
+            <button type="button" class="btn btn-danger btn-sm" style="float:right" id="cancelButton<%=detailedReservations[i].reservation_id%>"
+                onclick="cancelReservation('<%=detailedReservations[i].reservation_id%>')">Cancel</button>
+            <button type="button" class="btn btn-success btn-sm" style="float:right; margin-right:5px" id="approveButton<%=detailedReservations[i].reservation_id%>"
+                onclick="approveReservation('<%=detailedReservations[i].reservation_id%>')">Approve</button>
+            <%}%>
+        </h5>
+        <div class="card-body">
+            <p class="card-title"><strong>
+                    <%=detailedReservations[i].hotel_name %> Hotel</strong> <br> Reservation by
+                <%=detailedReservations[i].name %>
+            </p>
+            <!-- <button type="button" class="btn btn-success">Approve</button> -->
+            <div id="accordion">
+                <div class="card">
 
-                            <div id="<%=detailedReservations[i].reservation_id%>" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                                <div class="card-body">
-                                    <ul>
-                                        <li>Customer Name:
-                                            <%= detailedReservations[i].name%>
-                                        </li>
-                                        <li>Email:
-                                            <%= detailedReservations[i].email%>
-                                        </li>
-                                        <li>Check-in Date:
-                                            <%= detailedReservations[i].check_in_date%>
-                                        </li>
-                                        <li>Check-out Date:
-                                            <%= detailedReservations[i].check_out_date%>
-                                        </li>
-                                        <ul>
-                                            <% var reservationID = detailedReservations[i].reservation_id %>
-                                                <li>
-                                                    <%= detailedReservations[i].number_of_rooms%>
-                                                        <%=detailedReservations[i].room_type %> rooms
-                                                </li>
-                                                <% while(detailedReservations[i+1] && detailedReservations[i+1].reservation_id === reservationID){ %>
-                                                    <li>
-                                                        <% i++ %>
-                                                            <%= detailedReservations[i].number_of_rooms%>
-                                                                <%=detailedReservations[i].room_type %> rooms
-                                                    </li>
-                                                    <%}%>
-                                        </ul>
-                                    </ul>
-                                </div>
-                            </div>
+                    <h5 class="mb-0">
+                        <button class="btn btn-secondary btn-block collapsed" data-toggle="collapse" data-target="#<%=detailedReservations[i].reservation_id%>"
+                            aria-expanded="false" aria-controls="<%=detailedReservations[i].reservation_id%>">
+                            Guest Info
+                        </button>
+                    </h5>
+
+                    <div id="<%=detailedReservations[i].reservation_id%>" class="collapse" aria-labelledby="headingTwo"
+                        data-parent="#accordion">
+                        <div class="card-body">
+                            <ul>
+                                <li>Customer Name:
+                                    <%= detailedReservations[i].name%>
+                                </li>
+                                <li>Email:
+                                    <%= detailedReservations[i].email%>
+                                </li>
+                                <li>Check-in Date:
+                                    <%= detailedReservations[i].check_in_date%>
+                                </li>
+                                <li>Check-out Date:
+                                    <%= detailedReservations[i].check_out_date%>
+                                </li>
+                                <ul>
+                                    <% var reservationID = detailedReservations[i].reservation_id %>
+                                    <li>
+                                        <%= detailedReservations[i].number_of_rooms%>
+                                        <%=detailedReservations[i].room_type %> rooms
+                                    </li>
+                                    <% while(detailedReservations[i+1] && detailedReservations[i+1].reservation_id === reservationID){ %>
+                                    <li>
+                                        <% i++ %>
+                                        <%= detailedReservations[i].number_of_rooms%>
+                                        <%=detailedReservations[i].room_type %> rooms
+                                    </li>
+                                    <%}%>
+                                </ul>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
 
-        <%}%>
+<%}%>
 
 
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-                crossorigin="anonymous"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-                crossorigin="anonymous"></script>
-            <script src="/javascripts/hotels.js"></script>
-            <script src="/javascripts/reservations.js"></script>
-            </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+<script src="/javascripts/hotels.js"></script>
+<script src="/javascripts/reservations.js"></script>
+</body>
 
-            </html>
+</html>

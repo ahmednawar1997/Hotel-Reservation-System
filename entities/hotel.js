@@ -40,10 +40,21 @@ function getAllOwnedHotels(req) {
 }
 
 function getAllApprovedHotels(req) {
-  var sql = "SELECT hotels.*, hotel_locations.*, users.name AS hotel_owner_name FROM hotels INNER JOIN hotel_locations ON hotels.id = hotel_locations.hotel_id INNER JOIN users ON hotels.owner_id = users.id";
+  var sql = "SELECT hotels.*, hotel_locations.*, users.name AS hotel_owner_name, T1.res_count "+
+  "FROM hotels "+
+  "INNER JOIN hotel_locations "+
+  "ON hotels.id = hotel_locations.hotel_id "+
+  "INNER JOIN users "+
+  "ON hotels.owner_id = users.id "+
+  "LEFT JOIN " +
+  "(SELECT hotels.id, COUNT(*) AS res_count FROM " +
+  "hotels INNER JOIN reservations ON hotels.id = reservations.hotel_id "+
+  "GROUP BY hotels.id) AS T1 "+
+  "ON T1.id= hotels.id";
   return new Promise((resolve, reject) => {
     req.con.query(sql, [1], function (err, hotels) {
       if (err) console.log(err);
+      console.log(hotels);
       resolve(hotels);
     });
   });
@@ -62,6 +73,49 @@ function approveHotel(req) {
   var sql = "UPDATE hotels SET approved = ? WHERE id = ?;";
   return new Promise((resolve, reject) => {
     req.con.query(sql, [1, req.body.hotel_id], function (err, hotel) {
+      if (err) console.log(err);
+      resolve(hotel);
+    });
+  });
+}
+
+
+function addPremiumHotel(req) {
+  var sql = "UPDATE hotels SET premium = ? WHERE id = ?;";
+  return new Promise((resolve, reject) => {
+    req.con.query(sql, [1, req.body.hotel_id], function (err, hotel) {
+      if (err) console.log(err);
+      resolve(hotel);
+    });
+  });
+}
+
+function removePremiumHotel(req) {
+  var sql = "UPDATE hotels SET premium = ? WHERE id = ?;";
+  return new Promise((resolve, reject) => {
+    req.con.query(sql, [0, req.body.hotel_id], function (err, hotel) {
+      if (err) console.log(err);
+      resolve(hotel);
+    });
+  });
+}
+
+
+function suspendHotel(req) {
+  var sql = "UPDATE hotels SET suspended = ? WHERE id = ?;";
+  return new Promise((resolve, reject) => {
+    req.con.query(sql, [1, req.body.hotel_id], function (err, hotel) {
+      if (err) console.log(err);
+      resolve(hotel);
+    });
+  });
+}
+
+
+function reactivateHotel(req) {
+  var sql = "UPDATE hotels SET suspended = ? WHERE id = ?;";
+  return new Promise((resolve, reject) => {
+    req.con.query(sql, [0, req.body.hotel_id], function (err, hotel) {
       if (err) console.log(err);
       resolve(hotel);
     });
@@ -180,7 +234,11 @@ module.exports = {
   getHotelAverageRating,
   getHotelDetailsAndRooms,
   getPremiumHotels,
-  getCustomerReviews
+  getCustomerReviews,
+  addPremiumHotel,
+  removePremiumHotel,
+  reactivateHotel,
+  suspendHotel
 };
 
 

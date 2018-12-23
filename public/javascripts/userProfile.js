@@ -60,29 +60,6 @@ $(function () {
     });
 
 
-
-
-
-
-
-
-    $('.approve_btn').click(function (e) {
-
-        e.preventDefault();
-        $.ajax({
-            type: 'post',
-            url: '/hotels/approve',
-            data: {
-                hotel_id: $(this).attr('hotel_id')
-            },
-            success: function (data) {
-                window.location = '/user';
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                alert('fail');
-            }
-        });
-    });
     $('.cancel_reservation').click(function (e) {
         e.preventDefault();
         $.ajax({

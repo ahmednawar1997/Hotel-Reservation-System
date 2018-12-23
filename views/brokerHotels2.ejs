@@ -1,75 +1,133 @@
 <%- include partials/header %>
 
-    <% hotels.forEach(hotel => {%>
-        <div class="container">
-            <div class="card">
-                <h5 class="card-header">
-                    <% if(hotel.approved===1){ %>
-                        <span class="checkmark">
-                            <div class="checkmark_circle"></div>
-                            <div class="checkmark_stem"></div>
-                            <div class="checkmark_kick"></div>
-                        </span>
-                        <%}else{%>
-                            <span class="checkmark">
-                                <div class="pending_circle"></div>
-                            </span>
-                        <%}%>
+<div class="container">
+    <div class="card">
+        <h5 class="card-header text-center">Search for a user</h5>
+        <form style="margin:0" action="/user/customers/view" method="GET">
+            <div class="form-group row">
+                <div class="col-1"></div>
+                <label for="example-date-input" class="col-3 col-form-label">Customer Name</label>
+                <div class="col-5">
+                    <input class="form-control" type="text" name="customer_name" id="customer_input">
+                    <input class="form-control" type="text" name="customer_id" id="customer_id" hidden>
+                </div>
+                <div class="col-2">
+                    <button class="btn btn btn-secondary" id="user_search" style="padding:5px 20px 5px 20px;float:right;"
+                        type="submit" disabled>Search</button>
+                </div>
+                <div class="col-1"></div>
+            </div>
+        </form>
 
-                                <%= hotel.name%> Hotel 
-                                <% for(var i=0; i < hotel.stars; i++){%><span class="fa fa-star checked fa-xs star_checked"></span>
-                                <% }%>  
-                                <% if(hotel.premium===1){ %>
-                                <i style="color:#6849d1;float:right" title="Premium" class="fa fa-award fa-lg"></i>
-                                <%}%>
+    </div>
 
-                </h5>
-                <div class="card-body">
-                    <p class="card-title"><strong> <%=hotel.name%> Hotel</strong> <br> Owned by: <%=hotel.hotel_owner_name%>
-                    </p>
-                    <!-- <button type="button" class="btn btn-success">Approve</button> -->
-                    <div id="accordion">
-                        <div class="card">
+</div>
 
-                            <h5 class="mb-0">
-                                <button class="btn btn-secondary btn-block collapsed" data-toggle="collapse" data-target="#<%=hotel.id%>" aria-expanded="false"
-                                    aria-controls="<%=hotel.id%>">
-                                    More Info
-                                </button>
-                            </h5>
 
-                            <div id="<%=hotel.id%>" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                                <div class="card-body">
-                                    <ul>
-                                        <li>Name:
 
-                                        </li>
-                                        <li>Email:
 
-                                        </li>
-                                        <li>Check-in Date:
 
-                                        </li>
-                                        <li>Check-out Date:
+<% hotels.forEach(hotel => {%>
+<div class="container">
+    <div class="card">
+        <h5 class="card-header">
+            <% if(hotel.approved===1){ %>
+            <span class="checkmark">
+                <div class="checkmark_circle"></div>
+                <div class="checkmark_stem"></div>
+                <div class="checkmark_kick"></div>
+            </span>
+            <%}else{%>
+            <span class="checkmark">
+                <div class="pending_circle" hotel_id="<%=hotel.id%>" title="Approve Hotel"></div>
+            </span>
+            <%}%>
 
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+            <%= hotel.name%> Hotel
+            <% for(var i=0; i < hotel.stars; i++){%><span class="fa fa-star checked fa-xs star_checked"></span>
+            <% }%>
+            <% if(hotel.premium===1){ %>
+            <i style="color:#bf1c00;float:right" title="Click to remove premium" class="fa fa-award fa-lg premium_button"
+                hotel_id="<%=hotel.id%>"></i>
+            <%}else{%>
+            <i style="color:#6849d1;float:right" title="Click to add premium" class="fas fa-thumbs-down fa-lg non_premium_button"
+                hotel_id="<%=hotel.id%>"></i>
+
+            <%}%>
+
+        </h5>
+        <div class="card-body">
+            <div class="card-title row">
+                <p class="col-8"><strong>
+                        <%=hotel.name%> Hotel</strong> <br> Owned by:
+                    <%=hotel.hotel_owner_name%>
+                </p>
+                <div class="col-4">
+                    <% if(hotel.suspended===0){ %>
+
+                        <i class="fas fa-pause-circle fa-2x suspend_button" title="Suspend The Hotel"style="color:red;float:right"  hotel_id="<%=hotel.id%>"></i> 
+                    <%}else{%>
+                        <i class="far fa-play-circle fa-2x reactivate_button" title="Reactivate The Hotel"style="color:green;float:right"  hotel_id="<%=hotel.id%>"></i> 
+
+                    <%}%>
+
+                </div>
+            </div>
+
+
+            <!-- <button type="button" class="btn btn-success">Approve</button> -->
+            <div id="accordion">
+                <div class="card">
+
+                    <h5 class="mb-0">
+                        <button class="btn btn-secondary btn-block collapsed" data-toggle="collapse" data-target="#<%=hotel.id%>"
+                            aria-expanded="false" aria-controls="<%=hotel.id%>">
+                            More Info
+                        </button>
+                    </h5>
+
+                    <div id="<%=hotel.id%>" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                        <div class="card-body">
+                            <ul>
+                                <li>
+                                    <%=hotel.description%>
+                                </li>
+                                <li>Located at:
+                                    <%=hotel.street%>,
+                                    <%=hotel.district%>,
+                                    <%=hotel.city%>,
+                                    <%=hotel.country%>
+                                </li>
+                                <li>Number of times this hotel was reserved:
+                                    <%=hotel.res_count?hotel.res_count:'0'%>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
 
-        <%})%>
+<%})%>
 
 
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-                crossorigin="anonymous"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-                crossorigin="anonymous"></script>
-            <script src="/javascripts/hotels.js"></script>
-            </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+<script src="/javascripts/hotels.js"></script>
+<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet">
+</link>
+<script src='https://cdn.rawgit.com/pguso/jquery-plugin-circliful/master/js/jquery.circliful.min.js'></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+    crossorigin="anonymous"></script>
+    <script src="/javascripts/adminPage.js"></script>
 
-            </html>
+
+<script>
+ </script>
+</body>
+
+</html>

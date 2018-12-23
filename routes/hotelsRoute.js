@@ -16,12 +16,6 @@ router.get("/", isAuthenticated, function (req, res, next) {
   });
 });
 
-router.get("/getHotels", isAuthenticated, function (req, res, next) {
-  Hotel.getAllApprovedHotelsWithFacilities(req).then(hotels => {
-    res.status(202).send(hotels);
-  });
-});
-
 router.get("/:hotel_id(\\d+)/", isAuthenticated, function (req, res, next) {
   Hotel.getHotelDetailsAndRooms(req).then(hotels => {
     Hotel.getPremiumHotels(req).then(premiumHotels => {
@@ -95,6 +89,50 @@ router.post("/approve", isAuthenticated, function (req, res) {
   });
 
 });
+
+
+router.post("/premium", isAuthenticated, function (req, res) {
+
+  Hotel.addPremiumHotel(req).then(function (hotel_id) {
+    req.flash('message', 'Hotel is now Premium');
+    res.status(202).send('success');
+
+  });
+
+});
+
+router.post("/removepremium", isAuthenticated, function (req, res) {
+
+  Hotel.removePremiumHotel(req).then(function (hotel_id) {
+    req.flash('message', 'Hotel is now not Premium');
+    res.status(202).send('success');
+
+  });
+
+});
+
+router.post("/suspend", isAuthenticated, function (req, res) {
+
+  Hotel.suspendHotel(req).then(function (hotel_id) {
+    req.flash('message', 'Hotel is now suspended');
+    res.status(202).send('success');
+
+  });
+
+});
+
+router.post("/reactivate", isAuthenticated, function (req, res) {
+
+  Hotel.reactivateHotel(req).then(function (hotel_id) {
+    req.flash('message', 'Hotel is now reactivated');
+    res.status(202).send('success');
+
+  });
+
+});
+
+
+
 
 router.post("/rate", isAuthenticated, function (req, res) {
   Reservation.insertCustomerReview(req, req.body.reservation_id, req.body.customer_rating).then(function (reservation_id) {

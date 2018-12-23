@@ -3,6 +3,7 @@ var multer = require('multer');
 var router = express.Router();
 var Hotel = require("../entities/Hotel");
 var Room = require("../entities/Room");
+var User = require("../entities/User");
 var Reservation = require("../entities/Reservation");
 
 var storage = require('../helpers/uploadFile');
@@ -85,6 +86,39 @@ router.get("/admin/hotels", isAuthenticated, function (req, res, next) {
     res.render("brokerHotels2", { hotels: hotels, message: req.flash('message') });
   });
 });
+
+router.get("/customers", isAuthenticated, function (req, res, next) {
+  User.getAllCustomers(req, req.query.customer_name).then(customers => {
+    res.status(202).send(customers);
+  });
+});
+
+
+router.get("/customers/view", isAuthenticated, function (req, res, next) {
+  User.getUserDetails(req, req.query.customer_id).then(customer => {
+    if(customer.length > 0){
+    res.render("viewUser", { customer: customer, message: req.flash('message') });
+    }else{
+      req.flash('message', 'User Not Found');
+      res.redirect("/user/admin/hotels");
+
+    }
+  });
+});
+
+router.post("/:user_id(\\d+)/blacklist", isAuthenticated, function (req, res, next) {
+  User.blacklistUser(req, req.params.user_id).then(customer => {
+    res.redirect('/user/customers/view?customer_id=' + req.params.user_id);
+  });
+});
+
+router.post("/:user_id(\\d+)/blacklist/remove", isAuthenticated, function (req, res, next) {
+  User.removeBlacklistUser(req, req.params.user_id).then(customer => {
+    res.redirect('/user/customers/view?customer_id=' + req.params.user_id);
+  });
+});
+
+
 
 router.get("/edit", isAuthenticated, function (req, res, next) {
 

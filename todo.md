@@ -14,3 +14,16 @@
 -All money calculations and money owned features
 -Owner can approve reservation within 30 seconds
 -Customer add review comment
+
+
+
+
+-Broker all hotels page
+-Broker may suspend a hotel
+-Broker may approve a hotel
+-Broker may unsuspend a hotel
+-Textbox to search for a customer
+-Then submit to view customer profile
+
+
+-filters in broker all hotels
