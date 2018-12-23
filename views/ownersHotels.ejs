@@ -15,16 +15,17 @@
                             <div class="col-8 px-3">
                                 <div class="card-block px-3  col-12">
 
-                                    <div class="card-text col-12">
+                                    <div class="card-text col-12" style="padding-top: 20px">
                                         <%=hotels[i].description%>
                                     </div>
                                     <hr>
-                                    <div class="col-6"><strong>Stars:
-                                            <%      for(var j=0; j < hotels[i].stars; j++){%>
+                                    <div class="col-6"><strong><i class="fas fa-star-half-alt" titles="Stars"></i> Stars:
+                                            <% for(var j=0; j < hotels[i].stars; j++){%>
                                                 <span><i class="text-warning fa fa-star"></i></span>
                                                 <% }%></strong>
                                     </div>
-                                    <div class="col-6"><strong>Location: </strong>
+                                    <div class="col-6"><strong><i class="fas fa-map-marker-alt" style="margin-left:3px" title="
+                                                                                Location "></i> <span style="margin-left:3px">Location:</span></strong>
                                         <%=hotels[i].street%>,
                                             <%=hotels[i].district%>,
                                                 <%=hotels[i].city%>,
@@ -33,17 +34,18 @@
                                     </div>
 
                                     <div class="col-12">
-                                        <strong>Available Facilities: </strong>
-                                        <%= getFacilities()%>
+                                        <strong><i class="far fa-gem " title="Facilities "></i> Facilities: </strong>
+                                        <%= getFacilities(i)%>
                                     </div>
                                     <div class="col-12">
                                         <strong>Rooms Offered: </strong>
-                                        <ul>
+                                        <ul style="list-style-type: none;">
                                             <% var hotelID = hotels[i].hotel_id %>
                                                 <%if(hotels[i].room_type){ %>
                                                     <li>
-                                                        <%= hotels[i].room_type%> with a
-                                                            <%= hotels[i].room_view %> view.
+                                                        <%= getRoomIcon(hotels[i].room_type)%>
+                                                            <%= hotels[i].room_type%> with a
+                                                                <%= hotels[i].room_view %> view.
                                                     </li>
 
                                                     <%}else{%>
@@ -52,10 +54,13 @@
                                                             <% while(hotels[i+1] && hotels[i+1].room_type && hotels[i+1].hotel_id === hotelID){ %>
                                                                 <%i++%>
                                                                     <li>
-                                                                        <%= hotels[i].room_type%> with a
-                                                                            <%= hotels[i].room_view %> view.
+                                                                        <%= getRoomIcon(hotels[i].room_type)%>
+                                                                            <%= hotels[i].room_type%> with a
+                                                                                <%= hotels[i].room_view %> view.
                                                                     </li>
                                                                     <%}%>
+                                                                        </li><i class="fas fa-plus-circle" title="Add Room"
+                                                                            style="cursor:pointer"></i></li>
                                         </ul>
                                     </div>
                                     <div class="col-12 row">
@@ -78,37 +83,53 @@
             </section>
             <% } %>
 
-                <% function getFacilities(){ %>
-                    <!-- <ul class="row col-12" style="list-style-type: none;">
-                        <% if(hotels[0].pool===1){ %>
-                            <li class="col-3"><img src="/images/photo2.jpg" style="width:15px; height:15px;"> Pool</li>
-                            <% }if(hotels[0].bar===1) {%>
-                                <li class="col-3"><img src="/images/photo2.jpg" style="width:15px; height:15px;"> Bar</li>
-                                <% }if(hotels[0].wifi===1){ %>
-                                    <li class="col-3"><img src="/images/photo2.jpg" style="width:15px; height:15px;"> Wifi</li>
-                                    <% }if(hotels[0].gym===1){ %>
-                                        <li class="col-3"><img src="/images/photo2.jpg" style="width:15px; height:15px;">                                            Gym</li>
-                                        <% }if(hotels[0].kids_area===1){ %>
-                                            <li class="col-3"><img src="/images/photo2.jpg" style="width:15px; height:15px;">                                                Kids
-                                                Area
+                <% function getFacilities(i){ %>
+                    <ul class="row col-12" style="list-style-type: none; margin-left:20px">
+                        <% if(hotels[i].pool===1){ %>
+                            <li class="col-3"><i class="fas fa-swimming-pool" title="Pool"></i> Pool</li>
+                            <% }if(hotels[i].bar===1) {%>
+                                <li class="col-3"><i class="fas fa-glass-martini" title="Bar"></i> Bar</li>
+                                <% }if(hotels[i].wifi===1){ %>
+                                    <li class="col-3"><i class="fas fa-wifi" title="Wifi"></i> Wifi</li>
+                                    <% }if(hotels[i].gym===1){ %>
+                                        <li class="col-3"><i class="fas fa-dumbbell" title="Gym"></i> Gym</li>
+                                        <% }if(hotels[i].kids_area===1){ %>
+                                            <li class="col-3"><i class="fas fa-baby" title="Kids Area"></i> Kids Area
                                             </li>
-                                            <% }if(hotels[0].spa===1){ %>
-                                                <li class="col-3"><img src="/images/photo2.jpg" style="width:15px; height:15px;">                                                    Spa</li>
-                                                <% }if(hotels[0].restaurant===1){ %>
-                                                    <li class="col-3"><img src="/images/photo2.jpg" style="width:15px; height:15px;">                                                        Restaurant</li>
+                                            <% }if(hotels[i].spa===1){ %>
+                                                <li class="col-3"><i class="fas fa-hot-tub" title="Spa"></i> Spa</li>
+                                                <% }if(hotels[i].restaurant===1){ %>
+                                                    <li class="col-3"><i class="fas fa-utensils" title="Restaurant"></i>
+                                                        Restaurant</li>
                                                     <% } %>
-                    </ul> -->
+                    </ul>
 
                     <% } %>
 
+                        <% function getRoomIcon(roomType){
+                                    if(roomType==="single"){
+                                        %>
+                            <i class="fas fa-user"></i>
+                            <%}
+                                    else if(roomType==="double"){%>
+                                <i class="fas fa-user-friends"></i>
+                                <%}
+                                    else if(roomType==="triple"){%>
+                                    <i class="fas fa-users"></i>
+                                    <%}
+                                    else if(roomType==="suite"){%>
+                                        <i class="fas fa-crown"></i>
+                                        <%}
+                                } %>
 
-                        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-                            crossorigin="anonymous"></script>
-                        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-                            crossorigin="anonymous"></script>
+
+                                            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                                                crossorigin="anonymous"></script>
+                                            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                                                crossorigin="anonymous"></script>
 
 
-                        <script src="/javascripts/hotels.js"></script>
+                                            <script src="/javascripts/hotels.js"></script>
     </body>
 
     </html>

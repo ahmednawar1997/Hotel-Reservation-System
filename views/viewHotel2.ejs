@@ -16,16 +16,18 @@
                                 <!-- <h3 class="card-title col-lg-12">
                                     <%= hotels[0].name%> Hotel
                                 </h3> -->
-                                <div class="card-text col-12">
+                                <div class="card-text col-12" style="padding-top: 20px">
                                     <%=hotels[0].description%>
                                 </div>
                                 <hr>
-                                <div class="col-6"><strong>Stars:
+                                <div class="col-6"><strong><i class="fas fa-star-half-alt" titles="Stars"></i> Stars:
                                         <%      for(var i=0; i < hotels[0].stars; i++){%>
                                             <span><i class="text-warning fa fa-star"></i></span>
                                             <% }%></strong>
                                 </div>
-                                <div class="col-6"><strong>Location: </strong>
+                                <div class="col-6"><strong> <i class="fas fa-map-marker-alt" style="margin-left:3px" title="
+                                            Location "></i> <span style="margin-left:3px">Location:</span>
+                                    </strong>
                                     <%=hotels[0].street%>,
                                         <%=hotels[0].district%>,
                                             <%=hotels[0].city%>,
@@ -33,18 +35,20 @@
 
                                 </div>
 
-                                <div class="col-12">
-                                    <strong>Available Facilities: </strong>
+                                <div class="col-12 ">
+                                    <strong><i class="far fa-gem " title="Facilities "></i> Facilities: </strong>
+
                                     <%= getFacilities()%>
                                 </div>
-                                <div class="col-12">
+                                <div class="col-12 ">
                                     <strong>Rooms Offered: </strong>
-                                    <ul>
+                                    <ul style="list-style-type: none;">
                                         <%hotels.forEach(hotel => {%>
                                             <%if(hotel.room_type){ %>
-                                                <li>
-                                                    <%= hotel.room_type%> with a
-                                                        <%= hotel.room_view %> view.
+                                                <li style="text-transform: capitalize;">
+                                                    <%= getRoomIcon(hotel.room_type)%>
+                                                        <%= hotel.room_type%> with
+                                                            <%= hotel.room_view %> view.
                                                 </li>
 
                                                 <%}else{%>
@@ -52,10 +56,10 @@
                                                     <%}})%>
                                     </ul>
                                 </div>
-                                <div class="col-12 row">
-                                    <div class="col-9"></div>
-                                    <div class="col-3">
-                                        <a data-toggle="modal" data-target="#exampleModal" data-hotel_id="<%=hotels[0].id%>" class="btn btn-primary" style="float:right;">Reserve</a>
+                                <div class="col-12 row ">
+                                    <div class="col-9 "></div>
+                                    <div class="col-3 ">
+                                        <a data-toggle="modal " data-target="#exampleModal " data-hotel_id="<%=hotels[0].id%>" class="btn btn-primary" style="float:right;">Reserve</a>
                                         <% if(hotels[0].map_url){%>
                                             <img onclick="showMap('<%=hotels[0].map_url%>'); this.onclick=null;" src="/images/google-maps-50.png" style="width:46px; height:42px;float:right;margin-right:4px">
                                             <%}%>
@@ -164,60 +168,78 @@
 
 
         <% function getFacilities(){ %>
-            <ul class="row col-12" style="list-style-type: none;">
+            <ul class="row col-12" style="list-style-type: none; margin-left:20px">
                 <% if(hotels[0].pool===1){ %>
-                    <li class="col-3"><img src="/images/photo2.jpg" style="width:15px; height:15px;"> Pool</li>
+                    <li class="col-3"><i class="fas fa-swimming-pool" title="Pool"></i> Pool</li>
                     <% }if(hotels[0].bar===1) {%>
-                        <li class="col-3"><img src="/images/photo2.jpg" style="width:15px; height:15px;"> Bar</li>
+                        <li class="col-3"><i class="fas fa-glass-martini" title="Bar"></i> Bar</li>
                         <% }if(hotels[0].wifi===1){ %>
-                            <li class="col-3"><img src="/images/photo2.jpg" style="width:15px; height:15px;"> Wifi</li>
+                            <li class="col-3"><i class="fas fa-wifi" title="Wifi"></i> Wifi</li>
                             <% }if(hotels[0].gym===1){ %>
-                                <li class="col-3"><img src="/images/photo2.jpg" style="width:15px; height:15px;"> Gym</li>
+                                <li class="col-3"><i class="fas fa-dumbbell" title="Gym"></i> Gym</li>
                                 <% }if(hotels[0].kids_area===1){ %>
-                                    <li class="col-3"><img src="/images/photo2.jpg" style="width:15px; height:15px;"> Kids
-                                        Area
+                                    <li class="col-3"><i class="fas fa-baby" title="Kids Area"></i> Kids Area
                                     </li>
                                     <% }if(hotels[0].spa===1){ %>
-                                        <li class="col-3"><img src="/images/photo2.jpg" style="width:15px; height:15px;">                                            Spa</li>
+                                        <li class="col-3"><i class="fas fa-hot-tub" title="Spa"></i> Spa</li>
                                         <% }if(hotels[0].restaurant===1){ %>
-                                            <li class="col-3"><img src="/images/photo2.jpg" style="width:15px; height:15px;">                                                Restaurant</li>
+                                            <li class="col-3"><i class="fas fa-utensils" title="Restaurant"></i>
+                                                Restaurant</li>
                                             <% } %>
             </ul>
 
             <% } %>
 
+                <% function getRoomIcon(roomType){
+                if(roomType==="single"){
+                    %>
+                    <i class="fas fa-user"></i>
+                    <%}
+                else if(roomType==="double"){%>
+                        <i class="fas fa-user-friends"></i>
+                        <%}
+                else if(roomType==="triple"){%>
+                            <i class="fas fa-users"></i>
+                            <%}
+                else if(roomType==="suite"){%>
+                                <i class="fas fa-crown"></i>
+                                <%}
+            } %>
 
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document" style="max-width: 70%">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="reservation_hotel_name"></h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form id="reservation_form" action="" method="POST">
-                                    <div class="form-group row">
-                                        <label class="col-2 col-form-label">Check-in Date</label>
-                                        <div class="col-3">
-                                            <input id="reservation_checkin" class="form-control" type="date" name="checkin" readonly>
-                                        </div>
-                                        <label class="col-2 col-form-label">Check-out Date</label>
-                                        <div class="col-3">
-                                            <input id="reservation_checkout" class="form-control" type="date" name="checkout" readonly>
+
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document" style="max-width: 70%">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="reservation_hotel_name"></h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form id="reservation_form" action="" method="POST">
+                                                        <div class="form-group row">
+                                                            <label class="col-2 col-form-label">Check-in Date</label>
+                                                            <div class="col-3">
+                                                                <input id="reservation_checkin" class="form-control" type="date" name="checkin" readonly>
+                                                            </div>
+                                                            <label class="col-2 col-form-label">Check-out Date</label>
+                                                            <div class="col-3">
+                                                                <input id="reservation_checkout" class="form-control" type="date" name="checkout" readonly>
+                                                            </div>
+                                                        </div>
+                                                        <div id="reservation_rooms_div"></div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary" id="reservation_button">Book
+                                                        Now
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div id="reservation_rooms_div"></div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" id="reservation_button">Book Now</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
 
 
@@ -225,17 +247,17 @@
 
 
 
-                <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-                    crossorigin="anonymous"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-                    crossorigin="anonymous"></script>
-                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-                    crossorigin="anonymous"></script>
-                <script src="/javascripts/hotels.js"></script>
+                                    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+                                        crossorigin="anonymous"></script>
+                                    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                                        crossorigin="anonymous"></script>
+                                    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                                        crossorigin="anonymous"></script>
+                                    <script src="/javascripts/hotels.js"></script>
 
-                <script src="/javascripts/reservationForm.js"></script>
+                                    <script src="/javascripts/reservationForm.js"></script>
 
-                </script>
+                                    </script>
 
 
 
