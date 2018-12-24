@@ -111,8 +111,10 @@
                                 </h4>
                                 <% for(var i=0; i < hotel.stars; i++){%><span class="fa fa-star checked"></span>
                                 <% }%>
+                                <% if(hotel.avgRating){%>
                                 <span class="review">Review<br>
-                                    <%=hotel.review%> </span>
+                                    <%=hotel.avgRating%> </span>
+                                    <%}%>
                             </div>
                             <hr style="margin-left: 90px;">
                             <div class="card_body">

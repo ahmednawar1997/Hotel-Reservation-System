@@ -1,4 +1,4 @@
-function insertHotel(req) {
+    function insertHotel(req) {
   var query1 = "INSERT INTO  hotels (name, owner_id, stars, description, image_path) VALUES (?,?,?,?,?)";
   var query2 = "INSERT INTO  facilities (hotel_id, pool, restaurant, bar, gym, kids_area, spa) VALUES (?,?,?,?,?,?,?)";
   var query3 = "INSERT INTO  hotel_locations (hotel_id, country, city, district, street) VALUES (?,?,?,?,?)";
@@ -151,12 +151,22 @@ function reactivateHotel(req) {
 }
 
 function getAllApprovedHotelsWithFacilities(req) {
-  var sql = "SELECT * FROM hotels INNER JOIN facilities ON hotels.id = facilities.hotel_id AND hotels.approved = ? INNER JOIN hotel_locations ON hotels.id = hotel_locations.hotel_id";
+  var sql = "SELECT hotels.*, facilities.*, hotel_locations.*, T1.avgRating "+
+  "FROM hotels "+
+  "INNER JOIN facilities ON hotels.id = facilities.hotel_id "+
+  "INNER JOIN hotel_locations ON hotels.id = hotel_locations.hotel_id "+
+  "LEFT JOIN "+
+  "(SELECT reservations.hotel_id, AVG(customer_reviews.customer_review) AS avgRating FROM "+
+  "reservations INNER JOIN customer_reviews ON customer_reviews.reservation_id = reservations.reservation_id "+
+  "GROUP BY reservations.hotel_id) AS T1 "+
+  "ON T1.hotel_id = hotels.id "+
+  "WHERE hotels.approved = 1 AND hotels.suspended = 0"
   sql = addFacilitiesToQuery(req, sql);
   sql = addLocationToQuery(req, sql);
   return new Promise((resolve, reject) => {
     req.con.query(sql, [1], function (err, hotels) {
       if (err) console.log(err);
+      console.log(hotels);
       resolve(hotels);
     });
   });

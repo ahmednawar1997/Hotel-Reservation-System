@@ -7,11 +7,11 @@
 
 }
 .filter_header{
-    background-color: #bab198;
+    background-color: #f7f7f7;
 }
 
 .filter_body{
-    background-color: #dfdbce;
+    background-color: white;
 
 }
 
@@ -21,7 +21,7 @@
 
 .wrapper {
     /* height: 30%; */
-    background-color: #cec2c2;
+    background-color: white;
     border-radius: 15px;
     opacity: 0.9;
     margin-bottom: 20px;
@@ -57,21 +57,21 @@ hr {
     width: 100%;
     border-radius: 15px;
     padding: 5px;
-    border: 3px solid;
+    border: 3px solid #a284c4;
 }
 .card_image:hover{
     cursor: pointer;
 }
 .wrapper:hover{
-    transform: scale(1.02);
-    transition: all .2s ease-in-out;
+    opacity: 1;
+
 }
 
 .review {
     float: right;
     border-radius: 15px;
     padding: 4px;
-    background-color: #877c5a;
+    background-color: #a284c4;
     color:white;
 
 }
@@ -100,11 +100,11 @@ hr {
     margin-right: 30px;
     margin-bottom: 10px;
     margin-top: 0;;
-    border-color: #c6bfa1;
-    color: #877c5a;
+    border-color: #a284c4;
+    color: #a284c4;
 }
  #about:hover{
-     background-color: #877c5a;
+     background-color: #a284c4;
      color: white;
  }
 

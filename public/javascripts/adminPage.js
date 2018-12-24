@@ -112,26 +112,26 @@ $(document).ready(function () {
         }
     });
 
-    $('#hotel_search_form').submit(function(e){
+    $('#hotel_search_form').submit(function (e) {
         e.preventDefault();
-        $('.hotel_container').show();
+        $('.option1').click();
         $('html,body').animate({
-            scrollTop: $("#" + $('#hotel_id').val()+"_scroll").offset().top
+            scrollTop: $("#" + $('#hotel_id').val() + "_scroll").offset().top
         }, 'slow');
     });
 
-    $('.option1').click(function(){
+    $('.option1').click(function () {
         $('.hotel_container').show();
     })
-    $('.option2_nonApproved').click(function(){
+    $('.option2_nonApproved').click(function () {
         $('.hotel_container').hide();
         $('.non-approved').closest('.hotel_container').show();
     })
-    $('.option3_suspended').click(function(){
+    $('.option3_suspended').click(function () {
         $('.hotel_container').hide();
         $('.reactivate_button').closest('.hotel_container').show();
     })
-    $('.option4_premium').click(function(){
+    $('.option4_premium').click(function () {
         $('.hotel_container').hide();
         $('.premium_button').closest('.hotel_container').show();
     })
