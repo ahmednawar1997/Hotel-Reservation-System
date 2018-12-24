@@ -1,5 +1,5 @@
     function insertHotel(req) {
-  var query1 = "INSERT INTO  hotels (name, owner_id, stars, description, image_path) VALUES (?,?,?,?,?)";
+  var query1 = "INSERT INTO  hotels (name, owner_id, stars, description, image_path, map_url) VALUES (?,?,?,?,?,?)";
   var query2 = "INSERT INTO  facilities (hotel_id, pool, restaurant, bar, gym, kids_area, spa) VALUES (?,?,?,?,?,?,?)";
   var query3 = "INSERT INTO  hotel_locations (hotel_id, country, city, district, street) VALUES (?,?,?,?,?)";
   facilities = {
@@ -12,7 +12,7 @@
   };
 
   return new Promise((resolve, reject) => {
-    req.con.query(query1, [req.body.hotelname, req.user.id, req.body.stars, req.body.description, req.file.filename],
+    req.con.query(query1, [req.body.hotelname, req.user.id, req.body.stars, req.body.description, req.file.filename, req.body.map_url],
       (err, insertedHotel) => {
         if (err) throw err;
 
@@ -82,7 +82,6 @@ function getAllApprovedHotels(req) {
   return new Promise((resolve, reject) => {
     req.con.query(sql, [1], function (err, hotels) {
       if (err) console.log(err);
-      console.log(hotels);
       resolve(hotels);
     });
   });

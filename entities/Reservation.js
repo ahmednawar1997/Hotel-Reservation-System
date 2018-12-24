@@ -19,10 +19,10 @@ function insertReservation(req) {
 }
 
 
-function insertReservedRoomsInReservation(req, reservation_id, index) {
-    var query = "INSERT INTO  reserved_rooms (reservation_id, room_type, number_of_rooms) VALUES (?,?,?)";
+function insertReservedRoomsInReservation(req, reservation_id, room_type, room_view, number_of_rooms) {
+    var query = "INSERT INTO  reserved_rooms (reservation_id, room_type, room_view, number_of_rooms) VALUES (?,?,?,?)";
     return new Promise((resolve, reject) => {
-        req.con.query(query, [reservation_id, req.body.room_types[index], req.body.numberOfRooms[index]],
+        req.con.query(query, [reservation_id,room_type, room_view, number_of_rooms],
             (err, insertedReservedRoom) => {
                 if (err) throw err;
                 resolve();

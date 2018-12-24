@@ -150,12 +150,12 @@
 
 
 
-
+<!-- Reservation Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document" style="max-width: 70%">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="reservation_hotel_name"></h5>
+                <h5 class="modal-title" id="reservation_hotel_name"></h5><span id="error_msg" style="margin: auto;color: red"></span>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -177,7 +177,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="reservation_button" style="background-color: #fca83c">Book
+                <button type="button" class="btn btn-primary" id="reservation_button">Book
                     Now</button>
             </div>
         </div>
