@@ -45,7 +45,7 @@ router.get("/owner/reservations", auth.isAuthenticated, auth.isHotelOwner, (req,
   })
 
 });
-router.post("/owner/reservations/:reservation_id", isAuthenticated, isHotelOwner, (req, res, next) => {
+router.post("/owner/reservations/:reservation_id", auth.isAuthenticated, auth.isHotelOwner, (req, res, next) => {
   Reservation.setCustomerCheckedIn(req).then(() => {
     User.blacklistUser(req, req.body.customer_id).then(() => {
       res.send("reservations");
@@ -81,7 +81,7 @@ router.get("/owner/:hotel_id(\\d+)/", auth.isAuthenticated, auth.isHotelOwner, (
 });
 
 
-router.post("/owner/:hotel_id(\\d+)/", isAuthenticated, isHotelOwner, (req, res, next) => {
+router.post("/owner/:hotel_id(\\d+)/", auth.isAuthenticated, auth.isHotelOwner, (req, res, next) => {
   Room.insertRoom(req).then(() => {
 
     res.redirect('/user/owner/hotels');
