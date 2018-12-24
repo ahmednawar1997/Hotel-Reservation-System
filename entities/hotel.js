@@ -82,7 +82,6 @@ function getAllApprovedHotels(req) {
   return new Promise((resolve, reject) => {
     req.con.query(sql, [1], function (err, hotels) {
       if (err) console.log(err);
-      console.log(hotels);
       resolve(hotels);
     });
   });

@@ -95,6 +95,11 @@ hr {
     text-decoration: none;
     cursor: default;
 }
+.btn-primary:hover {
+    color: #fff;
+    background-color: #fca83c;
+    border-color: #fca83c;
+}
 #about{
     float: right;
     margin-right: 30px;
