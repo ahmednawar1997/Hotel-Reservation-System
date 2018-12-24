@@ -1,10 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var Hotel  = require('../entities/hotel');
 var multer  = require('multer');
-
 var storage = require('../helpers/uploadFile');
 var upload = multer({ storage: storage }); 
+var auth = require("../helpers/authorization");
 
 
 module.exports = function(passport) {
@@ -41,7 +40,7 @@ router.post('/register', upload.single('avatar'), passport.authenticate('sign-up
 }));
 
 
-router.get('/home', isAuthenticated, function(req, res, next) {
+router.get('/home', auth.isAuthenticated, function(req, res, next) {
 	res.render('home', {message: req.flash('message')});
 });
 
@@ -52,19 +51,7 @@ router.get('/logout', function(req, res){
   res.redirect('/login');
 });
 
-
-router.get('/test', isAuthenticated, function(req, res){
-  	res.render('test', {message: req.flash('message')});
-});
-
-
 module.exports = router;
 return router;
-}
-
-function isAuthenticated(req, res, next) {
-  if (req.isAuthenticated())
-    return next();
-  res.redirect('/login');
 }
 

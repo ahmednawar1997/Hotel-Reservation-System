@@ -4,8 +4,9 @@ var Hotel = require("../entities/Hotel");
 var Room = require("../entities/Room");
 var Reservation = require("../entities/Reservation");
 var date = require('date-and-time');
+var auth = require("../helpers/authorization");
 
-router.get("/", isAuthenticated, function (req, res, next) {
+router.get("/", auth.isAuthenticated, auth.isCustomer, function (req, res, next) {
 
   if (req.query.checkin == undefined || req.query.checkout == undefined) {
     addCheckinAndCheckoutDates(req);
@@ -16,7 +17,7 @@ router.get("/", isAuthenticated, function (req, res, next) {
   });
 });
 
-router.get("/:hotel_id(\\d+)/", isAuthenticated, function (req, res, next) {
+router.get("/:hotel_id(\\d+)/", auth.isAuthenticated, auth.isCustomer, function (req, res, next) {
   Hotel.getHotelDetailsAndRooms(req).then(hotels => {
     Hotel.getPremiumHotels(req).then(premiumHotels => {
       Hotel.getCustomerReviews(req).then(reviews => {
@@ -27,17 +28,7 @@ router.get("/:hotel_id(\\d+)/", isAuthenticated, function (req, res, next) {
 
 });
 
-// router.get("/:hotel_id(\\d+)/", isAuthenticated, function (req, res, next) {
-//   Hotel.getHotelDetails(req).then(hotel => {
-//     Hotel.getHotelAverageRating(req).then(avgRating => {
-//       hotel.avg_rating = avgRating.avgRating;
-//       res.render("viewHotel", { message: req.flash('message'), hotel: hotel });
-//     })
-
-//   });
-// });
-
-router.get("/fetch-hotels/", isAuthenticated, function (req, res, next) {
+router.get("/fetch-hotels/", auth.isAuthenticated, function (req, res, next) {
   Hotel.fetchHotelsWithName(req, req.query.hotel_name).then(function(hotels){
     res.status(202).send(hotels);
   })
@@ -45,7 +36,7 @@ router.get("/fetch-hotels/", isAuthenticated, function (req, res, next) {
 
 
 
-router.get("/:hotel_id(\\d+)/reserve", isAuthenticated, function(req, res){
+router.get("/:hotel_id(\\d+)/reserve", auth.isAuthenticated, auth.isCustomer, function(req, res){
   Hotel.getHotelDetails(req).then(function(hotel){
     Room.getRoomsByHotelId(req).then(function(rooms){
       Room.getNumberOfRooms(req, req.params.hotel_id, req.query.checkin, req.query.checkout).then(function(availableRooms){
@@ -56,7 +47,7 @@ router.get("/:hotel_id(\\d+)/reserve", isAuthenticated, function(req, res){
   });
 });
 
-router.get("/:hotel_id(\\d+)/book", isAuthenticated, function(req, res){
+router.get("/:hotel_id(\\d+)/book", auth.isAuthenticated, auth.isCustomer, function(req, res){
   Hotel.getHotelDetails(req).then(function(hotel){
       Room.getNumberOfRooms(req, req.params.hotel_id, req.query.checkin, req.query.checkout).then(function(availableRooms){
         var checkin = req.query.checkin;
@@ -73,7 +64,7 @@ router.get("/:hotel_id(\\d+)/book", isAuthenticated, function(req, res){
 });
 
 
-router.post("/:hotel_id(\\d+)/reserve", isAuthenticated, function (req, res) {
+router.post("/:hotel_id(\\d+)/reserve", auth.isAuthenticated, auth.isCustomer, function (req, res) {
 
   Reservation.insertReservation(req).then(function (reservation_id) {
 
@@ -87,7 +78,7 @@ router.post("/:hotel_id(\\d+)/reserve", isAuthenticated, function (req, res) {
 
 });
 
-router.post("/approve", isAuthenticated, function (req, res) {
+router.post("/approve", auth.isAuthenticated, auth.isBroker, function (req, res) {
 
   Hotel.approveHotel(req).then(function (hotel_id) {
     req.flash('message', 'Hotel Approved');
@@ -98,7 +89,7 @@ router.post("/approve", isAuthenticated, function (req, res) {
 });
 
 
-router.post("/premium", isAuthenticated, function (req, res) {
+router.post("/premium", auth.isAuthenticated, auth.isBroker, function (req, res) {
 
   Hotel.addPremiumHotel(req).then(function (hotel_id) {
     req.flash('message', 'Hotel is now Premium');
@@ -108,7 +99,7 @@ router.post("/premium", isAuthenticated, function (req, res) {
 
 });
 
-router.post("/removepremium", isAuthenticated, function (req, res) {
+router.post("/removepremium", auth.isAuthenticated, auth.isBroker, function (req, res) {
 
   Hotel.removePremiumHotel(req).then(function (hotel_id) {
     req.flash('message', 'Hotel is now not Premium');
@@ -118,7 +109,7 @@ router.post("/removepremium", isAuthenticated, function (req, res) {
 
 });
 
-router.post("/suspend", isAuthenticated, function (req, res) {
+router.post("/suspend", auth.isAuthenticated, auth.isBroker, function (req, res) {
 
   Hotel.suspendHotel(req).then(function (hotel_id) {
     req.flash('message', 'Hotel is now suspended');
@@ -128,7 +119,7 @@ router.post("/suspend", isAuthenticated, function (req, res) {
 
 });
 
-router.post("/reactivate", isAuthenticated, function (req, res) {
+router.post("/reactivate", auth.isAuthenticated, auth.isBroker, function (req, res) {
 
   Hotel.reactivateHotel(req).then(function (hotel_id) {
     req.flash('message', 'Hotel is now reactivated');
@@ -141,7 +132,7 @@ router.post("/reactivate", isAuthenticated, function (req, res) {
 
 
 
-router.post("/rate", isAuthenticated, function (req, res) {
+router.post("/rate", auth.isAuthenticated, auth.isCustomer, function (req, res) {
   Reservation.insertCustomerReview(req, req.body.reservation_id, req.body.customer_rating).then(function (reservation_id) {
     req.flash('message', 'Rated your visit with ' + req.body.customer_rating + " stars successfully");
     res.status(202).send('success');
@@ -149,7 +140,7 @@ router.post("/rate", isAuthenticated, function (req, res) {
 });
 
 
-router.post("/review", isAuthenticated, function (req, res) {
+router.post("/review", auth.isAuthenticated, auth.isCustomer, function (req, res) {
 
   Reservation.insertCustomerReviewComment(req, req.body.reservation_id, req.body.customer_review).then(function (reservation_id) {
     res.status(202).send('success');
@@ -160,10 +151,6 @@ router.post("/review", isAuthenticated, function (req, res) {
 
 module.exports = router;
 
-function isAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) return next();
-  res.redirect("/login");
-}
 
 function addCheckinAndCheckoutDates(req) {
   var now = new Date();

@@ -6,6 +6,7 @@
             <li class="nav-item">
                 <a class="nav-link active profile_navbar_item any_btn" id="profile_btn" data-toggle="tab" href="#profile">Profile</a>
             </li>
+            <% if ( user.type==='customer') { %>
             <li class="nav-item">
                 <a class="nav-link profile_navbar_item any_btn" data-toggle="tab" href="#upcoming_reservations_id">Upcoming
                     Reservations[
@@ -16,6 +17,7 @@
                     Reservations[
                     <%=pastReservations.length%>]</a>
             </li>
+            <% } %>
 
             <% if ( user.type==='broker') { %>
 

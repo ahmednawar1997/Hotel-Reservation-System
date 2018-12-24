@@ -1,25 +1,37 @@
 <%- include partials/header %>
 
-    <div class="container">
-            
-        <div style="color:white">
-          <h3>Welcome <%=user.name%>!</h3>
-          <p class="lead">With our Hotel Reservation System, you can browse through millions of hotels from all over the world and book your vacation instantly.</p>
+<div class="container">
+
+    <div style="color:white">
+        <h3>Welcome
+            <%=user.name%>!</h3>
+        <% if ( user.type==='customer') { %>
+        <p class="lead">With our Hotel Reservation System, you can browse through millions of hotels from all over the
+            world and book your vacation instantly.</p>
         <p class="text-center"><a class="btn btn-outline-light btn-lg" role="button" href="/hotels">Browse Hotels</a></p>
-        </div>
-        <div class="container">
+        <%} else if(user.type=='hotel_owner'){%>
+        <p class="lead">Go to your profile to manage your hotels</p>
+        <p class="text-center"><a class="btn btn-outline-light btn-lg" role="button" href="/user">Manage Hotels</a></p>
+        <%}else{%>
+        <p class="lead">Go to your profile to manage the system</p>
+        <p class="text-center"><a class="btn btn-outline-light btn-lg" role="button" href="/user">Manage System</a></p>
+        <%}%>
 
 
-        </div>
-        
-   
+    </div>
+    <div class="container">
 
 
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
+
+
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
 
 </body>

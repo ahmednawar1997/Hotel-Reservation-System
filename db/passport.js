@@ -31,7 +31,7 @@ passport.use('sign-in', new LocalStrategy({
         date.format(now, '[YYYY-MM-DD]'); 
         req.con.query("UPDATE users SET last_login_date = ? WHERE email = ? " , [now, email], function(err, updatedRows){
             if(err) console.log(err);
-        return done(null, rows[0].id, req.flash('message','Signed In Successfully'));
+        return done(null, rows[0].id);
         });
   
         });
