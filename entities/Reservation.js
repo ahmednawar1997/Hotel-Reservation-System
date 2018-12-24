@@ -45,13 +45,8 @@ function getAllOwnerReservations(req) {
     });
 }
 
-function getAllOwnerUpcomingReservations(req) {
-    var query = "SELECT hotels.name as hotel_name, reservations.* " +
-        "FROM reservations, hotels, users " +
-        "WHERE hotels.owner_id = ? AND " +
-        "reservations.hotel_id = hotels.id " +
-        "AND users.id = reservations.customer_id " +
-        "AND reservations.check_in_date>=?";
+function getAllCustomerUpcomingReservations(req) {
+    var query = "SELECT hotels.name as hotel_name, reservations.* FROM reservations, hotels WHERE reservations.customer_id = ? AND reservations.hotel_id = hotels.id AND reservations.check_in_date>=?";
     return new Promise((resolve, reject) => {
         var now = new Date();
         date.format(now, '[YYYY-MM-DD]');
@@ -62,7 +57,7 @@ function getAllOwnerUpcomingReservations(req) {
     });
 }
 
-function getAllOwnerPastReservations(req) {
+function getAllCustomerPastReservations(req) {
     var query = "SELECT hotels.name as hotel_name, reservations.*, customer_reviews.customer_review " +
         "FROM reservations " +
         "INNER JOIN hotels " +
@@ -71,7 +66,7 @@ function getAllOwnerPastReservations(req) {
         "ON reservations.customer_id = users.id " +
         "LEFT JOIN customer_reviews " +
         "ON reservations.reservation_id=customer_reviews.reservation_id " +
-        "WHERE hotels.owner_id = ? AND reservations.check_in_date<?"
+        "WHERE reservations.customer_id = ? AND reservations.check_in_date<?"
     return new Promise((resolve, reject) => {
         var now = new Date();
         date.format(now, '[YYYY-MM-DD]');
@@ -221,8 +216,8 @@ module.exports = {
     getAllOwnerReservations,
     getAllOwnerReservationsWithRoomsDetails,
     cancelReservationFromCustomer,
-    getAllOwnerUpcomingReservations,
-    getAllOwnerPastReservations,
+    getAllCustomerPastReservations,
+    getAllCustomerUpcomingReservations,
     getAllOwnerReservationsWithRoomsDetailsBetweenDates,
     insertCustomerReviewComment,
     changeHotelApproval,

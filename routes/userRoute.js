@@ -12,26 +12,15 @@ var upload = multer({ storage: storage });
 
 
 router.get("/", auth.isAuthenticated, (req, res) => {
-  Reservation.getAllOwnerUpcomingReservations(req).then(function (upcomingReservations) {
-    Reservation.getAllOwnerPastReservations(req).then(function (pastReservations) {
-      if (req.user.type === "broker") {
-        Hotel.getAllNonApprovedHotels(req).then(function (notApprovedHotels) {
-          res.render("userProfile", {
-            message: req.flash('message'), upcomingReservations: upcomingReservations,
-            pastReservations: pastReservations, notApprovedHotels: notApprovedHotels
-          });
-        });
-      } else {
-
+  Reservation.getAllCustomerUpcomingReservations(req).then(function (upcomingReservations) {
+    Reservation.getAllCustomerPastReservations(req).then(function (pastReservations) {
         res.render("userProfile", {
           message: req.flash('message'), upcomingReservations: upcomingReservations,
-          pastReservations: pastReservations, notApprovedHotels: {}
-        });
-      }
-    });
+          pastReservations: pastReservations});
+      })
+    })
   });
 
-});
 router.post("/owner/reservations", auth.isAuthenticated, auth.isHotelOwner, (req, res, next) => {
   Reservation.changeHotelApproval(req).then(() => {
     res.send("reservations");
