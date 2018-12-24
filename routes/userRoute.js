@@ -41,15 +41,21 @@ router.post("/owner/reservations", auth.isAuthenticated, auth.isHotelOwner, (req
 
 router.get("/owner/reservations", auth.isAuthenticated, auth.isHotelOwner, (req, res, next) => {
   Reservation.getAllOwnerReservationsWithRoomsDetailsBetweenDates(req).then(detailedReservations => {
+    console.log("YAA3M", detailedReservations);
     res.render("reservations", { message: req.flash('message'), detailedReservations });
   })
 
 });
 router.post("/owner/reservations/:reservation_id", auth.isAuthenticated, auth.isHotelOwner, (req, res, next) => {
   Reservation.setCustomerCheckedIn(req).then(() => {
-    User.blacklistUser(req, req.body.customer_id).then(() => {
+    console.log("AAAAAAAAAAA", req.body.customer_id);
+    if (req.body.customer_id) {
+      User.blacklistUser(req, req.body.customer_id).then(() => {
+        res.send("reservations");
+      });
+    } else {
       res.send("reservations");
-    });
+    }
   })
 });
 
@@ -126,4 +132,9 @@ router.post("/:user_id(\\d+)/blacklist/remove", auth.isAuthenticated, auth.isBro
   });
 });
 
+router.get("/report", auth.isAuthenticated, auth.isBroker, function (req, res, next) {
+  Reservation.getEachRoomTypeOfEachHotelTotalMoney(req).then(data => {
+    res.render('brokerReport', { message: req.flash('message'), data });
+  });
+});
 module.exports = router;

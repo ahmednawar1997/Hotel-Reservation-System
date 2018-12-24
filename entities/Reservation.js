@@ -193,6 +193,25 @@ function setCustomerCheckedIn(req) {
         });
     });
 }
+function getEachRoomTypeOfEachHotelTotalMoney(req) {
+    var query = "SELECT *, reserved_rooms.number_of_rooms AS quantity, SUM(reserved_rooms.number_of_rooms) as total " +
+        "FROM reservations, room_type, hotels, reserved_rooms " +
+        "WHERE  MONTH(reservations.check_in_date) = 12 " +
+        "AND YEAR(reservations.check_in_date) = 2018 " +
+        "AND hotels.id = reservations.hotel_id " +
+        "AND hotels.id = room_type.hotel_id " +
+        "AND reserved_rooms.reservation_id = reservations.reservation_id " +
+        "AND reserved_rooms.room_type = room_type.room_type " +
+        "AND reservations.checked_in = 1 " +
+        "GROUP BY hotels.id, room_type.room_type, room_type.room_view ";
+    return new Promise((resolve, reject) => {
+        req.con.query(query, [], (err, data) => {
+            if (err) console.log(err);
+            resolve(data);
+        });
+    });
+}
+
 
 
 module.exports = {
@@ -207,5 +226,6 @@ module.exports = {
     getAllOwnerReservationsWithRoomsDetailsBetweenDates,
     insertCustomerReviewComment,
     changeHotelApproval,
-    setCustomerCheckedIn
+    setCustomerCheckedIn,
+    getEachRoomTypeOfEachHotelTotalMoney
 };
