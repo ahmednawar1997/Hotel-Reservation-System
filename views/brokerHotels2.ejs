@@ -19,26 +19,42 @@
             </div>
         </form>
 
+
+        <div class="row justify-content-center" style="margin-bottom: 10px;">
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-secondary active option1">
+                    <input type="radio" name="options" id="option1" autocomplete="off" checked> All
+                </label>
+                <label class="btn btn-secondary option2_nonApproved">
+                    <input type="radio" name="options" id="option2" autocomplete="off"> Non-Approved
+                </label>
+                <label class="btn btn-secondary option3_suspended">
+                    <input type="radio" name="options" id="option3" autocomplete="off"> Suspended
+                </label>
+                <label class="btn btn-secondary option4_premium">
+                    <input type="radio" name="options" id="option4" autocomplete="off"> Premium
+                </label>
+            </div>
+        </div>
+
     </div>
 
 </div>
 
 
 
-
-
 <% hotels.forEach(hotel => {%>
-<div class="container">
-    <div class="card" id="<%=hotel.id%>">
+<div class="container hotel_container">
+    <div class="card" id="<%=hotel.id%>_scroll">
         <h5 class="card-header">
             <% if(hotel.approved===1){ %>
-            <span class="checkmark" title="Approved Hotel">
+            <span class="checkmark approved" title="Approved Hotel">
                 <div class="checkmark_circle"></div>
                 <div class="checkmark_stem"></div>
                 <div class="checkmark_kick"></div>
             </span>
             <%}else{%>
-            <span class="checkmark">
+            <span class="checkmark non-approved">
                 <div class="pending_circle" hotel_id="<%=hotel.id%>" title="Approve Hotel"></div>
             </span>
             <%}%>
