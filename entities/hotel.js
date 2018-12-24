@@ -162,11 +162,10 @@ function getAllApprovedHotelsWithFacilities(req) {
   "ON T1.hotel_id = hotels.id "+
   "WHERE hotels.approved = 1 AND hotels.suspended = 0"
   sql = addFacilitiesToQuery(req, sql);
-  sql = addLocationToQuery(req, sql);
+  sql = addFiltersToQuery(req, sql);
   return new Promise((resolve, reject) => {
     req.con.query(sql, [1], function (err, hotels) {
       if (err) console.log(err);
-      console.log(hotels);
       resolve(hotels);
     });
   });
@@ -281,16 +280,6 @@ module.exports = {
   fetchHotelsWithName
 };
 
-
-function addLocationToQuery(req, sql) {
-  if (req.query.country !== undefined) {
-    sql = sql + " AND hotel_locations.country LIKE'%" + req.query.country + "%'";
-  }
-  sql = sql + ";";
-  return sql;
-}
-
-
 function addFacilitiesToQuery(req, sql) {
   if (req.query.pool) {
     sql = sql + " AND facilities.pool = 1";
@@ -314,4 +303,24 @@ function addFacilitiesToQuery(req, sql) {
     sql = sql + " AND facilities.spa = 1";
   }
   return sql;
+}
+
+function addFiltersToQuery(req, sql){
+
+  if (req.query.country) {
+    sql = sql + " AND hotel_locations.country LIKE'%" + req.query.country + "%'";
+  }
+  if (req.query.city) {
+    sql = sql + " AND hotel_locations.city LIKE'%" + req.query.city + "%'";
+  }
+  if (req.query.min_rating) {
+    sql = sql + " AND hotels.stars>='"+req.query.min_rating+"'";
+  }
+  if (req.query.max_rating) {
+    sql = sql + " AND hotels.stars<='"+req.query.max_rating+"'";
+  }
+  return sql;
+
+
+
 }

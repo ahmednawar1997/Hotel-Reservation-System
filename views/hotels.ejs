@@ -33,10 +33,12 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-6">
-                                <input class="form-control" type="text" value='' name="rating" placeholder="Min Rating">
+                                <input class="form-control" type="number" min="0" max="5" value='<%= query.min_rating%>'
+                                    name="min_rating" placeholder="Min Rating">
                             </div>
                             <div class="col-6">
-                                <input class="form-control" type="text" value='' name="price" placeholder="Price">
+                                <input class="form-control" type="number" min="0" max="5" value='<%= query.max_rating%>'
+                                    name="max_rating" placeholder="Max Rating">
                             </div>
                         </div>
 
@@ -91,6 +93,7 @@
 
     <div class="col-9">
         <div class="container">
+            <% if(hotels.length>0){%>
             <% hotels.forEach(function(hotel){%>
             <div class="wrapper">
                 <div class="card_container">
@@ -114,7 +117,7 @@
                                 <% if(hotel.avgRating){%>
                                 <span class="review">Review<br>
                                     <%=hotel.avgRating%> </span>
-                                    <%}%>
+                                <%}%>
                             </div>
                             <hr style="margin-left: 90px;">
                             <div class="card_body">
@@ -136,6 +139,10 @@
                 </div>
             </div>
             <% }) %>
+            <% } else{%>
+            <p>No Hotels Matching Your Selection</p>
+            <% }%>
+
         </div>
     </div>
 </div>
@@ -170,7 +177,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="reservation_button"  style="background-color: #fca83c">Book Now</button>
+                <button type="button" class="btn btn-primary" id="reservation_button" style="background-color: #fca83c">Book
+                    Now</button>
             </div>
         </div>
     </div>
