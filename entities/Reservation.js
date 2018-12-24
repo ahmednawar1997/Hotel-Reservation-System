@@ -184,6 +184,16 @@ function changeHotelApproval(req) {
     });
 }
 
+function setCustomerCheckedIn(req) {
+    var query = "UPDATE reservations SET checked_in = ? WHERE reservation_id = ?;";
+    return new Promise((resolve, reject) => {
+        req.con.query(query, [req.body.checked_in, req.body.reservation_id], (err, updatedReservation) => {
+            if (err) console.log(err);
+            resolve(updatedReservation);
+        });
+    });
+}
+
 
 module.exports = {
     insertReservation,
@@ -196,5 +206,6 @@ module.exports = {
     getAllOwnerPastReservations,
     getAllOwnerReservationsWithRoomsDetailsBetweenDates,
     insertCustomerReviewComment,
-    changeHotelApproval
+    changeHotelApproval,
+    setCustomerCheckedIn
 };

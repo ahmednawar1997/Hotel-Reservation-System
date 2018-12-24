@@ -36,8 +36,6 @@ router.post("/owner/reservations", auth.isAuthenticated, auth.isHotelOwner, (req
   Reservation.changeHotelApproval(req).then(() => {
     res.send("reservations");
   })
-
-
 });
 
 
@@ -46,6 +44,11 @@ router.get("/owner/reservations", auth.isAuthenticated, auth.isHotelOwner, (req,
     res.render("reservations", { message: req.flash('message'), detailedReservations });
   })
 
+});
+router.post("/owner/reservations/:reservation_id", isAuthenticated, isHotelOwner, (req, res, next) => {
+  Reservation.setCustomerCheckedIn(req).then(() => {
+    res.send("reservations");
+  })
 });
 
 router.get("/owner/hotels", auth.isAuthenticated, auth.isHotelOwner, (req, res, next) => {
@@ -75,14 +78,8 @@ router.get("/owner/:hotel_id(\\d+)/", auth.isAuthenticated, auth.isHotelOwner, (
   });
 });
 
-// router.post("/owner/:hotel_id(\\d+)/", auth.isAuthenticated, auth.isHotelOwner, (req, res, next) => {
-//   Room.insertRoom(req).then(() => {
-//     Hotel.getOwnedHotelDetails(req).then(hotelObj => {
-//       res.render("viewOwnedHotel", { hotel: hotelObj.hotel, rooms: hotelObj.rooms, message: req.flash('message') });
-//     });
-//   })
-// });
-router.post("/owner/:hotel_id(\\d+)/", auth.isAuthenticated, auth.isHotelOwner, (req, res, next) => {
+
+router.post("/owner/:hotel_id(\\d+)/", isAuthenticated, isHotelOwner, (req, res, next) => {
   Room.insertRoom(req).then(() => {
 
     res.redirect('/user/owner/hotels');
