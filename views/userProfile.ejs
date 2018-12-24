@@ -17,16 +17,25 @@
                     <%=pastReservations.length%>]</a>
             </li>
 
+            <% if ( user.type==='broker') { %>
+
+            <li class="nav-item">
+                <a class="nav-link profile_navbar_item any_btn" data-toggle="tab" href="#customer_search">Search users</a>
+            </li>
+            <% } %>
+
 
             <% if ( user.type==='hotel_owner') { %>
             <li class='nav-item'><a class="nav-link profile_navbar_item any_btn" href="/user/owner/hotels">My Hotels</a></li>
-            <li class='nav-item'><a class="nav-link profile_navbar_item any_btn" href="/user/owner/reservations">My Hotels
+            <li class='nav-item'><a class="nav-link profile_navbar_item any_btn" href="/user/owner/reservations">My
+                    Hotels
                     Reservations</a></li>
             <% } %>
             <li class="nav-item ml-auto">
                 <% if ( user.type==='broker') { %>
 
-                <a class="nav-link profile_navbar_item any_btn" href="/user/admin/hotels">All Hotels & Users</a>
+
+                <a class="nav-link profile_navbar_item any_btn" href="/user/admin/hotels">All Hotels</a>
 
                 <% } %>
             </li>
@@ -138,6 +147,42 @@
             <% }) %>
         </div>
     </div>
+
+    <div class="container upcoming_reservations tab-pane" id="customer_search">
+        <div class="container">
+            <div class="card">
+                <h5 class="card-header text-center">Search for a user</h5>
+                <form style="margin:0" action="/user/customers/view" method="GET">
+                    <div class="form-group row">
+                        <div class="col-1"></div>
+                        <label for="example-date-input" class="col-3 col-form-label">Customer Name</label>
+                        <div class="col-5">
+                            <input class="form-control" type="text" name="customer_name" id="customer_input">
+                            <input class="form-control" type="text" name="customer_id" id="customer_id" hidden>
+                        </div>
+                        <div class="col-2">
+                            <button class="btn btn btn-secondary" id="user_search" style="padding:5px 20px 5px 20px;float:right;"
+                                type="submit" disabled>Search</button>
+                        </div>
+                        <div class="col-1"></div>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+
+
+
+
+
+    </div>
+
+
+
+
+
+
 </div>
 <script src="/javascripts/userProfile.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -145,6 +190,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
     crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet">
+</link>
+<script src='https://cdn.rawgit.com/pguso/jquery-plugin-circliful/master/js/jquery.circliful.min.js'></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
     crossorigin="anonymous"></script>
 
 

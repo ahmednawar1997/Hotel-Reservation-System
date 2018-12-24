@@ -29,6 +29,18 @@ function insertHotel(req) {
   });
 }
 
+
+function fetchHotelsWithName(req, hotel_name){
+  var query = "SELECT id, name FROM hotels WHERE name LIKE'%" + hotel_name + "%'";
+  return new Promise((resolve, reject) => {
+      req.con.query(query, [],
+          (err, hotels) => {
+              if (err) throw err;
+              resolve(hotels);
+          });
+  });
+}
+
 function getAllOwnedHotels(req) {
   var sql = "SELECT * FROM hotels WHERE owner_id=?";
   return new Promise((resolve, reject) => {
@@ -255,7 +267,8 @@ module.exports = {
   removePremiumHotel,
   reactivateHotel,
   suspendHotel,
-  getAllOwnedHotelsWithRoomsAndFacilities
+  getAllOwnedHotelsWithRoomsAndFacilities,
+  fetchHotelsWithName
 };
 
 

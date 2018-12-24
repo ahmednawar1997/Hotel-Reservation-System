@@ -81,24 +81,21 @@ $(document).ready(function () {
         });
     });
 
-
-
-
-    $("#customer_input").autocomplete({
+    $("#hotel_input").autocomplete({
 
         source: function (request, response) {
             $.ajax({
-                url: "/user/customers",
+                url: "/hotels/fetch-hotels",
                 dataType: "json",
                 data: {
-                    customer_name: request.term
+                    hotel_name: request.term
                 },
                 success: function (data) {
                     response(
-                        $.map(data, function (customer, key) {
+                        $.map(data, function (hotel, key) {
                             return {
-                                label: customer.name,
-                                value: customer.id
+                                label: hotel.name,
+                                value: hotel.id
                             }
                         })
                     );
@@ -106,12 +103,20 @@ $(document).ready(function () {
             });
         },
         select: function (event, ui) {
-            $('#customer_id').val(ui.item.value);
-            $('#customer_input').val(ui.item.label);
-            $('#user_search').prop('disabled', false);;
+            $('#hotel_id').val(ui.item.value);
+            $('#hotel_input').val(ui.item.label);
+            $('#hotel_search').prop('disabled', false);;
 
             return false;
 
         }
     });
+
+    $('#hotel_search_form').submit(function(e){
+        e.preventDefault();
+        $('html,body').animate({
+            scrollTop: $("#" + $('#hotel_id').val()).offset().top
+        }, 'slow');
+    })
+
 });

@@ -83,4 +83,40 @@ $(function () {
         });;
     });
 
+
+    $("#customer_input").autocomplete({
+
+        source: function (request, response) {
+            $.ajax({
+                url: "/user/customers",
+                dataType: "json",
+                data: {
+                    customer_name: request.term
+                },
+                success: function (data) {
+                    response(
+                        $.map(data, function (customer, key) {
+                            return {
+                                label: customer.name,
+                                value: customer.id
+                            }
+                        })
+                    );
+                }
+            });
+        },
+        select: function (event, ui) {
+            $('#customer_id').val(ui.item.value);
+            $('#customer_input').val(ui.item.label);
+            $('#user_search').prop('disabled', false);;
+
+            return false;
+
+        }
+    });
+
+
+
+
+
 });

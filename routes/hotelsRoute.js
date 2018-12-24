@@ -37,6 +37,13 @@ router.get("/:hotel_id(\\d+)/", isAuthenticated, function (req, res, next) {
 //   });
 // });
 
+router.get("/fetch-hotels/", isAuthenticated, function (req, res, next) {
+  Hotel.fetchHotelsWithName(req, req.query.hotel_name).then(function(hotels){
+    res.status(202).send(hotels);
+  })
+});
+
+
 
 router.get("/:hotel_id(\\d+)/reserve", isAuthenticated, function(req, res){
   Hotel.getHotelDetails(req).then(function(hotel){

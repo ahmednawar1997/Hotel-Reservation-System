@@ -2,17 +2,17 @@
 
 <div class="container">
     <div class="card">
-        <h5 class="card-header text-center">Search for a user</h5>
-        <form style="margin:0" action="/user/customers/view" method="GET">
+        <h5 class="card-header text-center">Search for a hotel</h5>
+        <form style="margin:0" id="hotel_search_form">
             <div class="form-group row">
                 <div class="col-1"></div>
-                <label for="example-date-input" class="col-3 col-form-label">Customer Name</label>
+                <label for="example-date-input" class="col-3 col-form-label">Hotel Name</label>
                 <div class="col-5">
-                    <input class="form-control" type="text" name="customer_name" id="customer_input">
-                    <input class="form-control" type="text" name="customer_id" id="customer_id" hidden>
+                    <input class="form-control" type="text" name="hotel_name" id="hotel_input">
+                    <input class="form-control" type="text" name="hotel_id" id="hotel_id" hidden>
                 </div>
                 <div class="col-2">
-                    <button class="btn btn btn-secondary" id="user_search" style="padding:5px 20px 5px 20px;float:right;"
+                    <button class="btn btn btn-secondary" id="hotel_search" style="padding:5px 20px 5px 20px;float:right;"
                         type="submit" disabled>Search</button>
                 </div>
                 <div class="col-1"></div>
@@ -29,10 +29,10 @@
 
 <% hotels.forEach(hotel => {%>
 <div class="container">
-    <div class="card">
+    <div class="card" id="<%=hotel.id%>">
         <h5 class="card-header">
             <% if(hotel.approved===1){ %>
-            <span class="checkmark">
+            <span class="checkmark" title="Approved Hotel">
                 <div class="checkmark_circle"></div>
                 <div class="checkmark_stem"></div>
                 <div class="checkmark_kick"></div>
@@ -43,11 +43,13 @@
             </span>
             <%}%>
 
-            <%= hotel.name%> Hotel
+            <a href="/hotels/<%= hotel.id%>" style="text-decoration: none; color:black">
+                <%= hotel.name%> Hotel
+            </a>
             <% for(var i=0; i < hotel.stars; i++){%><span class="fa fa-star checked fa-xs star_checked"></span>
             <% }%>
             <% if(hotel.premium===1){ %>
-            <i style="color:#bf1c00;float:right" title="Click to remove premium" class="fa fa-award fa-lg premium_button"
+            <i style="color:#D4AF37;float:right" title="Click to remove premium" class="fa fa-award fa-lg premium_button"
                 hotel_id="<%=hotel.id%>"></i>
             <%}else{%>
             <i style="color:#6849d1;float:right" title="Click to add premium" class="fas fa-thumbs-down fa-lg non_premium_button"
@@ -65,9 +67,11 @@
                 <div class="col-4">
                     <% if(hotel.suspended===0){ %>
 
-                        <i class="fas fa-pause-circle fa-2x suspend_button" title="Suspend The Hotel"style="color:red;float:right"  hotel_id="<%=hotel.id%>"></i> 
+                    <i class="fas fa-pause-circle fa-2x suspend_button" title="Suspend The Hotel" style="color:red;float:right"
+                        hotel_id="<%=hotel.id%>"></i>
                     <%}else{%>
-                        <i class="far fa-play-circle fa-2x reactivate_button" title="Reactivate The Hotel"style="color:green;float:right"  hotel_id="<%=hotel.id%>"></i> 
+                    <i class="far fa-play-circle fa-2x reactivate_button" title="Reactivate The Hotel" style="color:green;float:right"
+                        hotel_id="<%=hotel.id%>"></i>
 
                     <%}%>
 
@@ -123,11 +127,11 @@
 <script src='https://cdn.rawgit.com/pguso/jquery-plugin-circliful/master/js/jquery.circliful.min.js'></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
     crossorigin="anonymous"></script>
-    <script src="/javascripts/adminPage.js"></script>
+<script src="/javascripts/adminPage.js"></script>
 
 
 <script>
- </script>
+</script>
 </body>
 
 </html>
