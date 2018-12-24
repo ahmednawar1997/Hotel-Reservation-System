@@ -139,22 +139,22 @@
                         </div>
                         <div id="checkInDiv<%=detailedReservations[i].reservation_id%>">
                             <%if(detailedReservations[i].checked_in === null && detailedReservations[i].hotel_approval ===1 && detailedReservations[i].customer_approval !== 0){%>
-                                <div class="card-footer" align="center"></div>
-                                <span>Guest Checked In? </span>
-                                <br>
-                                <button type="button" class="btn btn-success btn-sm" style="margin-right:5px" id="yesButton<%=detailedReservations[i].reservation_id%>"
-                                    onclick="guestCheckedIn('<%=detailedReservations[i].reservation_id%>')"><i
-                                        class="fas fa-check-circle"></i> Yes</button>
-                                <button type="button" class="btn btn-danger btn-sm" style="" id="noButton<%=detailedReservations[i].reservation_id%>" onclick="guestNotCheckedIn('<%=detailedReservations[i].reservation_id%>')">
-                                    <i class="fas fa-times-circle"></i>
-                                    No</button>
+                                <div class="card-footer" align="center">
+                                    <span>Guest Checked In? </span>
+                                    <br>
+                                    <button type="button" class="btn btn-success btn-sm" style="margin-right:5px" id="yesButton<%=detailedReservations[i].reservation_id%>"
+                                        onclick="guestCheckedIn('<%=detailedReservations[i].reservation_id%>')"><i
+                                            class="fas fa-check-circle"></i> Yes</button>
+                                    <button type="button" class="btn btn-danger btn-sm" style="" id="noButton<%=detailedReservations[i].reservation_id%>" onclick="guestNotCheckedIn('<%=detailedReservations[i].reservation_id%>','<%=detailedReservations[i].customer_id%>')">
+                                        <i class="fas fa-times-circle"></i>
+                                        No</button>
+                                </div>
+                                <%}%>
                         </div>
-                        <%}%>
-                    </div>
 
+                    </div>
                 </div>
             </div>
-        </div>
         </div>
 
         <%}%>

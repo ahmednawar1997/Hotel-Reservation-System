@@ -47,7 +47,9 @@ router.get("/owner/reservations", auth.isAuthenticated, auth.isHotelOwner, (req,
 });
 router.post("/owner/reservations/:reservation_id", isAuthenticated, isHotelOwner, (req, res, next) => {
   Reservation.setCustomerCheckedIn(req).then(() => {
-    res.send("reservations");
+    User.blacklistUser(req, req.body.customer_id).then(() => {
+      res.send("reservations");
+    });
   })
 });
 

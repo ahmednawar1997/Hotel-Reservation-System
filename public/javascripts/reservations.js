@@ -12,7 +12,7 @@ function approveReservation(resID) {
                 $('#color' + resID).toggleClass('pending_circle checkmark_circle');
                 $('.check1' + resID).addClass('checkmark_stem')
                 $('.check2' + resID).addClass('checkmark_kick')
-                $('#checkInDiv' + resID).html('<div class="card-footer" align="center"></div>\
+                $('#checkInDiv' + resID).html('<div class="card-footer" align="center">\
                     <span>Guest Checked In ? </span>\
                     <br>\
                         <button type="button" class="btn btn-success btn-sm" style="margin-right:5px" id="yesButton<%=detailedReservations[i].reservation_id%>"\
@@ -59,11 +59,11 @@ function guestCheckedIn(resID) {
 
 }
 
-function guestNotCheckedIn(resID) {
+function guestNotCheckedIn(resID, customerID) {
     $.ajax({
         url: '/user/owner/reservations/' + resID,
         method: 'POST',
-        data: { reservation_id: resID, checked_in: 0 },
+        data: { reservation_id: resID, checked_in: 0, customer_id: customerID },
         success: () => {
             $('#checkInDiv' + resID).remove();
             $('#customerStatus' + resID).html('Missed Checkin')
