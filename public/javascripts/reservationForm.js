@@ -1,6 +1,15 @@
 $(function () {
     $('#reservation_button').click(function (e) {
-        $('#reservation_form').submit();
+        let submit = false;
+        $.each($('.number_of_rooms'), function (key, value) {
+            if ($(this).val() > 0) {
+                submit = true;
+            }
+        });
+        if (submit)
+            $('#reservation_form').submit();
+            else
+            $('#error_msg').html('Please add rooms');
     });
 
 
@@ -18,7 +27,7 @@ $(function () {
                 updateReservationForm(data);
             },
             error: function (xhr, textStatus, errorThrown) {
-                alert('fail');
+                alert('exampleModal fail');
             }
         });
     });
@@ -38,13 +47,17 @@ $(function () {
                 room.room_type + ' Room, ' + room.room_view + ' View, $' + room.price +
                 '/night</label>\
             <div class="col-4">\
-                <input class="form-control" name="numberOfRooms" type="number" placeholder="Number of rooms required" value="0"  min="0" max="' +
+                <input class="form-control number_of_rooms" name="numberOfRooms" type="number" placeholder="Number of rooms required" value="0"  min="0" max="' +
                 room.free_rooms + '"/> Available Rooms on these dates: ' + room.free_rooms +
                 '\
             </div>\
             </div>\
-            <input class="form-control" name="room_types" type="text" placeholder="Number of rooms required" value="' +
-                room.room_type + '" hidden/>');
+            <input class="form-control" name="room_types" type="text" value="' +
+                room.room_type + '" hidden/>\
+                <input class="form-control" name="room_views" type="text"  value="' +
+                room.room_view + '" hidden/>'
+                
+                );
         });
         $('#reservation_form').attr('action', '/hotels/' + data.hotel.id + '/reserve');
     }

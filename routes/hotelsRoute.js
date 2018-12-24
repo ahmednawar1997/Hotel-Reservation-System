@@ -13,7 +13,11 @@ router.get("/", auth.isAuthenticated, auth.isCustomer, function (req, res, next)
   }
   Hotel.getAllApprovedHotelsWithFacilities(req).then(hotels => {
 
-    res.render("hotels", { message: req.flash('message'), hotels: hotels, query: req.query });
+    res.render("hotels", {
+      message: req.flash('message'),
+      hotels: hotels,
+      query: req.query
+    });
   });
 });
 
@@ -21,7 +25,12 @@ router.get("/:hotel_id(\\d+)/", auth.isAuthenticated, auth.isCustomer, function 
   Hotel.getHotelDetailsAndRooms(req).then(hotels => {
     Hotel.getPremiumHotels(req).then(premiumHotels => {
       Hotel.getCustomerReviews(req).then(reviews => {
-        res.render("viewHotel2", { message: req.flash('message'), hotels, premiumHotels, reviews });
+        res.render("viewHotel2", {
+          message: req.flash('message'),
+          hotels,
+          premiumHotels,
+          reviews
+        });
       });
     });
   })
@@ -29,38 +38,43 @@ router.get("/:hotel_id(\\d+)/", auth.isAuthenticated, auth.isCustomer, function 
 });
 
 router.get("/fetch-hotels/", auth.isAuthenticated, function (req, res, next) {
-  Hotel.fetchHotelsWithName(req, req.query.hotel_name).then(function(hotels){
+  Hotel.fetchHotelsWithName(req, req.query.hotel_name).then(function (hotels) {
     res.status(202).send(hotels);
   })
 });
 
 
 
-router.get("/:hotel_id(\\d+)/reserve", auth.isAuthenticated, auth.isCustomer, function(req, res){
-  Hotel.getHotelDetails(req).then(function(hotel){
-    Room.getRoomsByHotelId(req).then(function(rooms){
-      Room.getNumberOfRooms(req, req.params.hotel_id, req.query.checkin, req.query.checkout).then(function(availableRooms){
-        res.render("reservationForm", { message: req.flash('message'), hotel: hotel, query: req.query, rooms: availableRooms});    
+router.get("/:hotel_id(\\d+)/reserve", auth.isAuthenticated, auth.isCustomer, function (req, res) {
+  Hotel.getHotelDetails(req).then(function (hotel) {
+    Room.getRoomsByHotelId(req).then(function (rooms) {
+      Room.getNumberOfRooms(req, req.params.hotel_id, req.query.checkin, req.query.checkout).then(function (availableRooms) {
+        res.render("reservationForm", {
+          message: req.flash('message'),
+          hotel: hotel,
+          query: req.query,
+          rooms: availableRooms
         });
+      });
 
     });
   });
 });
 
-router.get("/:hotel_id(\\d+)/book", auth.isAuthenticated, auth.isCustomer, function(req, res){
-  Hotel.getHotelDetails(req).then(function(hotel){
-      Room.getNumberOfRooms(req, req.params.hotel_id, req.query.checkin, req.query.checkout).then(function(availableRooms){
-        var checkin = req.query.checkin;
-        var checkout = req.query.checkout;
-        var data ={
-          hotel:hotel,
-          checkin: checkin,
-          checkout:checkout,
-          rooms:availableRooms
-        }
-        res.status(202).send(data);
-        });
+router.get("/:hotel_id(\\d+)/book", auth.isAuthenticated, auth.isCustomer, function (req, res) {
+  Hotel.getHotelDetails(req).then(function (hotel) {
+    Room.getNumberOfRooms(req, req.params.hotel_id, req.query.checkin, req.query.checkout).then(function (availableRooms) {
+      var checkin = req.query.checkin;
+      var checkout = req.query.checkout;
+      var data = {
+        hotel: hotel,
+        checkin: checkin,
+        checkout: checkout,
+        rooms: availableRooms
+      }
+      res.status(202).send(data);
     });
+  });
 });
 
 
@@ -68,12 +82,16 @@ router.post("/:hotel_id(\\d+)/reserve", auth.isAuthenticated, auth.isCustomer, f
 
   Reservation.insertReservation(req).then(function (reservation_id) {
 
-    (req.body.room_types).forEach((room_type, index) => {
-      Reservation.insertReservedRoomsInReservation(req, reservation_id, index)
-      req.flash('message', 'Reservation Successful');
-      res.redirect('/home');
-    });
+    if (((req.body.room_types) instanceof Array)) {
+      (req.body.room_types).forEach((room_type, index) => {
+        Reservation.insertReservedRoomsInReservation(req, reservation_id, req.body.room_types[index], req.body.room_views[index], req.body.numberOfRooms[index]);
+      });
 
+    } else {
+      Reservation.insertReservedRoomsInReservation(req, reservation_id, req.body.room_types, req.body.room_views, req.body.numberOfRooms);
+    }
+    req.flash('message', 'Reservation Successful');
+    res.redirect('/hotels');
   });
 
 });
