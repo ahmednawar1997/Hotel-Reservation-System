@@ -223,16 +223,6 @@ function getMoneyForEachHotel(req) {
     });
 }
 
-function extendReservationByNumberOfdays(req) {
-    var query = "";
-    return new Promise((resolve, reject) => {
-        req.con.query(query, [], (err, data) => {
-            if (err) console.log(err);
-            resolve(data);
-        });
-    });
-}
-
 
 module.exports = {
     insertReservation,
@@ -247,6 +237,5 @@ module.exports = {
     insertCustomerReviewComment,
     changeHotelApproval,
     setCustomerCheckedIn,
-    getMoneyForEachHotel,
-    extendReservationByNumberOfdays
+    getMoneyForEachHotel
 };

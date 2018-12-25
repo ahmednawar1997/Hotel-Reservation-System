@@ -31,7 +31,7 @@ router.post("/owner/reservations", auth.isAuthenticated, auth.isHotelOwner, (req
 });
 
 
-router.get("/owner/reservations", auth.isAuthenticated, auth.isHotelOwner,auth.isBlacklisted, (req, res, next) => {
+router.get("/owner/reservations", auth.isAuthenticated, auth.isHotelOwner, auth.isBlacklisted, (req, res, next) => {
   Reservation.getAllOwnerReservationsWithRoomsDetailsBetweenDates(req).then(detailedReservations => {
     res.render("reservations", { message: req.flash('message'), detailedReservations });
   })
@@ -49,13 +49,13 @@ router.post("/owner/reservations/:reservation_id", auth.isAuthenticated, auth.is
   })
 });
 
-router.get("/owner/hotels", auth.isAuthenticated, auth.isHotelOwner,auth.isBlacklisted, (req, res, next) => {
+router.get("/owner/hotels", auth.isAuthenticated, auth.isHotelOwner, auth.isBlacklisted, (req, res, next) => {
   Hotel.getAllOwnedHotelsWithRoomsAndFacilities(req).then(hotels => {
     res.render("ownersHotels", { message: req.flash('message'), hotels: hotels });
   });
 });
 
-router.get("/owner/register-hotel", auth.isAuthenticated, auth.isHotelOwner,auth.isBlacklisted, (req, res, next) => {
+router.get("/owner/register-hotel", auth.isAuthenticated, auth.isHotelOwner, auth.isBlacklisted, (req, res, next) => {
   res.render("registerHotel", { message: req.flash('message') });
 });
 
@@ -118,10 +118,6 @@ router.get("/report", auth.isAuthenticated, auth.isBroker, function (req, res, n
       values.push(reportData[i].total_amount)
     }
 
-    console.log("Monthly report: ", reportData);
-    console.log("Labels", labels);
-    console.log("VALUES", values);
-    console.log("ALL", { message: req.flash('message'), reportData, labels, values });
     res.render('brokerReport', { message: req.flash('message'), reportData, labels, values });
   });
 });

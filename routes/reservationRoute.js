@@ -22,10 +22,4 @@ router.post("/cancel", auth.isAuthenticated, function (req, res) {
     });
 });
 
-router.post("/extend", auth.isAuthenticated, auth.isBroker, function (req, res) {
-    Hotel.getReservedRooms(req).then((rooms) => {
-
-    });
-});
-
 module.exports = router;
