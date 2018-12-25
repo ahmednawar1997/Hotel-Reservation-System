@@ -40,9 +40,9 @@
     padding-right: 10px;
 }
 
-.hotel_item:hover {
-    transform: scale(1.02);
-    transition: all .2s ease-in-out;
+.hotel_item{
+    font-size: 0.9rem;
+
 }
 
 

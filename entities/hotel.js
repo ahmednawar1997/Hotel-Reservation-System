@@ -170,6 +170,60 @@ function getAllApprovedHotelsWithFacilities(req) {
   });
 }
 
+
+function getAllAvailableRoomsWithHotels(req, checkin, checkout) {
+
+  var sql1 = "SELECT T3.*, T2.* FROM "+
+  "((SELECT hotels.id AS kofta, hotels.name, hotels.description, hotels.stars, hotels.image_path, hotel_locations.*, T1.avgRating "+
+  "FROM hotels "+
+  "INNER JOIN facilities ON hotels.id = facilities.hotel_id "+
+  "INNER JOIN hotel_locations ON hotels.id = hotel_locations.hotel_id "+
+  "LEFT JOIN "+
+  "(SELECT reservations.hotel_id, AVG(customer_reviews.customer_review) AS avgRating FROM "+
+  "reservations INNER JOIN customer_reviews ON customer_reviews.reservation_id = reservations.reservation_id "+
+  "GROUP BY reservations.hotel_id) AS T1 "+
+  "ON T1.hotel_id = hotels.id "+
+  "WHERE hotels.approved = 1 AND hotels.suspended = 0";
+
+  sql1 = addFacilitiesToQuery(req, sql1);
+  sql1 = addFiltersToQuery(req, sql1);
+
+  var sql2= ")AS T3) INNER JOIN ((SELECT total_number_of_rooms.hotel_id, total_number_of_rooms.room_type, total_number_of_rooms.room_view, total_number_of_rooms.price, sum1-IFNULL(sum2, 0) AS free_rooms "+
+  "FROM "+
+  "(SELECT room_type.hotel_id, room_type.room_type, room_type.room_view, room_type.price, SUM(room_type.number_of_rooms) AS sum1 "+
+  "FROM room_type " +
+  "GROUP BY room_type.room_type, room_type.room_view, room_type.price, room_type.hotel_id) AS total_number_of_rooms "+
+  "LEFT OUTER JOIN " +
+  "((SELECT booked_hotels.room_type, booked_hotels.hotel_id, booked_hotels.reservation_id, booked_hotels.room_view, SUM(booked_hotels.number_of_rooms) AS sum2 "+
+  "FROM " +
+  "((SELECT input_conditions.hotel_id, reserved_rooms.reservation_id, reserved_rooms.room_type, reserved_rooms.number_of_rooms, reserved_rooms.room_view FROM reserved_rooms " +
+  "INNER JOIN "+
+  "(SELECT reservations.reservation_id AS reservation_id ,reservations.hotel_id AS hotel_id FROM reservations WHERE "+
+  "((? >= reservations.check_in_date AND ? < reservations.check_out_date) "+
+  "OR (? <= reservations.check_in_date AND ? > reservations.check_in_date AND ? < reservations.check_out_date) "+
+  "OR (? >= reservations.check_in_date AND ? < reservations.check_out_date)) "+
+  ")AS input_conditions "+
+  "ON reserved_rooms.reservation_id=input_conditions.reservation_id)AS booked_hotels) "+
+  "GROUP BY booked_hotels.room_type,booked_hotels.hotel_id,booked_hotels.room_view) AS number_of_reserved_rooms) "+
+  "ON number_of_reserved_rooms.room_type=total_number_of_rooms.room_type "+
+  "AND number_of_reserved_rooms.hotel_id=total_number_of_rooms.hotel_id "+
+  "AND number_of_reserved_rooms.room_view=total_number_of_rooms.room_view "+
+  ")AS T2) ON T3.kofta = T2.hotel_id ORDER BY T2.hotel_id";
+  console.log(sql1+sql2);
+
+  return new Promise((resolve, reject) => {
+    req.con.query(sql1+sql2, [checkin, checkin, checkin, checkout, checkin, checkin, checkout], function (err, hotels) {
+      if (err) console.log(err);
+      console.log(hotels);
+      resolve(hotels);
+    });
+});
+}
+
+
+
+
+
 function getHotelDetails(req) {
   var sql = "SELECT hotels.*, facilities.* " +
     "FROM hotels " +
@@ -276,7 +330,9 @@ module.exports = {
   reactivateHotel,
   suspendHotel,
   getAllOwnedHotelsWithRoomsAndFacilities,
-  fetchHotelsWithName
+  fetchHotelsWithName,
+  getAllAvailableRoomsWithHotels
+
 };
 
 function addFacilitiesToQuery(req, sql) {

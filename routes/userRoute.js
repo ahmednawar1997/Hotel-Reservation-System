@@ -30,7 +30,6 @@ router.post("/owner/reservations", auth.isAuthenticated, auth.isHotelOwner, (req
 
 router.get("/owner/reservations", auth.isAuthenticated, auth.isHotelOwner, (req, res, next) => {
   Reservation.getAllOwnerReservationsWithRoomsDetailsBetweenDates(req).then(detailedReservations => {
-    console.log("YAA3M", detailedReservations);
     res.render("reservations", { message: req.flash('message'), detailedReservations });
   })
 

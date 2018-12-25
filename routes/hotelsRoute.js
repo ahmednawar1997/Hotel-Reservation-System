@@ -11,17 +11,19 @@ router.get("/", auth.isAuthenticated, auth.isCustomer, function (req, res, next)
   if (req.query.checkin == undefined || req.query.checkout == undefined) {
     addCheckinAndCheckoutDates(req);
   }
-  Hotel.getAllApprovedHotelsWithFacilities(req).then(hotels => {
 
-    res.render("hotels", {
-      message: req.flash('message'),
-      hotels: hotels,
-      query: req.query
+  Hotel.getAllAvailableRoomsWithHotels(req, req.query.checkin, req.query.checkout).then(rooms => {
+
+      res.render("hotels", {
+        message: req.flash('message'),
+        query: req.query,
+        rooms:rooms
+      });
     });
-  });
+
 });
 
-router.get("/:hotel_id(\\d+)/", auth.isAuthenticated, auth.isCustomer, function (req, res, next) {
+router.get("/:hotel_id(\\d+)/", auth.isAuthenticated, function (req, res, next) {
   Hotel.getHotelDetailsAndRooms(req).then(hotels => {
     Hotel.getPremiumHotels(req).then(premiumHotels => {
       Hotel.getCustomerReviews(req).then(reviews => {

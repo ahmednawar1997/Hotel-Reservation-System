@@ -139,8 +139,9 @@
                         </div>
                         <div id="checkInDiv<%=detailedReservations[i].reservation_id%>">
                             <% var now = new Date();
-                                var date = new Date(detailedReservations[i].check_in_date%)%>
-                                <%if(detailedReservations[i].checked_in === null && detailedReservations[i].hotel_approval ===1 && detailedReservations[i].customer_approval !== 0 && date<now ){%>
+                                var date = new Date(detailedReservations[i].check_in_date);                                
+
+                                if(detailedReservations[i].checked_in === null && detailedReservations[i].hotel_approval ===1 && detailedReservations[i].customer_approval !== 0 && now>date){%>
                                     <div class="card-footer" align="center">
                                         <span>Guest Checked In? </span>
                                         <br>

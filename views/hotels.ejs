@@ -93,52 +93,66 @@
 
     <div class="col-9">
         <div class="container">
-            <% if(hotels.length>0){%>
-            <% hotels.forEach(function(hotel){%>
+            <% if(rooms.length>0){ var room;%>
+            <% for(var i = 0; i < rooms.length;){ room = rooms[i]%>
             <div class="wrapper">
                 <div class="card_container">
 
 
                     <div class="row">
                         <div class="col-3 align-self-center" style="padding-left: 25px;padding-right: 0px;">
-                            <% if ( !hotel.image_path) { %>
-                            <img title="Check Hotel" class="card_image img-thumbnail" path="/hotels/<%= hotel.id%>" src="/images/photo2.jpg">
+                            <% if ( !room.image_path) { %>
+                            <img title="Check Hotel" class="card_image img-thumbnail" path="/hotels/<%= room.hotel_id%>" src="/images/photo2.jpg">
                             <% } else{%>
-                            <img title="Check Hotel" class="card_image img-thumbnail" path="/hotels/<%= hotel.id%>" src="/uploads/<%=hotel.image_path%>">
+                            <img title="Check Hotel" class="card_image img-thumbnail" path="/hotels/<%= room.hotel_id%>" src="/uploads/<%=room.image_path%>">
                             <% } %>
                         </div>
                         <div class="col-9">
                             <div class="card_header">
                                 <h4 style="display:inline;">
-                                    <%=hotel.name%>
+                                    <%=room.name%>
                                 </h4>
-                                <% for(var i=0; i < hotel.stars; i++){%><span class="fa fa-star checked"></span>
+                                <% for(var j=0; j < room.stars; j++){%><span class="fa fa-star checked"></span>
                                 <% }%>
-                                <% if(hotel.avgRating){%>
+                                <% if(room.avgRating){%>
                                 <span class="review">Review<br>
-                                    <%=hotel.avgRating%> </span>
+                                    <%=room.avgRating%> </span>
                                 <%}%>
                             </div>
                             <hr style="margin-left: 90px;">
                             <div class="card_body">
                                 <ul class="hotel_list">
                                     <li><a class="hotel_item" href="#location"><Strong><span class="fa fa-map-marker-alt fa-lg"></span></Strong>
-                                            <%=hotel.city%>,
-                                            <%=hotel.country%></a></li>
+                                            <%=room.city%>,
+                                            <%=room.country%></a></li>
                                     <li><a class="hotel_item" href="#description" style="padding-bottom: 0"><Strong><i
                                                     class="fa fa-align-justify fa-lg"></i></Strong>
-                                            <%=hotel.description%></a></li>
+                                            <%=room.description%></a></li>
+
+
+
+                                    <%do{ %>
+                                    <li><a class="hotel_item" style="padding-bottom: 0"><Strong><span></span>&emsp;&emsp;<i class="fas fa-bed"></i></Strong>
+                                            <%=rooms[i].room_type%>,
+                                            <%=rooms[i].room_view%>, $
+                                            <%=rooms[i].price%>/night
+                                            -Free Rooms:
+                                            <%=rooms[i].free_rooms%> </a></li>
+                                            <% i++;%>
+                                    <%}while(rooms[i]&&rooms[i].hotel_id===rooms[i-1].hotel_id); %>
+
+
                                 </ul>
                             </div>
-                            <a path="/hotels/<%= hotel.id%>/reserve" href='#' id="about" class="btn btn-outline-light btn-sm reserveLink"
-                                data-toggle="modal" data-target="#exampleModal" data-hotel_id="<%=hotel.id%>">Reserve</a>
+                            <a path="/hotels/<%= room.hotel_id%>/reserve" href='#' id="about" class="btn btn-outline-light btn-sm reserveLink"
+                                data-toggle="modal" data-target="#exampleModal" data-hotel_id="<%=room.hotel_id%>">Reserve</a>
                         </div>
                     </div>
 
 
                 </div>
             </div>
-            <% }) %>
+            <% } %>
             <% } else{%>
             <p>No Hotels Matching Your Selection</p>
             <% }%>

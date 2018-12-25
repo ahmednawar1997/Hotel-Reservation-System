@@ -30,9 +30,9 @@ function getNumberOfRooms(req, hotel_id, checkin, checkout){
   "WHERE room_type.hotel_id=? "  +
   "GROUP BY room_type.room_type,room_type.room_view,room_type.price)AS total_number_of_rooms "+
   "LEFT OUTER JOIN " +
-  "(SELECT hotel_reservation_ids.room_type,SUM(hotel_reservation_ids.number_of_rooms) AS sum2 "+
+  "(SELECT hotel_reservation_ids.room_type,hotel_reservation_ids.roomView as roomView, SUM(hotel_reservation_ids.number_of_rooms) AS sum2 "+
   "FROM " +
-  "(SELECT reserved_rooms.* FROM reserved_rooms " +
+  "(SELECT reserved_rooms.room_type, reserved_rooms.room_view as roomView, reserved_rooms.reservation_id, reserved_rooms.number_of_rooms FROM reserved_rooms " +
   "INNER JOIN "+
   "(SELECT reservations.reservation_id FROM reservations "+
   "WHERE reservations.hotel_id=? " +
@@ -44,7 +44,7 @@ function getNumberOfRooms(req, hotel_id, checkin, checkout){
   "ON "+
   "reserved_rooms.reservation_id=input_conditions.reservation_id)AS hotel_reservation_ids "+
    "GROUP BY hotel_reservation_ids.room_type) AS number_of_reserved_rooms "+
-   "ON number_of_reserved_rooms.room_type=total_number_of_rooms.room_type;";
+   "ON number_of_reserved_rooms.room_type=total_number_of_rooms.room_type AND total_number_of_rooms.room_view=number_of_reserved_rooms.roomView;";
 
   return new Promise((resolve, reject) => {
     req.con.query(query, [hotel_id, hotel_id, checkin, checkin, checkin, checkout , checkin , checkin , checkout],

@@ -134,32 +134,42 @@
                                                         <div class="modal-body">
 
                                                             <form id="addRoomForm" action="" method="POST">
-                                                                <div class="form-group">
                                                                     <div class="form-group row">
                                                                         <label for="roomType" class="col-4 col-form-label">Room
                                                                             Type
                                                                         </label>
                                                                         <div class="col-6">
-                                                                            <input class="form-control" name="roomType" type="text" id="roomType" required />
+                                                                            <select class="form-control" name="roomType" id="roomType" required>
+                                                                                <option value="single">Single</option>
+                                                                                <option value="double">Double</option>
+                                                                                <option value="triple">Triple</option>
+                                                                                <option value="suite">Suite</option>
+                                                                              </select>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
                                                                         <label for="view" class="col-4 col-form-label">View</label>
                                                                         <div class="col-6">
-                                                                            <input class="form-control" name="view" type="text" required />
+                                                                            <select class="form-control" name="view" id="roomType" required>
+                                                                                <option value="garden">Garden</option>
+                                                                                <option value="ocean">Ocean</option>
+                                                                                <option value="sea">Sea</option>
+                                                                                <option value="pool">Pool</option>
+                                                                                <option value="city">City</option>                                                                                
+                                                                              </select>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
                                                                         <label for="price" class="col-4 col-form-label">Price</label>
                                                                         <div class="col-6">
-                                                                            <input class="form-control" name="price" type="text" required />
+                                                                            <input class="form-control" name="price" type="number" min="0" required />
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
                                                                         <label for="quantity" class="col-4 col-form-label">Identical
                                                                             Rooms Quantity</label>
                                                                         <div class="col-6">
-                                                                            <input class="form-control" name="quantity" type="text" required />
+                                                                            <input class="form-control" name="quantity" type="number" min="0" required />
                                                                         </div>
                                                                     </div>
                                                                     <div class="modal-footer">
