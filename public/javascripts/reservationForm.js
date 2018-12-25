@@ -1,15 +1,23 @@
 $(function () {
     $('#reservation_button').click(function (e) {
-        let submit = false;
+        let sumOfRooms = 0;
+        let submit2 = true;
         $.each($('.number_of_rooms'), function (key, value) {
-            if ($(this).val() > 0) {
-                submit = true;
+            sumOfRooms += $(this).val();
+
+            let maxNum = parseInt($(this).attr('max'));
+            let minNum = parseInt($(this).attr('min'));
+
+            console.log(10> $(this).attr('max'));
+            console.log(10<$(this).attr('max'));
+            if ($(this).val() < minNum || $(this).val() > maxNum) {
+                submit2 = false;
             }
         });
-        if (submit)
+        if (sumOfRooms > 0 && submit2)
             $('#reservation_form').submit();
-            else
-            $('#error_msg').html('Please add rooms');
+        else
+            $('#error_msg').html('Please add valid rooms');
     });
 
 
@@ -34,7 +42,6 @@ $(function () {
 
 
     function updateReservationForm(data) {
-        console.log(data);
         $('#reservation_hotel_name').text(data.hotel.name);
         $('#reservation_checkin').val(data.checkin);
         $('#reservation_checkout').val(data.checkout);
@@ -56,8 +63,8 @@ $(function () {
                 room.room_type + '" hidden/>\
                 <input class="form-control" name="room_views" type="text"  value="' +
                 room.room_view + '" hidden/>'
-                
-                );
+
+            );
         });
         $('#reservation_form').attr('action', '/hotels/' + data.hotel.id + '/reserve');
     }

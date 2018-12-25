@@ -102,9 +102,11 @@
                     <div class="row">
                         <div class="col-3 align-self-center" style="padding-left: 25px;padding-right: 0px;">
                             <% if ( !room.image_path) { %>
-                            <img title="Check Hotel" class="card_image img-thumbnail" path="/hotels/<%= room.hotel_id%>" src="/images/photo2.jpg">
+                            <img title="Check Hotel" class="card_image img-thumbnail" path="/hotels/<%= room.hotel_id%>"
+                                src="/images/photo2.jpg">
                             <% } else{%>
-                            <img title="Check Hotel" class="card_image img-thumbnail" path="/hotels/<%= room.hotel_id%>" src="/uploads/<%=room.image_path%>">
+                            <img title="Check Hotel" class="card_image img-thumbnail" path="/hotels/<%= room.hotel_id%>"
+                                src="/uploads/<%=room.image_path%>">
                             <% } %>
                         </div>
                         <div class="col-9">
@@ -132,13 +134,14 @@
 
 
                                     <%do{ %>
-                                    <li><a class="hotel_item" style="padding-bottom: 0"><Strong><span></span>&emsp;&emsp;<i class="fas fa-bed"></i></Strong>
+                                    <li><a class="hotel_item" style="padding-bottom: 0"><Strong><span></span>&emsp;&emsp;<i
+                                                    class="fas fa-bed"></i></Strong>
                                             <%=rooms[i].room_type%>,
                                             <%=rooms[i].room_view%>, $
                                             <%=rooms[i].price%>/night
                                             -Free Rooms:
                                             <%=rooms[i].free_rooms%> </a></li>
-                                            <% i++;%>
+                                    <% i++;%>
                                     <%}while(rooms[i]&&rooms[i].hotel_id===rooms[i-1].hotel_id); %>
 
 
