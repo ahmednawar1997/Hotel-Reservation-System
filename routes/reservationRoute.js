@@ -5,14 +5,9 @@ var Hotel = require("../entities/Hotel");
 var auth = require("../helpers/authorization");
 
 router.get("/", auth.isAuthenticated, (req, res) => {
-<<<<<<< HEAD
-    Reservation.getAllOwnerReservations(req).then(function(reservations){
-        res.render("customerProfile", {message: req.flash('message'), reservations: reservations});
-=======
     Reservation.getAllOwnerReservations(req).then(function (reservations) {
         console.log(reservations);
         res.render("customerProfile", { message: req.flash('message'), reservations: reservations });
->>>>>>> Added backend for monthly report
     });
 
 });

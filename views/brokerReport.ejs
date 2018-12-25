@@ -1,15 +1,15 @@
 <%- include partials/header %>
 
-    <div class="container card">
-        <h1 class="card-header" align='center'>Monthly Report</h1>
-        <div class="card-text">
-            <%=JSON.stringify(labels)%>
-                <%=JSON.stringify(values)%>
-        </div>
-    </div>
 
     <div class="container card">
-        <canvas id="myChart" data-labels="<%=JSON.stringify(labels)%>" data-values="<%=JSON.stringify(values)%>"></canvas>
+        <%var today = new Date()
+         const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November",
+        "December" ];
+%>
+            <h1 class="card-header" align='center'>
+                <%=monthNames[today.getMonth()-1]%> Report
+            </h1>
+            <canvas id="myChart" data-labels="<%=JSON.stringify(labels)%>" data-values="<%=JSON.stringify(values)%>"></canvas>
     </div>
 
 
@@ -18,20 +18,29 @@
 
     <script>
         var ctx = document.getElementById('myChart').getContext('2d');
-        var lab = $('#myChart').attr('data-labels');
-        var val = $('#myChart').attr('data-values')
-        // var lab = '<%=labels%>';
-        // var val = '<%=values%>';
+
+        var lab = '<%-JSON.stringify(labels)%>';
+        var val = '<%-JSON.stringify(values)%>';
+        console.log("labelss", lab)
         var chart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: lab,
+                labels: JSON.parse(lab),
                 datasets: [{
                     label: "Money From Hotels",
                     backgroundColor: 'rgb(252,168,60)',
                     borderColor: 'rgb(252,168,60)',
-                    data: val
+                    data: JSON.parse(val)
                 }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
             }
         });
 

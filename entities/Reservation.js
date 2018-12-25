@@ -216,7 +216,7 @@ function getMoneyForEachHotel(req) {
         var now = new Date();
         var month = now.getMonth();
         var year = now.getYear();
-        req.con.query(query, [month + 1, year + 1900], (err, data) => {
+        req.con.query(query, [month, year + 1900], (err, data) => {
             if (err) console.log(err);
             resolve(data);
         });
