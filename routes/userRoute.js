@@ -14,12 +14,15 @@ var upload = multer({ storage: storage });
 router.get("/", auth.isAuthenticated, (req, res) => {
   Reservation.getAllCustomerUpcomingReservations(req).then(function (upcomingReservations) {
     Reservation.getAllCustomerPastReservations(req).then(function (pastReservations) {
-        res.render("userProfile", {
-          message: req.flash('message'), upcomingReservations: upcomingReservations,
-          pastReservations: pastReservations});
-      })
+      res.render("userProfile", {
+        message: req.flash('message'), upcomingReservations: upcomingReservations,
+        pastReservations: pastReservations
+      });
+      console.log("UpcomingReservation: ", upcomingReservations);
     })
-  });
+  })
+
+});
 
 router.post("/owner/reservations", auth.isAuthenticated, auth.isHotelOwner, (req, res, next) => {
   Reservation.changeHotelApproval(req).then(() => {
@@ -36,7 +39,6 @@ router.get("/owner/reservations", auth.isAuthenticated, auth.isHotelOwner, (req,
 });
 router.post("/owner/reservations/:reservation_id", auth.isAuthenticated, auth.isHotelOwner, (req, res, next) => {
   Reservation.setCustomerCheckedIn(req).then(() => {
-    console.log("AAAAAAAAAAA", req.body.customer_id);
     if (req.body.customer_id) {
       User.blacklistUser(req, req.body.customer_id).then(() => {
         res.send("reservations");
@@ -107,6 +109,12 @@ router.get("/customers/view", auth.isAuthenticated, auth.isBroker, function (req
     }
   });
 });
+router.get("/report", auth.isAuthenticated, auth.isBroker, function (req, res, next) {
+  Reservation.getMoneyForEachHotel(req).then(data => {
+    console.log("Monthly report: ", data);
+    res.render('brokerReport', { message: req.flash('message'), data });
+  });
+});
 
 router.post("/:user_id(\\d+)/blacklist", auth.isAuthenticated, auth.isBroker, function (req, res, next) {
   User.blacklistUser(req, req.params.user_id).then(customer => {
@@ -120,9 +128,6 @@ router.post("/:user_id(\\d+)/blacklist/remove", auth.isAuthenticated, auth.isBro
   });
 });
 
-router.get("/report", auth.isAuthenticated, auth.isBroker, function (req, res, next) {
-  Reservation.getEachRoomTypeOfEachHotelTotalMoney(req).then(data => {
-    res.render('brokerReport', { message: req.flash('message'), data });
-  });
-});
+
+
 module.exports = router;
