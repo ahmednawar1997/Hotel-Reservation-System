@@ -1,200 +1,208 @@
 <%- include partials/header %>
 
-    <body>
-        <% for(var i=0 ; i<hotels.length; i++){ %>
-            <section>
-                <div class="container">
-                    <div class="card">
-                        <h1 class="card-header" align='center'>
-                            <%= hotels[i].name%> Hotel
-                                <% if(hotels[i].approved){ %>
-                                    <i class="far fa-check-circle" title="Approved Hotel" style="float:right; color:grey"></i>
-                                    <%}%>
-                        </h1>
-                        <div class="row ">
-                            <div class="col-4">
+<body>
+    <% for(var i=0 ; i<hotels.length; i++){ %>
+    <section>
+        <div class="container">
+            <div class="card">
+                <h1 class="card-header" align='center'>
+                    <%= hotels[i].name%> Hotel
+                    <% if(hotels[i].approved){ %>
+                    <i class="far fa-check-circle" title="Approved Hotel" style="float:right; color:grey"></i>
+                    <%}%>
+                </h1>
+                <div class="row ">
+                    <div class="col-4">
+                            <% if ( !hotels[i].image_path) { %>
                                 <img src="/images/photo2.jpg" class="w-100" style="height:300px; border-radius: 0% 0% 20% 0%;">
+                                <% } else{%>
+                                <img class="w-100" style="height:300px; border-radius: 0% 0% 20% 0%;" src="/uploads/<%=hotels[i].image_path%>">
+                                <% } %>
+                        
+                    </div>
+                    <div class="col-8">
+                        <div class="card-block col-12">
+
+                            <div class="card-text col-12" style="padding-top: 20px">
+                                <%=hotels[i].description%>
                             </div>
-                            <div class="col-8">
-                                <div class="card-block col-12">
-
-                                    <div class="card-text col-12" style="padding-top: 20px">
-                                        <%=hotels[i].description%>
-                                    </div>
-                                    <hr>
-                                    <div class="col-6"><strong><i class="fas fa-star-half-alt" titles="Stars"></i> Stars:
-                                            <% for(var j=0; j < hotels[i].stars; j++){%>
-                                                <span><i class="text-warning fa fa-star"></i></span>
-                                                <% }%></strong>
-                                    </div>
-                                    <div class="col-6"><strong><i class="fas fa-map-marker-alt" style="margin-left:3px" title="
-                                                                                Location "></i> <span style="margin-left:3px">Location:</span></strong>
-                                        <%=hotels[i].street%>,
-                                            <%=hotels[i].district%>,
-                                                <%=hotels[i].city%>,
-                                                    <%=hotels[i].country%>
-
-                                    </div>
-
-                                    <div class="col-12">
-                                        <strong><i class="far fa-gem " title="Facilities "></i> Facilities: </strong>
-                                        <%= getFacilities(i)%>
-                                    </div>
-                                    <div class="col-12">
-                                        <strong>Rooms Offered: </strong>
-                                        <ul style="list-style-type: none;">
-                                            <% var hotelID = hotels[i].id %>
-                                                <%if(hotels[i].room_type){ %>
-                                                    <li style="text-transform: capitalize;">
-                                                        <%= getRoomIcon(hotels[i].room_type)%>
-                                                            <%= hotels[i].room_type%> with
-                                                                <%= hotels[i].room_view %> view.
-                                                    </li>
-
-                                                    <%}else{%>
-                                                        <li>No rooms to offer</li>
-                                                        <%}%>
-                                                            <% while(hotels[i+1] && hotels[i+1].room_type && hotels[i+1].id === hotelID){ %>
-                                                                <%i++%>
-                                                                    <li style="text-transform: capitalize;">
-                                                                        <%= getRoomIcon(hotels[i].room_type)%>
-                                                                            <%= hotels[i].room_type%> with
-                                                                                <%= hotels[i].room_view %> view.
-                                                                    </li>
-                                                                    <%}%>
-                                        </ul>
-                                    </div>
-                                </div>
+                            <hr>
+                            <div class="col-6"><strong><i class="fas fa-star-half-alt" titles="Stars"></i> Stars:
+                                    <% for(var j=0; j < hotels[i].stars; j++){%>
+                                    <span><i class="text-warning fa fa-star"></i></span>
+                                    <% }%></strong>
+                            </div>
+                            <div class="col-6"><strong><i class="fas fa-map-marker-alt" style="margin-left:3px" title="
+                                                                                Location "></i>
+                                    <span style="margin-left:3px">Location:</span></strong>
+                                <%=hotels[i].street%>,
+                                <%=hotels[i].district%>,
+                                <%=hotels[i].city%>,
+                                <%=hotels[i].country%>
 
                             </div>
-                            <div class="col-12" style="padding:20px; padding-right:50px">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRoomModal" data-whatever='<%=hotels[i].id%>'
-                                    style="float:right;">Add Room
-                                </button>
-                                <% if(hotels[i].map_url){%>
-                                    <img onclick="showMap('<%=hotels[i].map_url%>','<%= hotels[i].id%>');" src="/images/google-maps-50.png" style="width:44px; height:44px;float:right;cursor:pointer">
+
+                            <div class="col-12">
+                                <strong><i class="far fa-gem " title="Facilities "></i> Facilities: </strong>
+                                <%= getFacilities(i)%>
+                            </div>
+                            <div class="col-12">
+                                <strong>Rooms Offered: </strong>
+                                <ul style="list-style-type: none;">
+                                    <% var hotelID = hotels[i].id %>
+                                    <%if(hotels[i].room_type){ %>
+                                    <li style="text-transform: capitalize;">
+                                        <%= getRoomIcon(hotels[i].room_type)%>
+                                        <%= hotels[i].room_type%> with
+                                        <%= hotels[i].room_view %> view.
+                                    </li>
+
+                                    <%}else{%>
+                                    <li>No rooms to offer</li>
                                     <%}%>
+                                    <% while(hotels[i+1] && hotels[i+1].room_type && hotels[i+1].id === hotelID){ %>
+                                    <%i++%>
+                                    <li style="text-transform: capitalize;">
+                                        <%= getRoomIcon(hotels[i].room_type)%>
+                                        <%= hotels[i].room_type%> with
+                                        <%= hotels[i].room_view %> view.
+                                    </li>
+                                    <%}%>
+                                </ul>
                             </div>
                         </div>
-                        <div id="mapiframe<%=hotels[i].id%>"></div>
+
+                    </div>
+                    <div class="col-12" style="padding:20px; padding-right:50px">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRoomModal"
+                            data-whatever='<%=hotels[i].id%>' style="float:right;">Add Room
+                        </button>
+                        <% if(hotels[i].map_url){%>
+                        <img onclick="showMap('<%=hotels[i].map_url%>','<%= hotels[i].id%>');" src="/images/google-maps-50.png"
+                            style="width:44px; height:44px;float:right;cursor:pointer">
+                        <%}%>
                     </div>
                 </div>
-            </section>
-            <% } %>
+                <div id="mapiframe<%=hotels[i].id%>"></div>
+            </div>
+        </div>
+    </section>
+    <% } %>
 
-                <% function getFacilities(i){ %>
-                    <ul class="row col-12" style="list-style-type: none; margin-left:20px">
-                        <% if(hotels[i].pool===1){ %>
-                            <li class="col-3"><i class="fas fa-swimming-pool" title="Pool"></i> Pool</li>
-                            <% }if(hotels[i].bar===1) {%>
-                                <li class="col-3"><i class="fas fa-glass-martini" title="Bar"></i> Bar</li>
-                                <% }if(hotels[i].wifi===1){ %>
-                                    <li class="col-3"><i class="fas fa-wifi" title="Wifi"></i> Wifi</li>
-                                    <% }if(hotels[i].gym===1){ %>
-                                        <li class="col-3"><i class="fas fa-dumbbell" title="Gym"></i> Gym</li>
-                                        <% }if(hotels[i].kids_area===1){ %>
-                                            <li class="col-3"><i class="fas fa-baby" title="Kids Area"></i> Kids Area
-                                            </li>
-                                            <% }if(hotels[i].spa===1){ %>
-                                                <li class="col-3"><i class="fas fa-hot-tub" title="Spa"></i> Spa</li>
-                                                <% }if(hotels[i].restaurant===1){ %>
-                                                    <li class="col-3"><i class="fas fa-utensils" title="Restaurant"></i>
-                                                        Restaurant</li>
-                                                    <% } %>
-                    </ul>
+    <% function getFacilities(i){ %>
+    <ul class="row col-12" style="list-style-type: none; margin-left:20px">
+        <% if(hotels[i].pool===1){ %>
+        <li class="col-3"><i class="fas fa-swimming-pool" title="Pool"></i> Pool</li>
+        <% }if(hotels[i].bar===1) {%>
+        <li class="col-3"><i class="fas fa-glass-martini" title="Bar"></i> Bar</li>
+        <% }if(hotels[i].wifi===1){ %>
+        <li class="col-3"><i class="fas fa-wifi" title="Wifi"></i> Wifi</li>
+        <% }if(hotels[i].gym===1){ %>
+        <li class="col-3"><i class="fas fa-dumbbell" title="Gym"></i> Gym</li>
+        <% }if(hotels[i].kids_area===1){ %>
+        <li class="col-3"><i class="fas fa-baby" title="Kids Area"></i> Kids Area
+        </li>
+        <% }if(hotels[i].spa===1){ %>
+        <li class="col-3"><i class="fas fa-hot-tub" title="Spa"></i> Spa</li>
+        <% }if(hotels[i].restaurant===1){ %>
+        <li class="col-3"><i class="fas fa-utensils" title="Restaurant"></i>
+            Restaurant</li>
+        <% } %>
+    </ul>
 
-                    <% } %>
+    <% } %>
 
-                        <% function getRoomIcon(roomType){
+    <% function getRoomIcon(roomType){
                                     if(roomType==="single"){
                                         %>
-                            <i class="fas fa-user"></i>
-                            <%}
+    <i class="fas fa-user"></i>
+    <%}
                                     else if(roomType==="double"){%>
-                                <i class="fas fa-user-friends"></i>
-                                <%}
+    <i class="fas fa-user-friends"></i>
+    <%}
                                     else if(roomType==="triple"){%>
-                                    <i class="fas fa-users"></i>
-                                    <%}
+    <i class="fas fa-users"></i>
+    <%}
                                     else if(roomType==="suite"){%>
-                                        <i class="fas fa-crown"></i>
-                                        <%}
+    <i class="fas fa-crown"></i>
+    <%}
                                 } %>
 
 
-                                            <div class="modal fade" id="addRoomModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">New Rooms Form</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
+    <div class="modal fade" id="addRoomModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">New Rooms Form</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
 
-                                                            <form id="addRoomForm" action="" method="POST">
-                                                                    <div class="form-group row">
-                                                                        <label for="roomType" class="col-4 col-form-label">Room
-                                                                            Type
-                                                                        </label>
-                                                                        <div class="col-6">
-                                                                            <select class="form-control" name="roomType" id="roomType" required>
-                                                                                <option value="single">Single</option>
-                                                                                <option value="double">Double</option>
-                                                                                <option value="triple">Triple</option>
-                                                                                <option value="suite">Suite</option>
-                                                                              </select>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group row">
-                                                                        <label for="view" class="col-4 col-form-label">View</label>
-                                                                        <div class="col-6">
-                                                                            <select class="form-control" name="view" id="roomType" required>
-                                                                                <option value="garden">Garden</option>
-                                                                                <option value="ocean">Ocean</option>
-                                                                                <option value="sea">Sea</option>
-                                                                                <option value="pool">Pool</option>
-                                                                                <option value="city">City</option>                                                                                
-                                                                              </select>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group row">
-                                                                        <label for="price" class="col-4 col-form-label">Price</label>
-                                                                        <div class="col-6">
-                                                                            <input class="form-control" name="price" type="number" min="0" required />
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group row">
-                                                                        <label for="quantity" class="col-4 col-form-label">Identical
-                                                                            Rooms Quantity</label>
-                                                                        <div class="col-6">
-                                                                            <input class="form-control" name="quantity" type="number" min="0" required />
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                        <button type="submit" class="btn btn-primary">Add
-                                                                            Room
-                                                                        </button>
-                                                                    </div>
+                    <form id="addRoomForm" action="" method="POST">
+                        <div class="form-group row">
+                            <label for="roomType" class="col-4 col-form-label">Room
+                                Type
+                            </label>
+                            <div class="col-6">
+                                <select class="form-control" name="roomType" id="roomType" required>
+                                    <option value="single">Single</option>
+                                    <option value="double">Double</option>
+                                    <option value="triple">Triple</option>
+                                    <option value="suite">Suite</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="view" class="col-4 col-form-label">View</label>
+                            <div class="col-6">
+                                <select class="form-control" name="view" id="roomType" required>
+                                    <option value="garden">Garden</option>
+                                    <option value="ocean">Ocean</option>
+                                    <option value="sea">Sea</option>
+                                    <option value="pool">Pool</option>
+                                    <option value="city">City</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="price" class="col-4 col-form-label">Price</label>
+                            <div class="col-6">
+                                <input class="form-control" name="price" type="number" min="0" required />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="quantity" class="col-4 col-form-label">Identical
+                                Rooms Quantity</label>
+                            <div class="col-6">
+                                <input class="form-control" name="quantity" type="number" min="0" required />
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Add
+                                Room
+                            </button>
+                        </div>
 
-                                                            </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
-                                                </div>
-                                            </div>
-                                            </div>
+    </div>
+    </div>
+    </div>
 
-                                            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-                                                crossorigin="anonymous"></script>
-                                            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-                                                crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 
 
-                                            <script src="/javascripts/hotels.js"></script>
-    </body>
+    <script src="/javascripts/hotels.js"></script>
+</body>
 
-    </html>
+</html>

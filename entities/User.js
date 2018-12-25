@@ -3,7 +3,7 @@ var date = require('date-and-time');
 
 
 function getAllCustomers(req, customer_name) {
-    var query = "SELECT id, name FROM users WHERE name LIKE'%" + customer_name + "%'";
+    var query = "SELECT id, name FROM users WHERE name LIKE'%" + customer_name + "%' AND name!='broker'";
     return new Promise((resolve, reject) => {
         req.con.query(query, [],
             (err, customers) => {

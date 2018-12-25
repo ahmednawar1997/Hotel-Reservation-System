@@ -27,6 +27,7 @@ router.get("/:hotel_id(\\d+)/", auth.isAuthenticated, function (req, res, next) 
   Hotel.getHotelDetailsAndRooms(req).then(hotels => {
     Hotel.getPremiumHotels(req).then(premiumHotels => {
       Hotel.getCustomerReviews(req).then(reviews => {
+        console.log(reviews);
         res.render("viewHotel2", {
           message: req.flash('message'),
           hotels,
@@ -68,6 +69,7 @@ router.get("/:hotel_id(\\d+)/book", auth.isAuthenticated, auth.isCustomer, funct
     Room.getNumberOfRooms(req, req.params.hotel_id, req.query.checkin, req.query.checkout).then(function (availableRooms) {
       var checkin = req.query.checkin;
       var checkout = req.query.checkout;
+      addCheckinAndCheckoutDates(req);
       var data = {
         hotel: hotel,
         checkin: checkin,

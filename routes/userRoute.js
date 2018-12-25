@@ -51,7 +51,6 @@ router.post("/owner/reservations/:reservation_id", auth.isAuthenticated, auth.is
 
 router.get("/owner/hotels", auth.isAuthenticated, auth.isHotelOwner, (req, res, next) => {
   Hotel.getAllOwnedHotelsWithRoomsAndFacilities(req).then(hotels => {
-    console.log("output: ", hotels)
     res.render("ownersHotels", { message: req.flash('message'), hotels: hotels });
   });
 });
