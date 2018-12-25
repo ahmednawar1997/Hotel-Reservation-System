@@ -41,3 +41,10 @@
 
 
 ---check reservation
+
+
+
+
+26/12/2018(a day before project deadline)
+-suspended hotels apear
+-cancelled reservations are taken into consideration

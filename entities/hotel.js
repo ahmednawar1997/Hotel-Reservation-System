@@ -201,7 +201,7 @@ function getAllAvailableRoomsWithHotels(req, checkin, checkout) {
   "(SELECT reservations.reservation_id AS reservation_id ,reservations.hotel_id AS hotel_id FROM reservations WHERE "+
   "((? >= reservations.check_in_date AND ? < reservations.check_out_date) "+
   "OR (? <= reservations.check_in_date AND ? > reservations.check_in_date AND ? < reservations.check_out_date) "+
-  "OR (? >= reservations.check_in_date AND ? < reservations.check_out_date)) "+
+  "OR (? >= reservations.check_in_date AND ? < reservations.check_out_date)) AND customer_approval = ? "+
   ")AS input_conditions "+
   "ON reserved_rooms.reservation_id=input_conditions.reservation_id)AS booked_hotels) "+
   "GROUP BY booked_hotels.room_type,booked_hotels.hotel_id,booked_hotels.room_view) AS number_of_reserved_rooms) "+
@@ -209,10 +209,9 @@ function getAllAvailableRoomsWithHotels(req, checkin, checkout) {
   "AND number_of_reserved_rooms.hotel_id=total_number_of_rooms.hotel_id "+
   "AND number_of_reserved_rooms.room_view=total_number_of_rooms.room_view "+
   ")AS T2) ON T3.kofta = T2.hotel_id ORDER BY T2.hotel_id";
-  console.log(sql1+sql2);
 
   return new Promise((resolve, reject) => {
-    req.con.query(sql1+sql2, [checkin, checkin, checkin, checkout, checkin, checkin, checkout], function (err, hotels) {
+    req.con.query(sql1 + sql2, [checkin, checkin, checkin, checkout, checkin, checkin, checkout, 1], function (err, hotels) {
       if (err) console.log(err);
       console.log(hotels);
       resolve(hotels);
