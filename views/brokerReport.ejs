@@ -1,15 +1,37 @@
 <%- include partials/header %>
 
+    <div class="container card">
+        <h1 class="card-header" align='center'>Monthly Report</h1>
+        <div class="card-text"></div>
+    </div>
 
-
-    <div>
-        <%=data[0].name%>:
-            <%=data[0].total*data[0].price%>
+    <div class="container card">
+        <canvas id="myChart"></canvas>
     </div>
 
 
 
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'bar',
 
+            // The data for our dataset
+            data: {
+                labels: ["Santana", "Four Seasons", "Novotel", "Hilton", "Hotel1", "Hotel2", "Hotel3"],
+                datasets: [{
+                    label: "Money From Hotels",
+                    backgroundColor: 'rgb(252,168,60)',
+                    borderColor: 'rgb(252,168,60)',
+                    data: [12, 10, 5, 2, 20, 30, 45],
+                }]
+            },
+
+            // Configuration options go here
+            options: {}
+        });
+    </script>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -22,7 +44,7 @@
     <script src='https://cdn.rawgit.com/pguso/jquery-plugin-circliful/master/js/jquery.circliful.min.js'></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
         crossorigin="anonymous"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
 
 
     <script>
