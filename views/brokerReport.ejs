@@ -2,37 +2,40 @@
 
     <div class="container card">
         <h1 class="card-header" align='center'>Monthly Report</h1>
-        <div class="card-text"></div>
+        <div class="card-text">
+            <%=JSON.stringify(labels)%>
+                <%=JSON.stringify(values)%>
+        </div>
     </div>
 
     <div class="container card">
-        <canvas id="myChart"></canvas>
+        <canvas id="myChart" data-labels="<%=JSON.stringify(labels)%>" data-values="<%=JSON.stringify(values)%>"></canvas>
     </div>
+
+
 
 
 
     <script>
         var ctx = document.getElementById('myChart').getContext('2d');
+        var lab = $('#myChart').attr('data-labels');
+        var val = $('#myChart').attr('data-values')
+        // var lab = '<%=labels%>';
+        // var val = '<%=values%>';
         var chart = new Chart(ctx, {
-            // The type of chart we want to create
             type: 'bar',
-
-            // The data for our dataset
             data: {
-                labels: ["Santana", "Four Seasons", "Novotel", "Hilton", "Hotel1", "Hotel2", "Hotel3"],
+                labels: lab,
                 datasets: [{
                     label: "Money From Hotels",
                     backgroundColor: 'rgb(252,168,60)',
                     borderColor: 'rgb(252,168,60)',
-                    data: [12, 10, 5, 2, 20, 30, 45],
+                    data: val
                 }]
-            },
-
-            // Configuration options go here
-            options: {}
+            }
         });
-    </script>
 
+    </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
@@ -44,8 +47,8 @@
     <script src='https://cdn.rawgit.com/pguso/jquery-plugin-circliful/master/js/jquery.circliful.min.js'></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
         crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
     <script>
     </script>

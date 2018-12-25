@@ -110,9 +110,20 @@ router.get("/customers/view", auth.isAuthenticated, auth.isBroker, function (req
   });
 });
 router.get("/report", auth.isAuthenticated, auth.isBroker, function (req, res, next) {
-  Reservation.getMoneyForEachHotel(req).then(data => {
-    console.log("Monthly report: ", data);
-    res.render('brokerReport', { message: req.flash('message'), data });
+  Reservation.getMoneyForEachHotel(req).then(reportData => {
+    var labels = [];
+    var values = [];
+
+    for (var i = 0; i < reportData.length; i++) {
+      labels.push(reportData[i].name);
+      values.push(reportData[i].total_amount)
+    }
+
+    console.log("Monthly report: ", reportData);
+    console.log("Labels", labels);
+    console.log("VALUES", values);
+    console.log("ALL", { message: req.flash('message'), reportData, labels, values });
+    res.render('brokerReport', { message: req.flash('message'), reportData, labels, values });
   });
 });
 
