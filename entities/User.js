@@ -50,7 +50,6 @@ function removeBlacklistUser(req, customer_id) {
 }
 
 
-
 module.exports = {
     getAllCustomers,
     getUserDetails,

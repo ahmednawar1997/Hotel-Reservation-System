@@ -87,7 +87,7 @@ passport.serializeUser(function(userId, done){
 });
 
 passport.deserializeUser(function(req, id, done){
-    req.con.query("select * from users where id = ? ", [id], function (err, users){
+    req.con.query("select users.*, blacklist.customer_id AS isBlacklisted from users LEFT JOIN blacklist ON id = customer_id where id = ? ", [id], function (err, users){
         done(err, users[0]);
     });
 });

@@ -6,7 +6,7 @@ var Reservation = require("../entities/Reservation");
 var date = require('date-and-time');
 var auth = require("../helpers/authorization");
 
-router.get("/", auth.isAuthenticated, auth.isCustomer, function (req, res, next) {
+router.get("/", auth.isAuthenticated, auth.isCustomer,auth.isBlacklisted, function (req, res, next) {
 
   if (req.query.checkin == undefined || req.query.checkout == undefined) {
     addCheckinAndCheckoutDates(req);

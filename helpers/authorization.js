@@ -33,11 +33,22 @@ function isHotelOwner(req, res, next) {
     }
     return next();
 }
+function isBlacklisted(req, res, next) {
+
+  if (req.user.isBlacklisted) {
+    req.flash('message', 'You Are Blacklisted');
+    res.redirect("/login");
+    return;
+}
+return next();
+
+}
 
 
 module.exports = {
     isHotelOwner,
     isBroker,
     isAuthenticated,
-    isCustomer
+    isCustomer,
+    isBlacklisted
 };

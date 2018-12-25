@@ -31,7 +31,7 @@ router.post("/owner/reservations", auth.isAuthenticated, auth.isHotelOwner, (req
 });
 
 
-router.get("/owner/reservations", auth.isAuthenticated, auth.isHotelOwner, (req, res, next) => {
+router.get("/owner/reservations", auth.isAuthenticated, auth.isHotelOwner,auth.isBlacklisted, (req, res, next) => {
   Reservation.getAllOwnerReservationsWithRoomsDetailsBetweenDates(req).then(detailedReservations => {
     res.render("reservations", { message: req.flash('message'), detailedReservations });
   })
@@ -49,13 +49,13 @@ router.post("/owner/reservations/:reservation_id", auth.isAuthenticated, auth.is
   })
 });
 
-router.get("/owner/hotels", auth.isAuthenticated, auth.isHotelOwner, (req, res, next) => {
+router.get("/owner/hotels", auth.isAuthenticated, auth.isHotelOwner,auth.isBlacklisted, (req, res, next) => {
   Hotel.getAllOwnedHotelsWithRoomsAndFacilities(req).then(hotels => {
     res.render("ownersHotels", { message: req.flash('message'), hotels: hotels });
   });
 });
 
-router.get("/owner/register-hotel", auth.isAuthenticated, auth.isHotelOwner, (req, res, next) => {
+router.get("/owner/register-hotel", auth.isAuthenticated, auth.isHotelOwner,auth.isBlacklisted, (req, res, next) => {
   res.render("registerHotel", { message: req.flash('message') });
 });
 
