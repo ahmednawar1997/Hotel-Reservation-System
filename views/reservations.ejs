@@ -83,7 +83,7 @@
                                                         <i class="fas fa-times-circle"></i>
                                                         Cancel</button>
                                                     <button type="button" class="btn btn-success btn-sm" style="float:right; margin-right:5px" id="approveButton<%=detailedReservations[i].reservation_id%>"
-                                                        onclick="approveReservation('<%=detailedReservations[i].reservation_id%>')"><i
+                                                        onclick="approveReservation('<%=JSON.stringify(detailedReservations[i])%>')"><i
                                                             class="fas fa-check-circle"></i> Approve</button>
                                                     <%}%>
                 </h5>
