@@ -18,7 +18,6 @@ router.get("/", auth.isAuthenticated, (req, res) => {
         message: req.flash('message'), upcomingReservations: upcomingReservations,
         pastReservations: pastReservations
       });
-      console.log("UpcomingReservation: ", upcomingReservations);
     })
   })
 

@@ -27,7 +27,6 @@ router.get("/:hotel_id(\\d+)/", auth.isAuthenticated, function (req, res, next) 
   Hotel.getHotelDetailsAndRooms(req).then(hotels => {
     Hotel.getPremiumHotels(req).then(premiumHotels => {
       Hotel.getCustomerReviews(req).then(reviews => {
-        console.log(reviews);
         res.render("viewHotel2", {
           message: req.flash('message'),
           hotels,

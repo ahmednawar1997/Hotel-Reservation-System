@@ -6,12 +6,8 @@ var auth = require("../helpers/authorization");
 
 router.get("/", auth.isAuthenticated, (req, res) => {
     Reservation.getAllOwnerReservations(req).then(function (reservations) {
-        console.log(reservations);
         res.render("customerProfile", { message: req.flash('message'), reservations: reservations });
     });
-    // Reservation.getAllOwnerReservations(req).then(function(reservations){
-    //     res.render("customerProfile", {message: req.flash('message'), reservations: reservations});
-
 });
 
 router.post("/cancel", auth.isAuthenticated, function (req, res) {

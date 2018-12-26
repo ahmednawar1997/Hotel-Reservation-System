@@ -269,7 +269,6 @@ function getPremiumHotels(req) {
     "FROM hotel_locations WHERE hotel_locations.hotel_id =? ) ";
   return new Promise((resolve, reject) => {
     req.con.query(sql, [req.params.hotel_id], function (err, hotels) {
-      console.log("YOO: ", req.params);
       if (err) console.log(err);
       resolve(hotels)
     });
