@@ -63,7 +63,8 @@ router.get("/owner/register-hotel", auth.isAuthenticated, auth.isHotelOwner, aut
 router.post("/owner/register-hotel", auth.isAuthenticated, auth.isHotelOwner, upload.single('avatar'), (req, res, next) => {
   Hotel.insertHotel(req).then(() => {
     Hotel.getAllOwnedHotels(req).then(hotels => {
-      res.render("ownersHotels", { message: req.flash('message'), hotels: hotels });
+      //res.render("ownersHotels", { message: req.flash('message'), hotels: hotels });
+      res.redirect('/user/owner/hotels');
     });
   });
 });
