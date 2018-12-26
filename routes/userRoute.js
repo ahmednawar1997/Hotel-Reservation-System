@@ -116,7 +116,7 @@ router.get("/report", auth.isAuthenticated, auth.isBroker, function (req, res, n
 
     for (var i = 0; i < reportData.length; i++) {
       labels.push(reportData[i].name);
-      values.push(reportData[i].total_amount)
+      values.push(reportData[i].total_amount * 0.09)
     }
 
     res.render('brokerReport', { message: req.flash('message'), reportData, labels, values });
