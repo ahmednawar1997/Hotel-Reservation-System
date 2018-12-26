@@ -189,34 +189,35 @@ function setCustomerCheckedIn(req) {
     });
 }
 function getMoneyForEachHotel(req) {
-    var query = "Select hotels.name,price_hotel.total_amount " +
-        "FROM hotels " +
-        "INNER JOIN " +
-        "((Select price_rooms.hotel_id As hotel_id, sum(price_rooms.days)As total_amount " +
+    var query = "Select hotels.name, IFNULL(price_hotel.total_amount,'0')  AS total_value " +
         "FROM " +
-        "(SELECT room_type.hotel_id AS hotel_id, room_type.room_type, room_type.room_view, room_type.price *number_of_reserved_rooms.days As days " +
-        "FROM room_type " +
-        "INNER JOIN " +
-        "((SELECT booked_hotels.room_type, booked_hotels.hotel_id, booked_hotels.reservation_id, booked_hotels.room_view, SUM(booked_hotels.number_of_rooms)AS sum2 " +
-        ",booked_hotels.days As days " +
+        "hotels " +
+        "LEFT OUTER JOIN " +
+        "((Select price_rooms.hotel_id As hotel_id, sum(price_rooms.days)As total_amount  " +
         "FROM " +
-        "((SELECT input_conditions.hotel_id, reserved_rooms.reservation_id, reserved_rooms.room_type, reserved_rooms.number_of_rooms,reserved_rooms.room_view, " + "input_conditions.days AS days FROM reserved_rooms " +
+        "(SELECT room_type.hotel_id AS hotel_id, room_type.room_type, room_type.room_view, room_type.price * number_of_reserved_rooms.days As days " +
+        "FROM room_type  " +
         "INNER JOIN " +
-        "(SELECT  reservations.reservation_id AS reservation_id ,reservations.hotel_id AS hotel_id , DATEDIFF(check_out_date,check_in_date) AS days  From reservations " +
+        "((SELECT booked_hotels.room_type, booked_hotels.hotel_id, booked_hotels.reservation_id, booked_hotels.room_view, SUM(booked_hotels.number_of_rooms)AS sum2, booked_hotels.days As days " +
+        "FROM " +
+        "((SELECT input_conditions.hotel_id, reserved_rooms.reservation_id, reserved_rooms.room_type, reserved_rooms.number_of_rooms, reserved_rooms.room_view, input_conditions.days AS days FROM reserved_rooms " +
+        "INNER JOIN " +
+        "(SELECT  reservations.reservation_id AS reservation_id, reservations.hotel_id AS hotel_id, DATEDIFF(check_out_date, check_in_date) AS days  From reservations " +
         "WHERE MONTH(check_in_date) = ? AND YEAR(check_in_date) = ? " +
+        "And checked_in = 1 " +
         ")AS input_conditions " +
-        "ON reserved_rooms.reservation_id=input_conditions.reservation_id)AS booked_hotels) " +
-        "GROUP BY booked_hotels.room_type,booked_hotels.hotel_id,booked_hotels.room_view) AS number_of_reserved_rooms) " +
-        "ON number_of_reserved_rooms.room_type=room_type.room_type " +
-        "AND number_of_reserved_rooms.hotel_id=room_type.hotel_id " +
-        "AND number_of_reserved_rooms.room_view=room_type.room_view ) AS price_rooms " +
+        "ON reserved_rooms.reservation_id = input_conditions.reservation_id)AS booked_hotels) " +
+        "GROUP BY booked_hotels.room_type, booked_hotels.hotel_id, booked_hotels.room_view) AS number_of_reserved_rooms) " +
+        "ON number_of_reserved_rooms.room_type = room_type.room_type " +
+        "AND number_of_reserved_rooms.hotel_id = room_type.hotel_id " +
+        "AND number_of_reserved_rooms.room_view = room_type.room_view ) AS price_rooms " +
         "GROUP BY price_rooms.hotel_id) As price_hotel) " +
-        "ON hotels.id=price_hotel.hotel_id";
+        "ON hotels.id = price_hotel.hotel_id; ";
     return new Promise((resolve, reject) => {
         var now = new Date();
         var month = now.getMonth();
         var year = now.getYear();
-        req.con.query(query, [month, year + 1900], (err, data) => {
+        req.con.query(query, [month + 1, year + 1900], (err, data) => {
             if (err) console.log(err);
             resolve(data);
         });
