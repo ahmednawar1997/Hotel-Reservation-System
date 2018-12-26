@@ -68,8 +68,14 @@ function(req, email, password, done) {
             date.format(now, 'YYYY-MM-DD'); 
 
             var passwordHash = password;
+            var imagePath;
+            if(req.file){
+                imagePath = req.file.filename;
+            }else{
+                imagePath = null;
+            }
             var sql = "INSERT INTO users (name, email, password, registration_date, type, image_path) VALUES (?, ?, ?, ?, ?, ?)";
-            req.con.query(sql, [ req.body.name, email, passwordHash, now, req.body.usertype, req.file.filename], function(err, user) {
+            req.con.query(sql, [ req.body.name, email, passwordHash, now, req.body.usertype, imagePath], function(err, user) {
                 if(err) console.log(err);
                 else{
                     return done(null, user.insertId, req.flash('message', 'Signed Up Successful'));
